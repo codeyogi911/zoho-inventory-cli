@@ -1,15 +1,15 @@
-// `items` resource — generated from the Zoho Inventory API catalog.
+// `users` resource — generated from the Zoho Inventory API catalog.
 // Edit RESOURCES in scripts/gen-resources.mjs (kept locally) and re-emit, rather
 // than hand-tweaking these files; otherwise upstream regeneration will undo edits.
 import { buildPayload } from "../lib/payload.mjs";
 
 export default {
-  name: "items",
+  name: "users",
   actions: {
     "list": {
       "method": "GET",
-      "path": "/items",
-      "description": "GET /items",
+      "path": "/users",
+      "description": "GET /users",
       "flags": {
         "page": {
           "type": "string",
@@ -30,8 +30,8 @@ export default {
     },
     "get": {
       "method": "GET",
-      "path": "/items/:id",
-      "description": "GET /items/:id",
+      "path": "/users/:id",
+      "description": "GET /users/:id",
       "flags": {
         "id": {
           "type": "string",
@@ -47,8 +47,8 @@ export default {
     },
     "create": {
       "method": "POST",
-      "path": "/items",
-      "description": "POST /items",
+      "path": "/users",
+      "description": "POST /users",
       "flags": {
         "name": {
           "type": "string",
@@ -65,55 +65,15 @@ export default {
           "required": false,
           "description": "Filter by status (list) or set status (create/update)"
         },
-        "sku": {
+        "email": {
           "type": "string",
           "required": false,
-          "description": "Stock-keeping unit"
+          "description": "Email address"
         },
-        "rate": {
+        "user_role": {
           "type": "string",
           "required": false,
-          "description": "Sales rate (decimal)"
-        },
-        "purchase_rate": {
-          "type": "string",
-          "required": false,
-          "description": "Purchase rate (decimal)"
-        },
-        "unit": {
-          "type": "string",
-          "required": false,
-          "description": "Unit of measure (pcs, kg, ...)"
-        },
-        "tax_id": {
-          "type": "string",
-          "required": false,
-          "description": "Default tax id"
-        },
-        "is_taxable": {
-          "type": "string",
-          "required": false,
-          "description": "true | false"
-        },
-        "item_type": {
-          "type": "string",
-          "required": false,
-          "description": "inventory | service | non_inventory"
-        },
-        "product_type": {
-          "type": "string",
-          "required": false,
-          "description": "goods | service"
-        },
-        "group_id": {
-          "type": "string",
-          "required": false,
-          "description": "Item group id"
-        },
-        "reorder_level": {
-          "type": "string",
-          "required": false,
-          "description": "Reorder level threshold"
+          "description": "Zoho role id"
         },
         "body": {
           "type": "string",
@@ -129,8 +89,8 @@ export default {
     },
     "update": {
       "method": "PUT",
-      "path": "/items/:id",
-      "description": "PUT /items/:id",
+      "path": "/users/:id",
+      "description": "PUT /users/:id",
       "flags": {
         "id": {
           "type": "string",
@@ -152,55 +112,15 @@ export default {
           "required": false,
           "description": "Filter by status (list) or set status (create/update)"
         },
-        "sku": {
+        "email": {
           "type": "string",
           "required": false,
-          "description": "Stock-keeping unit"
+          "description": "Email address"
         },
-        "rate": {
+        "user_role": {
           "type": "string",
           "required": false,
-          "description": "Sales rate (decimal)"
-        },
-        "purchase_rate": {
-          "type": "string",
-          "required": false,
-          "description": "Purchase rate (decimal)"
-        },
-        "unit": {
-          "type": "string",
-          "required": false,
-          "description": "Unit of measure (pcs, kg, ...)"
-        },
-        "tax_id": {
-          "type": "string",
-          "required": false,
-          "description": "Default tax id"
-        },
-        "is_taxable": {
-          "type": "string",
-          "required": false,
-          "description": "true | false"
-        },
-        "item_type": {
-          "type": "string",
-          "required": false,
-          "description": "inventory | service | non_inventory"
-        },
-        "product_type": {
-          "type": "string",
-          "required": false,
-          "description": "goods | service"
-        },
-        "group_id": {
-          "type": "string",
-          "required": false,
-          "description": "Item group id"
-        },
-        "reorder_level": {
-          "type": "string",
-          "required": false,
-          "description": "Reorder level threshold"
+          "description": "Zoho role id"
         },
         "body": {
           "type": "string",
@@ -216,8 +136,8 @@ export default {
     },
     "delete": {
       "method": "DELETE",
-      "path": "/items/:id",
-      "description": "DELETE /items/:id",
+      "path": "/users/:id",
+      "description": "DELETE /users/:id",
       "flags": {
         "id": {
           "type": "string",
@@ -231,16 +151,11 @@ export default {
         }
       }
     },
-    "bulk-fetch": {
+    "get-current-user": {
       "method": "GET",
-      "path": "/itemdetails",
-      "description": "GET /itemdetails",
+      "path": "/users/me",
+      "description": "GET /users/me",
       "flags": {
-        "item_ids": {
-          "type": "string",
-          "required": true,
-          "description": "Comma-separated list of item ids"
-        },
         "organization-id": {
           "type": "string",
           "required": false,
@@ -248,10 +163,10 @@ export default {
         }
       }
     },
-    "update-custom-fields": {
-      "method": "PUT",
-      "path": "/item/:id/customfields",
-      "description": "PUT /item/:id/customfields",
+    "invite": {
+      "method": "POST",
+      "path": "/users/:id/invite",
+      "description": "POST /users/:id/invite",
       "flags": {
         "id": {
           "type": "string",
@@ -270,27 +185,10 @@ export default {
         }
       }
     },
-    "delete-image": {
-      "method": "DELETE",
-      "path": "/items/:id/image",
-      "description": "DELETE /items/:id/image",
-      "flags": {
-        "id": {
-          "type": "string",
-          "required": true,
-          "description": "Primary resource id"
-        },
-        "organization-id": {
-          "type": "string",
-          "required": false,
-          "description": "Organization id override (defaults to ZOHO_INVENTORY_ORG_ID env)"
-        }
-      }
-    },
     "mark-active": {
       "method": "POST",
-      "path": "/items/:id/active",
-      "description": "POST /items/:id/active",
+      "path": "/users/:id/active",
+      "description": "POST /users/:id/active",
       "flags": {
         "id": {
           "type": "string",
@@ -311,8 +209,8 @@ export default {
     },
     "mark-inactive": {
       "method": "POST",
-      "path": "/items/:id/inactive",
-      "description": "POST /items/:id/inactive",
+      "path": "/users/:id/inactive",
+      "description": "POST /users/:id/inactive",
       "flags": {
         "id": {
           "type": "string",

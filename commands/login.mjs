@@ -1,16 +1,17 @@
-// `login` is the auth-management command, not a REST resource. It lives
-// outside the resource registry and is dispatched directly by bin/zoho-inventory-cli.mjs.
-//
-// Mirrors the agents-cli pattern: `<cli> login [--token <t>]` stores a token at
-// ~/.config/zoho-inventory-cli/credentials.json. `<cli> login --status` reports
-// whether the env var or stored token (or neither) is providing auth.
-import { saveCredentials, credentialsPath } from "../lib/config.mjs";
+// Zoho OAuth credential management. Stores refresh-token + client-id +
+// client-secret at ~/.config/zoho-inventory-cli/credentials.json (mode 0600);
+// the access token is fetched on demand and cached with an expiry.
+import { saveCredentials, loadCredentials, credentialsPath } from "../lib/config.mjs";
 import { authStatus } from "../lib/auth.mjs";
 import { output, errorOut } from "../lib/output.mjs";
 
 export const loginFlags = {
-  token: { type: "string", description: "API token to persist (omit to read interactively)" },
-  status: { type: "boolean", description: "Show current auth source without changing it" },
+  "refresh-token": { type: "string", description: "Zoho OAuth refresh token (long-lived)" },
+  "client-id": { type: "string", description: "OAuth Self Client ID" },
+  "client-secret": { type: "string", description: "OAuth Self Client secret" },
+  token: { type: "string", description: "Static access token (~1 hour validity); use refresh flow instead when possible" },
+  status: { type: "boolean", description: "Print current auth source without changing it" },
+  clear: { type: "boolean", description: "Delete the stored credentials file" },
 };
 
 export async function runLogin(values, jsonRequested) {
@@ -18,11 +19,29 @@ export async function runLogin(values, jsonRequested) {
     output(authStatus(), jsonRequested);
     return;
   }
-  let token = values.token;
-  if (!token) token = (process.env.ZOHO_INVENTORY_LOGIN_TOKEN || "").trim();
-  if (!token) {
-    errorOut("validation_error", "Pass --token <value>, set ZOHO_INVENTORY_LOGIN_TOKEN, or set ZOHO_INVENTORY_API_KEY in your environment.");
+
+  if (values.clear) {
+    saveCredentials({});
+    output({ ok: true, cleared: true, path: credentialsPath() }, jsonRequested);
+    return;
   }
-  saveCredentials({ token, savedAt: new Date().toISOString() });
+
+  const stored = loadCredentials() || {};
+  const next = { ...stored, savedAt: new Date().toISOString() };
+
+  let touched = false;
+  if (values["refresh-token"]) { next.refreshToken = values["refresh-token"]; delete next.accessToken; delete next.expiresAt; touched = true; }
+  if (values["client-id"]) { next.clientId = values["client-id"]; touched = true; }
+  if (values["client-secret"]) { next.clientSecret = values["client-secret"]; touched = true; }
+  if (values.token) { next.token = values.token; touched = true; }
+
+  if (!touched) {
+    errorOut(
+      "validation_error",
+      "Pass at least one of --refresh-token, --client-id, --client-secret, --token, --status, or --clear."
+    );
+  }
+
+  saveCredentials(next);
   output({ ok: true, path: credentialsPath() }, jsonRequested);
 }

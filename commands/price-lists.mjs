@@ -1,15 +1,15 @@
-// `items` resource — generated from the Zoho Inventory API catalog.
+// `price-lists` resource — generated from the Zoho Inventory API catalog.
 // Edit RESOURCES in scripts/gen-resources.mjs (kept locally) and re-emit, rather
 // than hand-tweaking these files; otherwise upstream regeneration will undo edits.
 import { buildPayload } from "../lib/payload.mjs";
 
 export default {
-  name: "items",
+  name: "price-lists",
   actions: {
     "list": {
       "method": "GET",
-      "path": "/items",
-      "description": "GET /items",
+      "path": "/pricebooks",
+      "description": "GET /pricebooks",
       "flags": {
         "page": {
           "type": "string",
@@ -28,27 +28,10 @@ export default {
         }
       }
     },
-    "get": {
-      "method": "GET",
-      "path": "/items/:id",
-      "description": "GET /items/:id",
-      "flags": {
-        "id": {
-          "type": "string",
-          "required": true,
-          "description": "Primary resource id"
-        },
-        "organization-id": {
-          "type": "string",
-          "required": false,
-          "description": "Organization id override (defaults to ZOHO_INVENTORY_ORG_ID env)"
-        }
-      }
-    },
     "create": {
       "method": "POST",
-      "path": "/items",
-      "description": "POST /items",
+      "path": "/pricebooks",
+      "description": "POST /pricebooks",
       "flags": {
         "name": {
           "type": "string",
@@ -65,55 +48,30 @@ export default {
           "required": false,
           "description": "Filter by status (list) or set status (create/update)"
         },
-        "sku": {
+        "currency_id": {
           "type": "string",
           "required": false,
-          "description": "Stock-keeping unit"
+          "description": "Currency id"
         },
-        "rate": {
+        "percentage": {
           "type": "string",
           "required": false,
-          "description": "Sales rate (decimal)"
+          "description": "Markup/markdown percentage"
         },
-        "purchase_rate": {
+        "pricebook_type": {
           "type": "string",
           "required": false,
-          "description": "Purchase rate (decimal)"
+          "description": "fixed_percentage | per_item"
         },
-        "unit": {
+        "rounding_type": {
           "type": "string",
           "required": false,
-          "description": "Unit of measure (pcs, kg, ...)"
+          "description": "no_rounding | round_to_dollar_minus_01 | …"
         },
-        "tax_id": {
+        "is_increase": {
           "type": "string",
           "required": false,
-          "description": "Default tax id"
-        },
-        "is_taxable": {
-          "type": "string",
-          "required": false,
-          "description": "true | false"
-        },
-        "item_type": {
-          "type": "string",
-          "required": false,
-          "description": "inventory | service | non_inventory"
-        },
-        "product_type": {
-          "type": "string",
-          "required": false,
-          "description": "goods | service"
-        },
-        "group_id": {
-          "type": "string",
-          "required": false,
-          "description": "Item group id"
-        },
-        "reorder_level": {
-          "type": "string",
-          "required": false,
-          "description": "Reorder level threshold"
+          "description": "true (markup) | false (markdown)"
         },
         "body": {
           "type": "string",
@@ -129,8 +87,8 @@ export default {
     },
     "update": {
       "method": "PUT",
-      "path": "/items/:id",
-      "description": "PUT /items/:id",
+      "path": "/pricebooks/:id",
+      "description": "PUT /pricebooks/:id",
       "flags": {
         "id": {
           "type": "string",
@@ -152,55 +110,30 @@ export default {
           "required": false,
           "description": "Filter by status (list) or set status (create/update)"
         },
-        "sku": {
+        "currency_id": {
           "type": "string",
           "required": false,
-          "description": "Stock-keeping unit"
+          "description": "Currency id"
         },
-        "rate": {
+        "percentage": {
           "type": "string",
           "required": false,
-          "description": "Sales rate (decimal)"
+          "description": "Markup/markdown percentage"
         },
-        "purchase_rate": {
+        "pricebook_type": {
           "type": "string",
           "required": false,
-          "description": "Purchase rate (decimal)"
+          "description": "fixed_percentage | per_item"
         },
-        "unit": {
+        "rounding_type": {
           "type": "string",
           "required": false,
-          "description": "Unit of measure (pcs, kg, ...)"
+          "description": "no_rounding | round_to_dollar_minus_01 | …"
         },
-        "tax_id": {
+        "is_increase": {
           "type": "string",
           "required": false,
-          "description": "Default tax id"
-        },
-        "is_taxable": {
-          "type": "string",
-          "required": false,
-          "description": "true | false"
-        },
-        "item_type": {
-          "type": "string",
-          "required": false,
-          "description": "inventory | service | non_inventory"
-        },
-        "product_type": {
-          "type": "string",
-          "required": false,
-          "description": "goods | service"
-        },
-        "group_id": {
-          "type": "string",
-          "required": false,
-          "description": "Item group id"
-        },
-        "reorder_level": {
-          "type": "string",
-          "required": false,
-          "description": "Reorder level threshold"
+          "description": "true (markup) | false (markdown)"
         },
         "body": {
           "type": "string",
@@ -216,64 +149,8 @@ export default {
     },
     "delete": {
       "method": "DELETE",
-      "path": "/items/:id",
-      "description": "DELETE /items/:id",
-      "flags": {
-        "id": {
-          "type": "string",
-          "required": true,
-          "description": "Primary resource id"
-        },
-        "organization-id": {
-          "type": "string",
-          "required": false,
-          "description": "Organization id override (defaults to ZOHO_INVENTORY_ORG_ID env)"
-        }
-      }
-    },
-    "bulk-fetch": {
-      "method": "GET",
-      "path": "/itemdetails",
-      "description": "GET /itemdetails",
-      "flags": {
-        "item_ids": {
-          "type": "string",
-          "required": true,
-          "description": "Comma-separated list of item ids"
-        },
-        "organization-id": {
-          "type": "string",
-          "required": false,
-          "description": "Organization id override (defaults to ZOHO_INVENTORY_ORG_ID env)"
-        }
-      }
-    },
-    "update-custom-fields": {
-      "method": "PUT",
-      "path": "/item/:id/customfields",
-      "description": "PUT /item/:id/customfields",
-      "flags": {
-        "id": {
-          "type": "string",
-          "required": true,
-          "description": "Primary resource id"
-        },
-        "body": {
-          "type": "string",
-          "required": false,
-          "description": "Raw JSON body (overrides individual flags)"
-        },
-        "organization-id": {
-          "type": "string",
-          "required": false,
-          "description": "Organization id override (defaults to ZOHO_INVENTORY_ORG_ID env)"
-        }
-      }
-    },
-    "delete-image": {
-      "method": "DELETE",
-      "path": "/items/:id/image",
-      "description": "DELETE /items/:id/image",
+      "path": "/pricebooks/:id",
+      "description": "DELETE /pricebooks/:id",
       "flags": {
         "id": {
           "type": "string",
@@ -289,8 +166,8 @@ export default {
     },
     "mark-active": {
       "method": "POST",
-      "path": "/items/:id/active",
-      "description": "POST /items/:id/active",
+      "path": "/pricebooks/:id/active",
+      "description": "POST /pricebooks/:id/active",
       "flags": {
         "id": {
           "type": "string",
@@ -311,8 +188,8 @@ export default {
     },
     "mark-inactive": {
       "method": "POST",
-      "path": "/items/:id/inactive",
-      "description": "POST /items/:id/inactive",
+      "path": "/pricebooks/:id/inactive",
+      "description": "POST /pricebooks/:id/inactive",
       "flags": {
         "id": {
           "type": "string",

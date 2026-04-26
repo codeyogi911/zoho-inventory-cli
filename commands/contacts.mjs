@@ -1,15 +1,15 @@
-// `items` resource — generated from the Zoho Inventory API catalog.
+// `contacts` resource — generated from the Zoho Inventory API catalog.
 // Edit RESOURCES in scripts/gen-resources.mjs (kept locally) and re-emit, rather
 // than hand-tweaking these files; otherwise upstream regeneration will undo edits.
 import { buildPayload } from "../lib/payload.mjs";
 
 export default {
-  name: "items",
+  name: "contacts",
   actions: {
     "list": {
       "method": "GET",
-      "path": "/items",
-      "description": "GET /items",
+      "path": "/contacts",
+      "description": "GET /contacts",
       "flags": {
         "page": {
           "type": "string",
@@ -30,8 +30,8 @@ export default {
     },
     "get": {
       "method": "GET",
-      "path": "/items/:id",
-      "description": "GET /items/:id",
+      "path": "/contacts/:id",
+      "description": "GET /contacts/:id",
       "flags": {
         "id": {
           "type": "string",
@@ -47,8 +47,8 @@ export default {
     },
     "create": {
       "method": "POST",
-      "path": "/items",
-      "description": "POST /items",
+      "path": "/contacts",
+      "description": "POST /contacts",
       "flags": {
         "name": {
           "type": "string",
@@ -65,55 +65,20 @@ export default {
           "required": false,
           "description": "Filter by status (list) or set status (create/update)"
         },
-        "sku": {
+        "contact_name": {
           "type": "string",
           "required": false,
-          "description": "Stock-keeping unit"
+          "description": "Contact display name"
         },
-        "rate": {
+        "company_name": {
           "type": "string",
           "required": false,
-          "description": "Sales rate (decimal)"
+          "description": "Company name"
         },
-        "purchase_rate": {
+        "contact_type": {
           "type": "string",
           "required": false,
-          "description": "Purchase rate (decimal)"
-        },
-        "unit": {
-          "type": "string",
-          "required": false,
-          "description": "Unit of measure (pcs, kg, ...)"
-        },
-        "tax_id": {
-          "type": "string",
-          "required": false,
-          "description": "Default tax id"
-        },
-        "is_taxable": {
-          "type": "string",
-          "required": false,
-          "description": "true | false"
-        },
-        "item_type": {
-          "type": "string",
-          "required": false,
-          "description": "inventory | service | non_inventory"
-        },
-        "product_type": {
-          "type": "string",
-          "required": false,
-          "description": "goods | service"
-        },
-        "group_id": {
-          "type": "string",
-          "required": false,
-          "description": "Item group id"
-        },
-        "reorder_level": {
-          "type": "string",
-          "required": false,
-          "description": "Reorder level threshold"
+          "description": "customer | vendor"
         },
         "body": {
           "type": "string",
@@ -129,8 +94,8 @@ export default {
     },
     "update": {
       "method": "PUT",
-      "path": "/items/:id",
-      "description": "PUT /items/:id",
+      "path": "/contacts/:id",
+      "description": "PUT /contacts/:id",
       "flags": {
         "id": {
           "type": "string",
@@ -152,55 +117,20 @@ export default {
           "required": false,
           "description": "Filter by status (list) or set status (create/update)"
         },
-        "sku": {
+        "contact_name": {
           "type": "string",
           "required": false,
-          "description": "Stock-keeping unit"
+          "description": "Contact display name"
         },
-        "rate": {
+        "company_name": {
           "type": "string",
           "required": false,
-          "description": "Sales rate (decimal)"
+          "description": "Company name"
         },
-        "purchase_rate": {
+        "contact_type": {
           "type": "string",
           "required": false,
-          "description": "Purchase rate (decimal)"
-        },
-        "unit": {
-          "type": "string",
-          "required": false,
-          "description": "Unit of measure (pcs, kg, ...)"
-        },
-        "tax_id": {
-          "type": "string",
-          "required": false,
-          "description": "Default tax id"
-        },
-        "is_taxable": {
-          "type": "string",
-          "required": false,
-          "description": "true | false"
-        },
-        "item_type": {
-          "type": "string",
-          "required": false,
-          "description": "inventory | service | non_inventory"
-        },
-        "product_type": {
-          "type": "string",
-          "required": false,
-          "description": "goods | service"
-        },
-        "group_id": {
-          "type": "string",
-          "required": false,
-          "description": "Item group id"
-        },
-        "reorder_level": {
-          "type": "string",
-          "required": false,
-          "description": "Reorder level threshold"
+          "description": "customer | vendor"
         },
         "body": {
           "type": "string",
@@ -216,8 +146,8 @@ export default {
     },
     "delete": {
       "method": "DELETE",
-      "path": "/items/:id",
-      "description": "DELETE /items/:id",
+      "path": "/contacts/:id",
+      "description": "DELETE /contacts/:id",
       "flags": {
         "id": {
           "type": "string",
@@ -231,49 +161,10 @@ export default {
         }
       }
     },
-    "bulk-fetch": {
+    "get-address": {
       "method": "GET",
-      "path": "/itemdetails",
-      "description": "GET /itemdetails",
-      "flags": {
-        "item_ids": {
-          "type": "string",
-          "required": true,
-          "description": "Comma-separated list of item ids"
-        },
-        "organization-id": {
-          "type": "string",
-          "required": false,
-          "description": "Organization id override (defaults to ZOHO_INVENTORY_ORG_ID env)"
-        }
-      }
-    },
-    "update-custom-fields": {
-      "method": "PUT",
-      "path": "/item/:id/customfields",
-      "description": "PUT /item/:id/customfields",
-      "flags": {
-        "id": {
-          "type": "string",
-          "required": true,
-          "description": "Primary resource id"
-        },
-        "body": {
-          "type": "string",
-          "required": false,
-          "description": "Raw JSON body (overrides individual flags)"
-        },
-        "organization-id": {
-          "type": "string",
-          "required": false,
-          "description": "Organization id override (defaults to ZOHO_INVENTORY_ORG_ID env)"
-        }
-      }
-    },
-    "delete-image": {
-      "method": "DELETE",
-      "path": "/items/:id/image",
-      "description": "DELETE /items/:id/image",
+      "path": "/contacts/:id/address",
+      "description": "GET /contacts/:id/address",
       "flags": {
         "id": {
           "type": "string",
@@ -289,8 +180,8 @@ export default {
     },
     "mark-active": {
       "method": "POST",
-      "path": "/items/:id/active",
-      "description": "POST /items/:id/active",
+      "path": "/contacts/:id/active",
+      "description": "POST /contacts/:id/active",
       "flags": {
         "id": {
           "type": "string",
@@ -311,8 +202,8 @@ export default {
     },
     "mark-inactive": {
       "method": "POST",
-      "path": "/items/:id/inactive",
-      "description": "POST /items/:id/inactive",
+      "path": "/contacts/:id/inactive",
+      "description": "POST /contacts/:id/inactive",
       "flags": {
         "id": {
           "type": "string",
@@ -323,6 +214,84 @@ export default {
           "type": "string",
           "required": false,
           "description": "Raw JSON body (overrides individual flags)"
+        },
+        "organization-id": {
+          "type": "string",
+          "required": false,
+          "description": "Organization id override (defaults to ZOHO_INVENTORY_ORG_ID env)"
+        }
+      }
+    },
+    "email-statement": {
+      "method": "POST",
+      "path": "/contacts/:id/statements/email",
+      "description": "POST /contacts/:id/statements/email",
+      "flags": {
+        "id": {
+          "type": "string",
+          "required": true,
+          "description": "Primary resource id"
+        },
+        "body": {
+          "type": "string",
+          "required": false,
+          "description": "Raw JSON body (overrides individual flags)"
+        },
+        "organization-id": {
+          "type": "string",
+          "required": false,
+          "description": "Organization id override (defaults to ZOHO_INVENTORY_ORG_ID env)"
+        }
+      }
+    },
+    "get-statement-email": {
+      "method": "GET",
+      "path": "/contacts/:id/statements/email",
+      "description": "GET /contacts/:id/statements/email",
+      "flags": {
+        "id": {
+          "type": "string",
+          "required": true,
+          "description": "Primary resource id"
+        },
+        "organization-id": {
+          "type": "string",
+          "required": false,
+          "description": "Organization id override (defaults to ZOHO_INVENTORY_ORG_ID env)"
+        }
+      }
+    },
+    "email-contact": {
+      "method": "POST",
+      "path": "/contacts/:id/email",
+      "description": "POST /contacts/:id/email",
+      "flags": {
+        "id": {
+          "type": "string",
+          "required": true,
+          "description": "Primary resource id"
+        },
+        "body": {
+          "type": "string",
+          "required": false,
+          "description": "Raw JSON body (overrides individual flags)"
+        },
+        "organization-id": {
+          "type": "string",
+          "required": false,
+          "description": "Organization id override (defaults to ZOHO_INVENTORY_ORG_ID env)"
+        }
+      }
+    },
+    "list-comments": {
+      "method": "GET",
+      "path": "/contacts/:id/comments",
+      "description": "GET /contacts/:id/comments",
+      "flags": {
+        "id": {
+          "type": "string",
+          "required": true,
+          "description": "Primary resource id"
         },
         "organization-id": {
           "type": "string",

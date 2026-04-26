@@ -1,15 +1,15 @@
-// `items` resource — generated from the Zoho Inventory API catalog.
+// `sales-orders` resource — generated from the Zoho Inventory API catalog.
 // Edit RESOURCES in scripts/gen-resources.mjs (kept locally) and re-emit, rather
 // than hand-tweaking these files; otherwise upstream regeneration will undo edits.
 import { buildPayload } from "../lib/payload.mjs";
 
 export default {
-  name: "items",
+  name: "sales-orders",
   actions: {
     "list": {
       "method": "GET",
-      "path": "/items",
-      "description": "GET /items",
+      "path": "/salesorders",
+      "description": "GET /salesorders",
       "flags": {
         "page": {
           "type": "string",
@@ -30,8 +30,8 @@ export default {
     },
     "get": {
       "method": "GET",
-      "path": "/items/:id",
-      "description": "GET /items/:id",
+      "path": "/salesorders/:id",
+      "description": "GET /salesorders/:id",
       "flags": {
         "id": {
           "type": "string",
@@ -47,8 +47,8 @@ export default {
     },
     "create": {
       "method": "POST",
-      "path": "/items",
-      "description": "POST /items",
+      "path": "/salesorders",
+      "description": "POST /salesorders",
       "flags": {
         "name": {
           "type": "string",
@@ -65,55 +65,40 @@ export default {
           "required": false,
           "description": "Filter by status (list) or set status (create/update)"
         },
-        "sku": {
+        "customer_id": {
           "type": "string",
           "required": false,
-          "description": "Stock-keeping unit"
+          "description": "Zoho customer id"
         },
-        "rate": {
+        "salesorder_number": {
           "type": "string",
           "required": false,
-          "description": "Sales rate (decimal)"
+          "description": "Sales order number override"
         },
-        "purchase_rate": {
+        "date": {
           "type": "string",
           "required": false,
-          "description": "Purchase rate (decimal)"
+          "description": "Date in YYYY-MM-DD"
         },
-        "unit": {
+        "shipment_date": {
           "type": "string",
           "required": false,
-          "description": "Unit of measure (pcs, kg, ...)"
+          "description": "Shipment date in YYYY-MM-DD"
         },
-        "tax_id": {
+        "line_items": {
           "type": "string",
           "required": false,
-          "description": "Default tax id"
+          "description": "JSON array of line items (use --body for complex shapes)"
         },
-        "is_taxable": {
+        "discount": {
+          "type": "string",
+          "required": false,
+          "description": "Discount as percentage or absolute, depending on org settings"
+        },
+        "is_inclusive_tax": {
           "type": "string",
           "required": false,
           "description": "true | false"
-        },
-        "item_type": {
-          "type": "string",
-          "required": false,
-          "description": "inventory | service | non_inventory"
-        },
-        "product_type": {
-          "type": "string",
-          "required": false,
-          "description": "goods | service"
-        },
-        "group_id": {
-          "type": "string",
-          "required": false,
-          "description": "Item group id"
-        },
-        "reorder_level": {
-          "type": "string",
-          "required": false,
-          "description": "Reorder level threshold"
         },
         "body": {
           "type": "string",
@@ -129,8 +114,8 @@ export default {
     },
     "update": {
       "method": "PUT",
-      "path": "/items/:id",
-      "description": "PUT /items/:id",
+      "path": "/salesorders/:id",
+      "description": "PUT /salesorders/:id",
       "flags": {
         "id": {
           "type": "string",
@@ -152,55 +137,40 @@ export default {
           "required": false,
           "description": "Filter by status (list) or set status (create/update)"
         },
-        "sku": {
+        "customer_id": {
           "type": "string",
           "required": false,
-          "description": "Stock-keeping unit"
+          "description": "Zoho customer id"
         },
-        "rate": {
+        "salesorder_number": {
           "type": "string",
           "required": false,
-          "description": "Sales rate (decimal)"
+          "description": "Sales order number override"
         },
-        "purchase_rate": {
+        "date": {
           "type": "string",
           "required": false,
-          "description": "Purchase rate (decimal)"
+          "description": "Date in YYYY-MM-DD"
         },
-        "unit": {
+        "shipment_date": {
           "type": "string",
           "required": false,
-          "description": "Unit of measure (pcs, kg, ...)"
+          "description": "Shipment date in YYYY-MM-DD"
         },
-        "tax_id": {
+        "line_items": {
           "type": "string",
           "required": false,
-          "description": "Default tax id"
+          "description": "JSON array of line items (use --body for complex shapes)"
         },
-        "is_taxable": {
+        "discount": {
+          "type": "string",
+          "required": false,
+          "description": "Discount as percentage or absolute, depending on org settings"
+        },
+        "is_inclusive_tax": {
           "type": "string",
           "required": false,
           "description": "true | false"
-        },
-        "item_type": {
-          "type": "string",
-          "required": false,
-          "description": "inventory | service | non_inventory"
-        },
-        "product_type": {
-          "type": "string",
-          "required": false,
-          "description": "goods | service"
-        },
-        "group_id": {
-          "type": "string",
-          "required": false,
-          "description": "Item group id"
-        },
-        "reorder_level": {
-          "type": "string",
-          "required": false,
-          "description": "Reorder level threshold"
         },
         "body": {
           "type": "string",
@@ -216,8 +186,8 @@ export default {
     },
     "delete": {
       "method": "DELETE",
-      "path": "/items/:id",
-      "description": "DELETE /items/:id",
+      "path": "/salesorders/:id",
+      "description": "DELETE /salesorders/:id",
       "flags": {
         "id": {
           "type": "string",
@@ -231,54 +201,15 @@ export default {
         }
       }
     },
-    "bulk-fetch": {
-      "method": "GET",
-      "path": "/itemdetails",
-      "description": "GET /itemdetails",
-      "flags": {
-        "item_ids": {
-          "type": "string",
-          "required": true,
-          "description": "Comma-separated list of item ids"
-        },
-        "organization-id": {
-          "type": "string",
-          "required": false,
-          "description": "Organization id override (defaults to ZOHO_INVENTORY_ORG_ID env)"
-        }
-      }
-    },
-    "update-custom-fields": {
-      "method": "PUT",
-      "path": "/item/:id/customfields",
-      "description": "PUT /item/:id/customfields",
-      "flags": {
-        "id": {
-          "type": "string",
-          "required": true,
-          "description": "Primary resource id"
-        },
-        "body": {
-          "type": "string",
-          "required": false,
-          "description": "Raw JSON body (overrides individual flags)"
-        },
-        "organization-id": {
-          "type": "string",
-          "required": false,
-          "description": "Organization id override (defaults to ZOHO_INVENTORY_ORG_ID env)"
-        }
-      }
-    },
-    "delete-image": {
+    "bulk-delete": {
       "method": "DELETE",
-      "path": "/items/:id/image",
-      "description": "DELETE /items/:id/image",
+      "path": "/salesorders",
+      "description": "DELETE /salesorders",
       "flags": {
-        "id": {
+        "salesorder_ids": {
           "type": "string",
           "required": true,
-          "description": "Primary resource id"
+          "description": "Comma-separated list of sales order ids"
         },
         "organization-id": {
           "type": "string",
@@ -287,10 +218,10 @@ export default {
         }
       }
     },
-    "mark-active": {
+    "mark-confirmed": {
       "method": "POST",
-      "path": "/items/:id/active",
-      "description": "POST /items/:id/active",
+      "path": "/salesorders/:id/status/confirmed",
+      "description": "POST /salesorders/:id/status/confirmed",
       "flags": {
         "id": {
           "type": "string",
@@ -309,15 +240,37 @@ export default {
         }
       }
     },
-    "mark-inactive": {
+    "mark-void": {
       "method": "POST",
-      "path": "/items/:id/inactive",
-      "description": "POST /items/:id/inactive",
+      "path": "/salesorders/:id/status/void",
+      "description": "POST /salesorders/:id/status/void",
       "flags": {
         "id": {
           "type": "string",
           "required": true,
           "description": "Primary resource id"
+        },
+        "body": {
+          "type": "string",
+          "required": false,
+          "description": "Raw JSON body (overrides individual flags)"
+        },
+        "organization-id": {
+          "type": "string",
+          "required": false,
+          "description": "Organization id override (defaults to ZOHO_INVENTORY_ORG_ID env)"
+        }
+      }
+    },
+    "bulk-confirm": {
+      "method": "POST",
+      "path": "/salesorders/status/confirmed",
+      "description": "POST /salesorders/status/confirmed",
+      "flags": {
+        "salesorder_ids": {
+          "type": "string",
+          "required": true,
+          "description": "Comma-separated list of sales order ids"
         },
         "body": {
           "type": "string",

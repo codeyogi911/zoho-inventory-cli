@@ -1,15 +1,15 @@
-// `items` resource — generated from the Zoho Inventory API catalog.
+// `tasks` resource — generated from the Zoho Inventory API catalog.
 // Edit RESOURCES in scripts/gen-resources.mjs (kept locally) and re-emit, rather
 // than hand-tweaking these files; otherwise upstream regeneration will undo edits.
 import { buildPayload } from "../lib/payload.mjs";
 
 export default {
-  name: "items",
+  name: "tasks",
   actions: {
     "list": {
       "method": "GET",
-      "path": "/items",
-      "description": "GET /items",
+      "path": "/tasks",
+      "description": "GET /tasks",
       "flags": {
         "page": {
           "type": "string",
@@ -30,8 +30,8 @@ export default {
     },
     "get": {
       "method": "GET",
-      "path": "/items/:id",
-      "description": "GET /items/:id",
+      "path": "/tasks/:id",
+      "description": "GET /tasks/:id",
       "flags": {
         "id": {
           "type": "string",
@@ -47,8 +47,8 @@ export default {
     },
     "create": {
       "method": "POST",
-      "path": "/items",
-      "description": "POST /items",
+      "path": "/tasks",
+      "description": "POST /tasks",
       "flags": {
         "name": {
           "type": "string",
@@ -65,55 +65,25 @@ export default {
           "required": false,
           "description": "Filter by status (list) or set status (create/update)"
         },
-        "sku": {
+        "task_name": {
           "type": "string",
           "required": false,
-          "description": "Stock-keeping unit"
+          "description": "Task name"
+        },
+        "project_id": {
+          "type": "string",
+          "required": false,
+          "description": "Project id"
+        },
+        "user_id": {
+          "type": "string",
+          "required": false,
+          "description": "Assigned user id"
         },
         "rate": {
           "type": "string",
           "required": false,
           "description": "Sales rate (decimal)"
-        },
-        "purchase_rate": {
-          "type": "string",
-          "required": false,
-          "description": "Purchase rate (decimal)"
-        },
-        "unit": {
-          "type": "string",
-          "required": false,
-          "description": "Unit of measure (pcs, kg, ...)"
-        },
-        "tax_id": {
-          "type": "string",
-          "required": false,
-          "description": "Default tax id"
-        },
-        "is_taxable": {
-          "type": "string",
-          "required": false,
-          "description": "true | false"
-        },
-        "item_type": {
-          "type": "string",
-          "required": false,
-          "description": "inventory | service | non_inventory"
-        },
-        "product_type": {
-          "type": "string",
-          "required": false,
-          "description": "goods | service"
-        },
-        "group_id": {
-          "type": "string",
-          "required": false,
-          "description": "Item group id"
-        },
-        "reorder_level": {
-          "type": "string",
-          "required": false,
-          "description": "Reorder level threshold"
         },
         "body": {
           "type": "string",
@@ -129,8 +99,8 @@ export default {
     },
     "update": {
       "method": "PUT",
-      "path": "/items/:id",
-      "description": "PUT /items/:id",
+      "path": "/tasks/:id",
+      "description": "PUT /tasks/:id",
       "flags": {
         "id": {
           "type": "string",
@@ -152,55 +122,25 @@ export default {
           "required": false,
           "description": "Filter by status (list) or set status (create/update)"
         },
-        "sku": {
+        "task_name": {
           "type": "string",
           "required": false,
-          "description": "Stock-keeping unit"
+          "description": "Task name"
+        },
+        "project_id": {
+          "type": "string",
+          "required": false,
+          "description": "Project id"
+        },
+        "user_id": {
+          "type": "string",
+          "required": false,
+          "description": "Assigned user id"
         },
         "rate": {
           "type": "string",
           "required": false,
           "description": "Sales rate (decimal)"
-        },
-        "purchase_rate": {
-          "type": "string",
-          "required": false,
-          "description": "Purchase rate (decimal)"
-        },
-        "unit": {
-          "type": "string",
-          "required": false,
-          "description": "Unit of measure (pcs, kg, ...)"
-        },
-        "tax_id": {
-          "type": "string",
-          "required": false,
-          "description": "Default tax id"
-        },
-        "is_taxable": {
-          "type": "string",
-          "required": false,
-          "description": "true | false"
-        },
-        "item_type": {
-          "type": "string",
-          "required": false,
-          "description": "inventory | service | non_inventory"
-        },
-        "product_type": {
-          "type": "string",
-          "required": false,
-          "description": "goods | service"
-        },
-        "group_id": {
-          "type": "string",
-          "required": false,
-          "description": "Item group id"
-        },
-        "reorder_level": {
-          "type": "string",
-          "required": false,
-          "description": "Reorder level threshold"
         },
         "body": {
           "type": "string",
@@ -216,8 +156,8 @@ export default {
     },
     "delete": {
       "method": "DELETE",
-      "path": "/items/:id",
-      "description": "DELETE /items/:id",
+      "path": "/tasks/:id",
+      "description": "DELETE /tasks/:id",
       "flags": {
         "id": {
           "type": "string",
@@ -231,33 +171,11 @@ export default {
         }
       }
     },
-    "bulk-fetch": {
-      "method": "GET",
-      "path": "/itemdetails",
-      "description": "GET /itemdetails",
-      "flags": {
-        "item_ids": {
-          "type": "string",
-          "required": true,
-          "description": "Comma-separated list of item ids"
-        },
-        "organization-id": {
-          "type": "string",
-          "required": false,
-          "description": "Organization id override (defaults to ZOHO_INVENTORY_ORG_ID env)"
-        }
-      }
-    },
-    "update-custom-fields": {
+    "bulk-update": {
       "method": "PUT",
-      "path": "/item/:id/customfields",
-      "description": "PUT /item/:id/customfields",
+      "path": "/tasks",
+      "description": "PUT /tasks",
       "flags": {
-        "id": {
-          "type": "string",
-          "required": true,
-          "description": "Primary resource id"
-        },
         "body": {
           "type": "string",
           "required": false,
@@ -270,15 +188,15 @@ export default {
         }
       }
     },
-    "delete-image": {
+    "bulk-delete": {
       "method": "DELETE",
-      "path": "/items/:id/image",
-      "description": "DELETE /items/:id/image",
+      "path": "/tasks",
+      "description": "DELETE /tasks",
       "flags": {
-        "id": {
+        "task_ids": {
           "type": "string",
           "required": true,
-          "description": "Primary resource id"
+          "description": "Comma-separated list of task ids"
         },
         "organization-id": {
           "type": "string",
@@ -287,10 +205,10 @@ export default {
         }
       }
     },
-    "mark-active": {
+    "update-completed-percentage": {
       "method": "POST",
-      "path": "/items/:id/active",
-      "description": "POST /items/:id/active",
+      "path": "/tasks/:id/percentage",
+      "description": "POST /tasks/:id/percentage",
       "flags": {
         "id": {
           "type": "string",
@@ -309,10 +227,10 @@ export default {
         }
       }
     },
-    "mark-inactive": {
+    "mark-open": {
       "method": "POST",
-      "path": "/items/:id/inactive",
-      "description": "POST /items/:id/inactive",
+      "path": "/tasks/:id/markasopen",
+      "description": "POST /tasks/:id/markasopen",
       "flags": {
         "id": {
           "type": "string",
@@ -323,6 +241,177 @@ export default {
           "type": "string",
           "required": false,
           "description": "Raw JSON body (overrides individual flags)"
+        },
+        "organization-id": {
+          "type": "string",
+          "required": false,
+          "description": "Organization id override (defaults to ZOHO_INVENTORY_ORG_ID env)"
+        }
+      }
+    },
+    "mark-ongoing": {
+      "method": "POST",
+      "path": "/tasks/:id/markasongoing",
+      "description": "POST /tasks/:id/markasongoing",
+      "flags": {
+        "id": {
+          "type": "string",
+          "required": true,
+          "description": "Primary resource id"
+        },
+        "body": {
+          "type": "string",
+          "required": false,
+          "description": "Raw JSON body (overrides individual flags)"
+        },
+        "organization-id": {
+          "type": "string",
+          "required": false,
+          "description": "Organization id override (defaults to ZOHO_INVENTORY_ORG_ID env)"
+        }
+      }
+    },
+    "mark-completed": {
+      "method": "POST",
+      "path": "/tasks/:id/markascompleted",
+      "description": "POST /tasks/:id/markascompleted",
+      "flags": {
+        "id": {
+          "type": "string",
+          "required": true,
+          "description": "Primary resource id"
+        },
+        "body": {
+          "type": "string",
+          "required": false,
+          "description": "Raw JSON body (overrides individual flags)"
+        },
+        "organization-id": {
+          "type": "string",
+          "required": false,
+          "description": "Organization id override (defaults to ZOHO_INVENTORY_ORG_ID env)"
+        }
+      }
+    },
+    "add-comment": {
+      "method": "POST",
+      "path": "/tasks/:id/comments",
+      "description": "POST /tasks/:id/comments",
+      "flags": {
+        "id": {
+          "type": "string",
+          "required": true,
+          "description": "Primary resource id"
+        },
+        "body": {
+          "type": "string",
+          "required": false,
+          "description": "Raw JSON body (overrides individual flags)"
+        },
+        "organization-id": {
+          "type": "string",
+          "required": false,
+          "description": "Organization id override (defaults to ZOHO_INVENTORY_ORG_ID env)"
+        }
+      }
+    },
+    "list-comments": {
+      "method": "GET",
+      "path": "/tasks/:id/comments",
+      "description": "GET /tasks/:id/comments",
+      "flags": {
+        "id": {
+          "type": "string",
+          "required": true,
+          "description": "Primary resource id"
+        },
+        "organization-id": {
+          "type": "string",
+          "required": false,
+          "description": "Organization id override (defaults to ZOHO_INVENTORY_ORG_ID env)"
+        }
+      }
+    },
+    "delete-comment": {
+      "method": "DELETE",
+      "path": "/tasks/:id/comments/:commentId",
+      "description": "DELETE /tasks/:id/comments/:commentId",
+      "flags": {
+        "id": {
+          "type": "string",
+          "required": true,
+          "description": "Primary resource id"
+        },
+        "commentId": {
+          "type": "string",
+          "required": true,
+          "description": "Comment id"
+        },
+        "organization-id": {
+          "type": "string",
+          "required": false,
+          "description": "Organization id override (defaults to ZOHO_INVENTORY_ORG_ID env)"
+        }
+      }
+    },
+    "add-attachment": {
+      "method": "POST",
+      "path": "/tasks/:id/attachment",
+      "description": "POST /tasks/:id/attachment",
+      "flags": {
+        "id": {
+          "type": "string",
+          "required": true,
+          "description": "Primary resource id"
+        },
+        "file": {
+          "type": "string",
+          "required": true,
+          "description": "Path to file for multipart upload (--add-attachment, etc.)"
+        },
+        "organization-id": {
+          "type": "string",
+          "required": false,
+          "description": "Organization id override (defaults to ZOHO_INVENTORY_ORG_ID env)"
+        }
+      }
+    },
+    "get-document": {
+      "method": "GET",
+      "path": "/tasks/:id/documents/:documentId",
+      "description": "GET /tasks/:id/documents/:documentId",
+      "flags": {
+        "id": {
+          "type": "string",
+          "required": true,
+          "description": "Primary resource id"
+        },
+        "documentId": {
+          "type": "string",
+          "required": true,
+          "description": "Attachment document id"
+        },
+        "organization-id": {
+          "type": "string",
+          "required": false,
+          "description": "Organization id override (defaults to ZOHO_INVENTORY_ORG_ID env)"
+        }
+      }
+    },
+    "delete-document": {
+      "method": "DELETE",
+      "path": "/tasks/:id/documents/:documentId",
+      "description": "DELETE /tasks/:id/documents/:documentId",
+      "flags": {
+        "id": {
+          "type": "string",
+          "required": true,
+          "description": "Primary resource id"
+        },
+        "documentId": {
+          "type": "string",
+          "required": true,
+          "description": "Attachment document id"
         },
         "organization-id": {
           "type": "string",

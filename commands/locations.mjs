@@ -1,15 +1,32 @@
-// `items` resource — generated from the Zoho Inventory API catalog.
+// `locations` resource — generated from the Zoho Inventory API catalog.
 // Edit RESOURCES in scripts/gen-resources.mjs (kept locally) and re-emit, rather
 // than hand-tweaking these files; otherwise upstream regeneration will undo edits.
 import { buildPayload } from "../lib/payload.mjs";
 
 export default {
-  name: "items",
+  name: "locations",
   actions: {
+    "enable": {
+      "method": "POST",
+      "path": "/settings/locations/enable",
+      "description": "POST /settings/locations/enable",
+      "flags": {
+        "body": {
+          "type": "string",
+          "required": false,
+          "description": "Raw JSON body (overrides individual flags)"
+        },
+        "organization-id": {
+          "type": "string",
+          "required": false,
+          "description": "Organization id override (defaults to ZOHO_INVENTORY_ORG_ID env)"
+        }
+      }
+    },
     "list": {
       "method": "GET",
-      "path": "/items",
-      "description": "GET /items",
+      "path": "/locations",
+      "description": "GET /locations",
       "flags": {
         "page": {
           "type": "string",
@@ -28,27 +45,10 @@ export default {
         }
       }
     },
-    "get": {
-      "method": "GET",
-      "path": "/items/:id",
-      "description": "GET /items/:id",
-      "flags": {
-        "id": {
-          "type": "string",
-          "required": true,
-          "description": "Primary resource id"
-        },
-        "organization-id": {
-          "type": "string",
-          "required": false,
-          "description": "Organization id override (defaults to ZOHO_INVENTORY_ORG_ID env)"
-        }
-      }
-    },
     "create": {
       "method": "POST",
-      "path": "/items",
-      "description": "POST /items",
+      "path": "/locations",
+      "description": "POST /locations",
       "flags": {
         "name": {
           "type": "string",
@@ -65,55 +65,25 @@ export default {
           "required": false,
           "description": "Filter by status (list) or set status (create/update)"
         },
-        "sku": {
+        "location_name": {
           "type": "string",
           "required": false,
-          "description": "Stock-keeping unit"
+          "description": "Location display name"
         },
-        "rate": {
+        "address": {
           "type": "string",
           "required": false,
-          "description": "Sales rate (decimal)"
+          "description": "Address object (use --body for nested fields)"
         },
-        "purchase_rate": {
+        "phone": {
           "type": "string",
           "required": false,
-          "description": "Purchase rate (decimal)"
+          "description": "Phone number"
         },
-        "unit": {
+        "email": {
           "type": "string",
           "required": false,
-          "description": "Unit of measure (pcs, kg, ...)"
-        },
-        "tax_id": {
-          "type": "string",
-          "required": false,
-          "description": "Default tax id"
-        },
-        "is_taxable": {
-          "type": "string",
-          "required": false,
-          "description": "true | false"
-        },
-        "item_type": {
-          "type": "string",
-          "required": false,
-          "description": "inventory | service | non_inventory"
-        },
-        "product_type": {
-          "type": "string",
-          "required": false,
-          "description": "goods | service"
-        },
-        "group_id": {
-          "type": "string",
-          "required": false,
-          "description": "Item group id"
-        },
-        "reorder_level": {
-          "type": "string",
-          "required": false,
-          "description": "Reorder level threshold"
+          "description": "Email address"
         },
         "body": {
           "type": "string",
@@ -129,8 +99,8 @@ export default {
     },
     "update": {
       "method": "PUT",
-      "path": "/items/:id",
-      "description": "PUT /items/:id",
+      "path": "/locations/:id",
+      "description": "PUT /locations/:id",
       "flags": {
         "id": {
           "type": "string",
@@ -152,55 +122,25 @@ export default {
           "required": false,
           "description": "Filter by status (list) or set status (create/update)"
         },
-        "sku": {
+        "location_name": {
           "type": "string",
           "required": false,
-          "description": "Stock-keeping unit"
+          "description": "Location display name"
         },
-        "rate": {
+        "address": {
           "type": "string",
           "required": false,
-          "description": "Sales rate (decimal)"
+          "description": "Address object (use --body for nested fields)"
         },
-        "purchase_rate": {
+        "phone": {
           "type": "string",
           "required": false,
-          "description": "Purchase rate (decimal)"
+          "description": "Phone number"
         },
-        "unit": {
+        "email": {
           "type": "string",
           "required": false,
-          "description": "Unit of measure (pcs, kg, ...)"
-        },
-        "tax_id": {
-          "type": "string",
-          "required": false,
-          "description": "Default tax id"
-        },
-        "is_taxable": {
-          "type": "string",
-          "required": false,
-          "description": "true | false"
-        },
-        "item_type": {
-          "type": "string",
-          "required": false,
-          "description": "inventory | service | non_inventory"
-        },
-        "product_type": {
-          "type": "string",
-          "required": false,
-          "description": "goods | service"
-        },
-        "group_id": {
-          "type": "string",
-          "required": false,
-          "description": "Item group id"
-        },
-        "reorder_level": {
-          "type": "string",
-          "required": false,
-          "description": "Reorder level threshold"
+          "description": "Email address"
         },
         "body": {
           "type": "string",
@@ -216,64 +156,8 @@ export default {
     },
     "delete": {
       "method": "DELETE",
-      "path": "/items/:id",
-      "description": "DELETE /items/:id",
-      "flags": {
-        "id": {
-          "type": "string",
-          "required": true,
-          "description": "Primary resource id"
-        },
-        "organization-id": {
-          "type": "string",
-          "required": false,
-          "description": "Organization id override (defaults to ZOHO_INVENTORY_ORG_ID env)"
-        }
-      }
-    },
-    "bulk-fetch": {
-      "method": "GET",
-      "path": "/itemdetails",
-      "description": "GET /itemdetails",
-      "flags": {
-        "item_ids": {
-          "type": "string",
-          "required": true,
-          "description": "Comma-separated list of item ids"
-        },
-        "organization-id": {
-          "type": "string",
-          "required": false,
-          "description": "Organization id override (defaults to ZOHO_INVENTORY_ORG_ID env)"
-        }
-      }
-    },
-    "update-custom-fields": {
-      "method": "PUT",
-      "path": "/item/:id/customfields",
-      "description": "PUT /item/:id/customfields",
-      "flags": {
-        "id": {
-          "type": "string",
-          "required": true,
-          "description": "Primary resource id"
-        },
-        "body": {
-          "type": "string",
-          "required": false,
-          "description": "Raw JSON body (overrides individual flags)"
-        },
-        "organization-id": {
-          "type": "string",
-          "required": false,
-          "description": "Organization id override (defaults to ZOHO_INVENTORY_ORG_ID env)"
-        }
-      }
-    },
-    "delete-image": {
-      "method": "DELETE",
-      "path": "/items/:id/image",
-      "description": "DELETE /items/:id/image",
+      "path": "/locations/:id",
+      "description": "DELETE /locations/:id",
       "flags": {
         "id": {
           "type": "string",
@@ -289,8 +173,8 @@ export default {
     },
     "mark-active": {
       "method": "POST",
-      "path": "/items/:id/active",
-      "description": "POST /items/:id/active",
+      "path": "/locations/:id/active",
+      "description": "POST /locations/:id/active",
       "flags": {
         "id": {
           "type": "string",
@@ -311,8 +195,30 @@ export default {
     },
     "mark-inactive": {
       "method": "POST",
-      "path": "/items/:id/inactive",
-      "description": "POST /items/:id/inactive",
+      "path": "/locations/:id/inactive",
+      "description": "POST /locations/:id/inactive",
+      "flags": {
+        "id": {
+          "type": "string",
+          "required": true,
+          "description": "Primary resource id"
+        },
+        "body": {
+          "type": "string",
+          "required": false,
+          "description": "Raw JSON body (overrides individual flags)"
+        },
+        "organization-id": {
+          "type": "string",
+          "required": false,
+          "description": "Organization id override (defaults to ZOHO_INVENTORY_ORG_ID env)"
+        }
+      }
+    },
+    "mark-primary": {
+      "method": "POST",
+      "path": "/locations/:id/markasprimary",
+      "description": "POST /locations/:id/markasprimary",
       "flags": {
         "id": {
           "type": "string",

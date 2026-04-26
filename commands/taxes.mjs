@@ -1,15 +1,15 @@
-// `items` resource — generated from the Zoho Inventory API catalog.
+// `taxes` resource — generated from the Zoho Inventory API catalog.
 // Edit RESOURCES in scripts/gen-resources.mjs (kept locally) and re-emit, rather
 // than hand-tweaking these files; otherwise upstream regeneration will undo edits.
 import { buildPayload } from "../lib/payload.mjs";
 
 export default {
-  name: "items",
+  name: "taxes",
   actions: {
     "list": {
       "method": "GET",
-      "path": "/items",
-      "description": "GET /items",
+      "path": "/settings/taxes",
+      "description": "GET /settings/taxes",
       "flags": {
         "page": {
           "type": "string",
@@ -30,8 +30,8 @@ export default {
     },
     "get": {
       "method": "GET",
-      "path": "/items/:id",
-      "description": "GET /items/:id",
+      "path": "/settings/taxes/:id",
+      "description": "GET /settings/taxes/:id",
       "flags": {
         "id": {
           "type": "string",
@@ -47,8 +47,8 @@ export default {
     },
     "create": {
       "method": "POST",
-      "path": "/items",
-      "description": "POST /items",
+      "path": "/settings/taxes",
+      "description": "POST /settings/taxes",
       "flags": {
         "name": {
           "type": "string",
@@ -65,55 +65,20 @@ export default {
           "required": false,
           "description": "Filter by status (list) or set status (create/update)"
         },
-        "sku": {
+        "tax_name": {
           "type": "string",
           "required": false,
-          "description": "Stock-keeping unit"
+          "description": "Tax name"
         },
-        "rate": {
+        "tax_percentage": {
           "type": "string",
           "required": false,
-          "description": "Sales rate (decimal)"
+          "description": "Tax percentage as decimal"
         },
-        "purchase_rate": {
+        "tax_type": {
           "type": "string",
           "required": false,
-          "description": "Purchase rate (decimal)"
-        },
-        "unit": {
-          "type": "string",
-          "required": false,
-          "description": "Unit of measure (pcs, kg, ...)"
-        },
-        "tax_id": {
-          "type": "string",
-          "required": false,
-          "description": "Default tax id"
-        },
-        "is_taxable": {
-          "type": "string",
-          "required": false,
-          "description": "true | false"
-        },
-        "item_type": {
-          "type": "string",
-          "required": false,
-          "description": "inventory | service | non_inventory"
-        },
-        "product_type": {
-          "type": "string",
-          "required": false,
-          "description": "goods | service"
-        },
-        "group_id": {
-          "type": "string",
-          "required": false,
-          "description": "Item group id"
-        },
-        "reorder_level": {
-          "type": "string",
-          "required": false,
-          "description": "Reorder level threshold"
+          "description": "tax | compound_tax"
         },
         "body": {
           "type": "string",
@@ -129,8 +94,8 @@ export default {
     },
     "update": {
       "method": "PUT",
-      "path": "/items/:id",
-      "description": "PUT /items/:id",
+      "path": "/settings/taxes/:id",
+      "description": "PUT /settings/taxes/:id",
       "flags": {
         "id": {
           "type": "string",
@@ -152,55 +117,20 @@ export default {
           "required": false,
           "description": "Filter by status (list) or set status (create/update)"
         },
-        "sku": {
+        "tax_name": {
           "type": "string",
           "required": false,
-          "description": "Stock-keeping unit"
+          "description": "Tax name"
         },
-        "rate": {
+        "tax_percentage": {
           "type": "string",
           "required": false,
-          "description": "Sales rate (decimal)"
+          "description": "Tax percentage as decimal"
         },
-        "purchase_rate": {
+        "tax_type": {
           "type": "string",
           "required": false,
-          "description": "Purchase rate (decimal)"
-        },
-        "unit": {
-          "type": "string",
-          "required": false,
-          "description": "Unit of measure (pcs, kg, ...)"
-        },
-        "tax_id": {
-          "type": "string",
-          "required": false,
-          "description": "Default tax id"
-        },
-        "is_taxable": {
-          "type": "string",
-          "required": false,
-          "description": "true | false"
-        },
-        "item_type": {
-          "type": "string",
-          "required": false,
-          "description": "inventory | service | non_inventory"
-        },
-        "product_type": {
-          "type": "string",
-          "required": false,
-          "description": "goods | service"
-        },
-        "group_id": {
-          "type": "string",
-          "required": false,
-          "description": "Item group id"
-        },
-        "reorder_level": {
-          "type": "string",
-          "required": false,
-          "description": "Reorder level threshold"
+          "description": "tax | compound_tax"
         },
         "body": {
           "type": "string",
@@ -216,8 +146,8 @@ export default {
     },
     "delete": {
       "method": "DELETE",
-      "path": "/items/:id",
-      "description": "DELETE /items/:id",
+      "path": "/settings/taxes/:id",
+      "description": "DELETE /settings/taxes/:id",
       "flags": {
         "id": {
           "type": "string",
@@ -231,15 +161,32 @@ export default {
         }
       }
     },
-    "bulk-fetch": {
+    "create-tax-group": {
+      "method": "POST",
+      "path": "/settings/taxgroups",
+      "description": "POST /settings/taxgroups",
+      "flags": {
+        "body": {
+          "type": "string",
+          "required": false,
+          "description": "Raw JSON body (overrides individual flags)"
+        },
+        "organization-id": {
+          "type": "string",
+          "required": false,
+          "description": "Organization id override (defaults to ZOHO_INVENTORY_ORG_ID env)"
+        }
+      }
+    },
+    "get-tax-group": {
       "method": "GET",
-      "path": "/itemdetails",
-      "description": "GET /itemdetails",
+      "path": "/settings/taxgroups/:taxGroupId",
+      "description": "GET /settings/taxgroups/:taxGroupId",
       "flags": {
-        "item_ids": {
+        "taxGroupId": {
           "type": "string",
           "required": true,
-          "description": "Comma-separated list of item ids"
+          "description": "Tax group id"
         },
         "organization-id": {
           "type": "string",
@@ -248,15 +195,15 @@ export default {
         }
       }
     },
-    "update-custom-fields": {
+    "update-tax-group": {
       "method": "PUT",
-      "path": "/item/:id/customfields",
-      "description": "PUT /item/:id/customfields",
+      "path": "/settings/taxgroups/:taxGroupId",
+      "description": "PUT /settings/taxgroups/:taxGroupId",
       "flags": {
-        "id": {
+        "taxGroupId": {
           "type": "string",
           "required": true,
-          "description": "Primary resource id"
+          "description": "Tax group id"
         },
         "body": {
           "type": "string",
@@ -270,15 +217,15 @@ export default {
         }
       }
     },
-    "delete-image": {
+    "delete-tax-group": {
       "method": "DELETE",
-      "path": "/items/:id/image",
-      "description": "DELETE /items/:id/image",
+      "path": "/settings/taxgroups/:taxGroupId",
+      "description": "DELETE /settings/taxgroups/:taxGroupId",
       "flags": {
-        "id": {
+        "taxGroupId": {
           "type": "string",
           "required": true,
-          "description": "Primary resource id"
+          "description": "Tax group id"
         },
         "organization-id": {
           "type": "string",
@@ -287,15 +234,61 @@ export default {
         }
       }
     },
-    "mark-active": {
+    "create-tax-authority": {
       "method": "POST",
-      "path": "/items/:id/active",
-      "description": "POST /items/:id/active",
+      "path": "/settings/taxauthorities",
+      "description": "POST /settings/taxauthorities",
       "flags": {
-        "id": {
+        "body": {
+          "type": "string",
+          "required": false,
+          "description": "Raw JSON body (overrides individual flags)"
+        },
+        "organization-id": {
+          "type": "string",
+          "required": false,
+          "description": "Organization id override (defaults to ZOHO_INVENTORY_ORG_ID env)"
+        }
+      }
+    },
+    "list-tax-authorities": {
+      "method": "GET",
+      "path": "/settings/taxauthorities",
+      "description": "GET /settings/taxauthorities",
+      "flags": {
+        "organization-id": {
+          "type": "string",
+          "required": false,
+          "description": "Organization id override (defaults to ZOHO_INVENTORY_ORG_ID env)"
+        }
+      }
+    },
+    "get-tax-authority": {
+      "method": "GET",
+      "path": "/settings/taxauthorities/:taxAuthorityId",
+      "description": "GET /settings/taxauthorities/:taxAuthorityId",
+      "flags": {
+        "taxAuthorityId": {
           "type": "string",
           "required": true,
-          "description": "Primary resource id"
+          "description": "Tax authority id"
+        },
+        "organization-id": {
+          "type": "string",
+          "required": false,
+          "description": "Organization id override (defaults to ZOHO_INVENTORY_ORG_ID env)"
+        }
+      }
+    },
+    "update-tax-authority": {
+      "method": "PUT",
+      "path": "/settings/taxauthorities/:taxAuthorityId",
+      "description": "PUT /settings/taxauthorities/:taxAuthorityId",
+      "flags": {
+        "taxAuthorityId": {
+          "type": "string",
+          "required": true,
+          "description": "Tax authority id"
         },
         "body": {
           "type": "string",
@@ -309,20 +302,100 @@ export default {
         }
       }
     },
-    "mark-inactive": {
-      "method": "POST",
-      "path": "/items/:id/inactive",
-      "description": "POST /items/:id/inactive",
+    "delete-tax-authority": {
+      "method": "DELETE",
+      "path": "/settings/taxauthorities/:taxAuthorityId",
+      "description": "DELETE /settings/taxauthorities/:taxAuthorityId",
       "flags": {
-        "id": {
+        "taxAuthorityId": {
           "type": "string",
           "required": true,
-          "description": "Primary resource id"
+          "description": "Tax authority id"
+        },
+        "organization-id": {
+          "type": "string",
+          "required": false,
+          "description": "Organization id override (defaults to ZOHO_INVENTORY_ORG_ID env)"
+        }
+      }
+    },
+    "create-tax-exemption": {
+      "method": "POST",
+      "path": "/settings/taxexemptions",
+      "description": "POST /settings/taxexemptions",
+      "flags": {
+        "body": {
+          "type": "string",
+          "required": false,
+          "description": "Raw JSON body (overrides individual flags)"
+        },
+        "organization-id": {
+          "type": "string",
+          "required": false,
+          "description": "Organization id override (defaults to ZOHO_INVENTORY_ORG_ID env)"
+        }
+      }
+    },
+    "list-tax-exemptions": {
+      "method": "GET",
+      "path": "/settings/taxexemptions",
+      "description": "GET /settings/taxexemptions",
+      "flags": {
+        "organization-id": {
+          "type": "string",
+          "required": false,
+          "description": "Organization id override (defaults to ZOHO_INVENTORY_ORG_ID env)"
+        }
+      }
+    },
+    "get-tax-exemption": {
+      "method": "GET",
+      "path": "/settings/taxexemptions/:taxExemptionId",
+      "description": "GET /settings/taxexemptions/:taxExemptionId",
+      "flags": {
+        "taxExemptionId": {
+          "type": "string",
+          "required": true,
+          "description": "Tax exemption id"
+        },
+        "organization-id": {
+          "type": "string",
+          "required": false,
+          "description": "Organization id override (defaults to ZOHO_INVENTORY_ORG_ID env)"
+        }
+      }
+    },
+    "update-tax-exemption": {
+      "method": "PUT",
+      "path": "/settings/taxexemptions/:taxExemptionId",
+      "description": "PUT /settings/taxexemptions/:taxExemptionId",
+      "flags": {
+        "taxExemptionId": {
+          "type": "string",
+          "required": true,
+          "description": "Tax exemption id"
         },
         "body": {
           "type": "string",
           "required": false,
           "description": "Raw JSON body (overrides individual flags)"
+        },
+        "organization-id": {
+          "type": "string",
+          "required": false,
+          "description": "Organization id override (defaults to ZOHO_INVENTORY_ORG_ID env)"
+        }
+      }
+    },
+    "delete-tax-exemption": {
+      "method": "DELETE",
+      "path": "/settings/taxexemptions/:taxExemptionId",
+      "description": "DELETE /settings/taxexemptions/:taxExemptionId",
+      "flags": {
+        "taxExemptionId": {
+          "type": "string",
+          "required": true,
+          "description": "Tax exemption id"
         },
         "organization-id": {
           "type": "string",

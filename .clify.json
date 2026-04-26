@@ -1,30 +1,79 @@
 {
   "apiName": "zoho-inventory",
-  "docsUrl": "https://docs.zoho-inventory.test/api/v1",
-  "crawledUrls": ["https://docs.zoho-inventory.test/api/v1"],
-  "contentHash": "sha256:zoho-inventory-static-not-from-live-fetch",
+  "docsUrl": "https://www.zoho.com/inventory/api/v1/introduction/",
+  "crawledUrls": [
+    "https://www.zoho.com/inventory/api/v1/introduction/",
+    "https://www.zoho.com/inventory/api/v1/oauth/",
+    "https://www.zoho.com/inventory/api/v1/organizations/",
+    "https://www.zoho.com/inventory/api/v1/contacts/",
+    "https://www.zoho.com/inventory/api/v1/contact-persons/",
+    "https://www.zoho.com/inventory/api/v1/itemgroups/",
+    "https://www.zoho.com/inventory/api/v1/items/",
+    "https://www.zoho.com/inventory/api/v1/compositeitems/",
+    "https://www.zoho.com/inventory/api/v1/inventoryadjustments/",
+    "https://www.zoho.com/inventory/api/v1/transferorders/",
+    "https://www.zoho.com/inventory/api/v1/salesorders/",
+    "https://www.zoho.com/inventory/api/v1/packages/",
+    "https://www.zoho.com/inventory/api/v1/shipmentorders/",
+    "https://www.zoho.com/inventory/api/v1/invoices/",
+    "https://www.zoho.com/inventory/api/v1/retainer-invoices/",
+    "https://www.zoho.com/inventory/api/v1/customer-payments/",
+    "https://www.zoho.com/inventory/api/v1/salesreturns/",
+    "https://www.zoho.com/inventory/api/v1/credit-notes/",
+    "https://www.zoho.com/inventory/api/v1/purchaseorders/",
+    "https://www.zoho.com/inventory/api/v1/purchasereceives/",
+    "https://www.zoho.com/inventory/api/v1/bills/",
+    "https://www.zoho.com/inventory/api/v1/vendor-credits/",
+    "https://www.zoho.com/inventory/api/v1/locations/",
+    "https://www.zoho.com/inventory/api/v1/pricelists/",
+    "https://www.zoho.com/inventory/api/v1/users/",
+    "https://www.zoho.com/inventory/api/v1/tasks/",
+    "https://www.zoho.com/inventory/api/v1/taxes/",
+    "https://www.zoho.com/inventory/api/v1/currency/",
+    "https://www.zoho.com/inventory/api/v1/delivery-challans/",
+    "https://www.zoho.com/inventory/api/v1/reporting-tags/"
+  ],
+  "contentHash": "sha256:zoho-inventory-2026-04-26-from-docs-crawl",
   "generatedAt": "2026-04-26T00:00:00Z",
   "clifyVersion": "0.3.0",
   "nodeMinVersion": "20",
   "auth": {
     "envVar": "ZOHO_INVENTORY_API_KEY",
     "scheme": "bearer",
-    "validationCommand": "items list"
+    "validationCommand": "organizations list"
   },
-  "defaults": [],
+  "defaults": [
+    {
+      "name": "ZOHO_INVENTORY_DC",
+      "description": "Datacenter routing — com | eu | in | com.au | jp | ca | com.cn | sa",
+      "default": "com"
+    },
+    {
+      "name": "ZOHO_INVENTORY_ORG_ID",
+      "description": "Auto-injected as ?organization_id= on every request",
+      "default": null
+    }
+  ],
   "nuances": {
-    "pagination": "cursor",
+    "pagination": "page",
     "rateLimits": true,
-    "authScopes": false,
+    "authScopes": true,
     "deprecated": [],
-    "idempotency": ["items.create", "orders.create"],
-    "multiPart": ["orders.upload"],
-    "conditional": ["items.update"],
-    "businessRules": 1
+    "idempotency": [],
+    "multiPart": [
+      "item-groups.create",
+      "invoices.add-attachment",
+      "retainer-invoices.email",
+      "retainer-invoices.add-attachment",
+      "tasks.add-attachment",
+      "delivery-challans.add-attachment"
+    ],
+    "conditional": [],
+    "businessRules": 6
   },
   "coverage": {
-    "totalParsed": 11,
-    "totalIncluded": 11,
+    "totalParsed": 316,
+    "totalIncluded": 316,
     "totalDropped": 0
   }
 }

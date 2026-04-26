@@ -1,15 +1,15 @@
-// `items` resource — generated from the Zoho Inventory API catalog.
+// `composite-items` resource — generated from the Zoho Inventory API catalog.
 // Edit RESOURCES in scripts/gen-resources.mjs (kept locally) and re-emit, rather
 // than hand-tweaking these files; otherwise upstream regeneration will undo edits.
 import { buildPayload } from "../lib/payload.mjs";
 
 export default {
-  name: "items",
+  name: "composite-items",
   actions: {
     "list": {
       "method": "GET",
-      "path": "/items",
-      "description": "GET /items",
+      "path": "/compositeitems",
+      "description": "GET /compositeitems",
       "flags": {
         "page": {
           "type": "string",
@@ -30,8 +30,8 @@ export default {
     },
     "get": {
       "method": "GET",
-      "path": "/items/:id",
-      "description": "GET /items/:id",
+      "path": "/compositeitems/:id",
+      "description": "GET /compositeitems/:id",
       "flags": {
         "id": {
           "type": "string",
@@ -47,8 +47,8 @@ export default {
     },
     "create": {
       "method": "POST",
-      "path": "/items",
-      "description": "POST /items",
+      "path": "/compositeitems",
+      "description": "POST /compositeitems",
       "flags": {
         "name": {
           "type": "string",
@@ -75,26 +75,6 @@ export default {
           "required": false,
           "description": "Sales rate (decimal)"
         },
-        "purchase_rate": {
-          "type": "string",
-          "required": false,
-          "description": "Purchase rate (decimal)"
-        },
-        "unit": {
-          "type": "string",
-          "required": false,
-          "description": "Unit of measure (pcs, kg, ...)"
-        },
-        "tax_id": {
-          "type": "string",
-          "required": false,
-          "description": "Default tax id"
-        },
-        "is_taxable": {
-          "type": "string",
-          "required": false,
-          "description": "true | false"
-        },
         "item_type": {
           "type": "string",
           "required": false,
@@ -105,15 +85,10 @@ export default {
           "required": false,
           "description": "goods | service"
         },
-        "group_id": {
+        "mapped_items": {
           "type": "string",
           "required": false,
-          "description": "Item group id"
-        },
-        "reorder_level": {
-          "type": "string",
-          "required": false,
-          "description": "Reorder level threshold"
+          "description": "JSON array of mapped item objects"
         },
         "body": {
           "type": "string",
@@ -129,8 +104,8 @@ export default {
     },
     "update": {
       "method": "PUT",
-      "path": "/items/:id",
-      "description": "PUT /items/:id",
+      "path": "/compositeitems/:id",
+      "description": "PUT /compositeitems/:id",
       "flags": {
         "id": {
           "type": "string",
@@ -162,26 +137,6 @@ export default {
           "required": false,
           "description": "Sales rate (decimal)"
         },
-        "purchase_rate": {
-          "type": "string",
-          "required": false,
-          "description": "Purchase rate (decimal)"
-        },
-        "unit": {
-          "type": "string",
-          "required": false,
-          "description": "Unit of measure (pcs, kg, ...)"
-        },
-        "tax_id": {
-          "type": "string",
-          "required": false,
-          "description": "Default tax id"
-        },
-        "is_taxable": {
-          "type": "string",
-          "required": false,
-          "description": "true | false"
-        },
         "item_type": {
           "type": "string",
           "required": false,
@@ -192,15 +147,10 @@ export default {
           "required": false,
           "description": "goods | service"
         },
-        "group_id": {
+        "mapped_items": {
           "type": "string",
           "required": false,
-          "description": "Item group id"
-        },
-        "reorder_level": {
-          "type": "string",
-          "required": false,
-          "description": "Reorder level threshold"
+          "description": "JSON array of mapped item objects"
         },
         "body": {
           "type": "string",
@@ -216,64 +166,8 @@ export default {
     },
     "delete": {
       "method": "DELETE",
-      "path": "/items/:id",
-      "description": "DELETE /items/:id",
-      "flags": {
-        "id": {
-          "type": "string",
-          "required": true,
-          "description": "Primary resource id"
-        },
-        "organization-id": {
-          "type": "string",
-          "required": false,
-          "description": "Organization id override (defaults to ZOHO_INVENTORY_ORG_ID env)"
-        }
-      }
-    },
-    "bulk-fetch": {
-      "method": "GET",
-      "path": "/itemdetails",
-      "description": "GET /itemdetails",
-      "flags": {
-        "item_ids": {
-          "type": "string",
-          "required": true,
-          "description": "Comma-separated list of item ids"
-        },
-        "organization-id": {
-          "type": "string",
-          "required": false,
-          "description": "Organization id override (defaults to ZOHO_INVENTORY_ORG_ID env)"
-        }
-      }
-    },
-    "update-custom-fields": {
-      "method": "PUT",
-      "path": "/item/:id/customfields",
-      "description": "PUT /item/:id/customfields",
-      "flags": {
-        "id": {
-          "type": "string",
-          "required": true,
-          "description": "Primary resource id"
-        },
-        "body": {
-          "type": "string",
-          "required": false,
-          "description": "Raw JSON body (overrides individual flags)"
-        },
-        "organization-id": {
-          "type": "string",
-          "required": false,
-          "description": "Organization id override (defaults to ZOHO_INVENTORY_ORG_ID env)"
-        }
-      }
-    },
-    "delete-image": {
-      "method": "DELETE",
-      "path": "/items/:id/image",
-      "description": "DELETE /items/:id/image",
+      "path": "/compositeitems/:id",
+      "description": "DELETE /compositeitems/:id",
       "flags": {
         "id": {
           "type": "string",
@@ -289,8 +183,8 @@ export default {
     },
     "mark-active": {
       "method": "POST",
-      "path": "/items/:id/active",
-      "description": "POST /items/:id/active",
+      "path": "/compositeitems/:id/active",
+      "description": "POST /compositeitems/:id/active",
       "flags": {
         "id": {
           "type": "string",
@@ -311,8 +205,8 @@ export default {
     },
     "mark-inactive": {
       "method": "POST",
-      "path": "/items/:id/inactive",
-      "description": "POST /items/:id/inactive",
+      "path": "/compositeitems/:id/inactive",
+      "description": "POST /compositeitems/:id/inactive",
       "flags": {
         "id": {
           "type": "string",

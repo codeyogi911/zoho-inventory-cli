@@ -1,15 +1,15 @@
-// `items` resource — generated from the Zoho Inventory API catalog.
+// `reporting-tags` resource — generated from the Zoho Inventory API catalog.
 // Edit RESOURCES in scripts/gen-resources.mjs (kept locally) and re-emit, rather
 // than hand-tweaking these files; otherwise upstream regeneration will undo edits.
 import { buildPayload } from "../lib/payload.mjs";
 
 export default {
-  name: "items",
+  name: "reporting-tags",
   actions: {
     "list": {
       "method": "GET",
-      "path": "/items",
-      "description": "GET /items",
+      "path": "/reportingtags",
+      "description": "GET /reportingtags",
       "flags": {
         "page": {
           "type": "string",
@@ -28,27 +28,10 @@ export default {
         }
       }
     },
-    "get": {
-      "method": "GET",
-      "path": "/items/:id",
-      "description": "GET /items/:id",
-      "flags": {
-        "id": {
-          "type": "string",
-          "required": true,
-          "description": "Primary resource id"
-        },
-        "organization-id": {
-          "type": "string",
-          "required": false,
-          "description": "Organization id override (defaults to ZOHO_INVENTORY_ORG_ID env)"
-        }
-      }
-    },
     "create": {
       "method": "POST",
-      "path": "/items",
-      "description": "POST /items",
+      "path": "/reportingtags",
+      "description": "POST /reportingtags",
       "flags": {
         "name": {
           "type": "string",
@@ -65,55 +48,15 @@ export default {
           "required": false,
           "description": "Filter by status (list) or set status (create/update)"
         },
-        "sku": {
+        "tag_name": {
           "type": "string",
           "required": false,
-          "description": "Stock-keeping unit"
+          "description": "Reporting tag name"
         },
-        "rate": {
+        "options": {
           "type": "string",
           "required": false,
-          "description": "Sales rate (decimal)"
-        },
-        "purchase_rate": {
-          "type": "string",
-          "required": false,
-          "description": "Purchase rate (decimal)"
-        },
-        "unit": {
-          "type": "string",
-          "required": false,
-          "description": "Unit of measure (pcs, kg, ...)"
-        },
-        "tax_id": {
-          "type": "string",
-          "required": false,
-          "description": "Default tax id"
-        },
-        "is_taxable": {
-          "type": "string",
-          "required": false,
-          "description": "true | false"
-        },
-        "item_type": {
-          "type": "string",
-          "required": false,
-          "description": "inventory | service | non_inventory"
-        },
-        "product_type": {
-          "type": "string",
-          "required": false,
-          "description": "goods | service"
-        },
-        "group_id": {
-          "type": "string",
-          "required": false,
-          "description": "Item group id"
-        },
-        "reorder_level": {
-          "type": "string",
-          "required": false,
-          "description": "Reorder level threshold"
+          "description": "JSON array of tag option objects"
         },
         "body": {
           "type": "string",
@@ -129,8 +72,8 @@ export default {
     },
     "update": {
       "method": "PUT",
-      "path": "/items/:id",
-      "description": "PUT /items/:id",
+      "path": "/reportingtags/:id",
+      "description": "PUT /reportingtags/:id",
       "flags": {
         "id": {
           "type": "string",
@@ -152,55 +95,15 @@ export default {
           "required": false,
           "description": "Filter by status (list) or set status (create/update)"
         },
-        "sku": {
+        "tag_name": {
           "type": "string",
           "required": false,
-          "description": "Stock-keeping unit"
+          "description": "Reporting tag name"
         },
-        "rate": {
+        "options": {
           "type": "string",
           "required": false,
-          "description": "Sales rate (decimal)"
-        },
-        "purchase_rate": {
-          "type": "string",
-          "required": false,
-          "description": "Purchase rate (decimal)"
-        },
-        "unit": {
-          "type": "string",
-          "required": false,
-          "description": "Unit of measure (pcs, kg, ...)"
-        },
-        "tax_id": {
-          "type": "string",
-          "required": false,
-          "description": "Default tax id"
-        },
-        "is_taxable": {
-          "type": "string",
-          "required": false,
-          "description": "true | false"
-        },
-        "item_type": {
-          "type": "string",
-          "required": false,
-          "description": "inventory | service | non_inventory"
-        },
-        "product_type": {
-          "type": "string",
-          "required": false,
-          "description": "goods | service"
-        },
-        "group_id": {
-          "type": "string",
-          "required": false,
-          "description": "Item group id"
-        },
-        "reorder_level": {
-          "type": "string",
-          "required": false,
-          "description": "Reorder level threshold"
+          "description": "JSON array of tag option objects"
         },
         "body": {
           "type": "string",
@@ -216,8 +119,8 @@ export default {
     },
     "delete": {
       "method": "DELETE",
-      "path": "/items/:id",
-      "description": "DELETE /items/:id",
+      "path": "/reportingtags/:id",
+      "description": "DELETE /reportingtags/:id",
       "flags": {
         "id": {
           "type": "string",
@@ -231,27 +134,10 @@ export default {
         }
       }
     },
-    "bulk-fetch": {
-      "method": "GET",
-      "path": "/itemdetails",
-      "description": "GET /itemdetails",
-      "flags": {
-        "item_ids": {
-          "type": "string",
-          "required": true,
-          "description": "Comma-separated list of item ids"
-        },
-        "organization-id": {
-          "type": "string",
-          "required": false,
-          "description": "Organization id override (defaults to ZOHO_INVENTORY_ORG_ID env)"
-        }
-      }
-    },
-    "update-custom-fields": {
-      "method": "PUT",
-      "path": "/item/:id/customfields",
-      "description": "PUT /item/:id/customfields",
+    "mark-default-option": {
+      "method": "POST",
+      "path": "/reportingtags/:id",
+      "description": "POST /reportingtags/:id",
       "flags": {
         "id": {
           "type": "string",
@@ -270,15 +156,42 @@ export default {
         }
       }
     },
-    "delete-image": {
-      "method": "DELETE",
-      "path": "/items/:id/image",
-      "description": "DELETE /items/:id/image",
+    "update-options": {
+      "method": "PUT",
+      "path": "/reportingtags/:id/options",
+      "description": "PUT /reportingtags/:id/options",
       "flags": {
         "id": {
           "type": "string",
           "required": true,
           "description": "Primary resource id"
+        },
+        "body": {
+          "type": "string",
+          "required": false,
+          "description": "Raw JSON body (overrides individual flags)"
+        },
+        "organization-id": {
+          "type": "string",
+          "required": false,
+          "description": "Organization id override (defaults to ZOHO_INVENTORY_ORG_ID env)"
+        }
+      }
+    },
+    "update-visibility-conditions": {
+      "method": "PUT",
+      "path": "/reportingtags/:id/criteria",
+      "description": "PUT /reportingtags/:id/criteria",
+      "flags": {
+        "id": {
+          "type": "string",
+          "required": true,
+          "description": "Primary resource id"
+        },
+        "body": {
+          "type": "string",
+          "required": false,
+          "description": "Raw JSON body (overrides individual flags)"
         },
         "organization-id": {
           "type": "string",
@@ -289,8 +202,8 @@ export default {
     },
     "mark-active": {
       "method": "POST",
-      "path": "/items/:id/active",
-      "description": "POST /items/:id/active",
+      "path": "/reportingtags/:id/active",
+      "description": "POST /reportingtags/:id/active",
       "flags": {
         "id": {
           "type": "string",
@@ -311,14 +224,114 @@ export default {
     },
     "mark-inactive": {
       "method": "POST",
-      "path": "/items/:id/inactive",
-      "description": "POST /items/:id/inactive",
+      "path": "/reportingtags/:id/inactive",
+      "description": "POST /reportingtags/:id/inactive",
       "flags": {
         "id": {
           "type": "string",
           "required": true,
           "description": "Primary resource id"
         },
+        "body": {
+          "type": "string",
+          "required": false,
+          "description": "Raw JSON body (overrides individual flags)"
+        },
+        "organization-id": {
+          "type": "string",
+          "required": false,
+          "description": "Organization id override (defaults to ZOHO_INVENTORY_ORG_ID env)"
+        }
+      }
+    },
+    "mark-option-active": {
+      "method": "POST",
+      "path": "/reportingtags/:id/option/:optionId/active",
+      "description": "POST /reportingtags/:id/option/:optionId/active",
+      "flags": {
+        "id": {
+          "type": "string",
+          "required": true,
+          "description": "Primary resource id"
+        },
+        "optionId": {
+          "type": "string",
+          "required": true,
+          "description": "Tag option id"
+        },
+        "body": {
+          "type": "string",
+          "required": false,
+          "description": "Raw JSON body (overrides individual flags)"
+        },
+        "organization-id": {
+          "type": "string",
+          "required": false,
+          "description": "Organization id override (defaults to ZOHO_INVENTORY_ORG_ID env)"
+        }
+      }
+    },
+    "mark-option-inactive": {
+      "method": "POST",
+      "path": "/reportingtags/:id/option/:optionId/inactive",
+      "description": "POST /reportingtags/:id/option/:optionId/inactive",
+      "flags": {
+        "id": {
+          "type": "string",
+          "required": true,
+          "description": "Primary resource id"
+        },
+        "optionId": {
+          "type": "string",
+          "required": true,
+          "description": "Tag option id"
+        },
+        "body": {
+          "type": "string",
+          "required": false,
+          "description": "Raw JSON body (overrides individual flags)"
+        },
+        "organization-id": {
+          "type": "string",
+          "required": false,
+          "description": "Organization id override (defaults to ZOHO_INVENTORY_ORG_ID env)"
+        }
+      }
+    },
+    "get-options-detail": {
+      "method": "GET",
+      "path": "/reportingtags/options",
+      "description": "GET /reportingtags/options",
+      "flags": {
+        "organization-id": {
+          "type": "string",
+          "required": false,
+          "description": "Organization id override (defaults to ZOHO_INVENTORY_ORG_ID env)"
+        }
+      }
+    },
+    "get-all-options": {
+      "method": "GET",
+      "path": "/reportingtags/:id/options/all",
+      "description": "GET /reportingtags/:id/options/all",
+      "flags": {
+        "id": {
+          "type": "string",
+          "required": true,
+          "description": "Primary resource id"
+        },
+        "organization-id": {
+          "type": "string",
+          "required": false,
+          "description": "Organization id override (defaults to ZOHO_INVENTORY_ORG_ID env)"
+        }
+      }
+    },
+    "reorder": {
+      "method": "PUT",
+      "path": "/reportingtags/reorder",
+      "description": "PUT /reportingtags/reorder",
+      "flags": {
         "body": {
           "type": "string",
           "required": false,
