@@ -21,6 +21,41 @@ export default {
           "required": false,
           "description": "Results per page (server default 200)"
         },
+        "reference_number": {
+          "type": "string",
+          "required": false,
+          "description": "Free-form reference number (also a list filter on most endpoints — see help per resource for whether the API actually honors it)"
+        },
+        "salesorder_number": {
+          "type": "string",
+          "required": false,
+          "description": "Sales order number override"
+        },
+        "customer_id": {
+          "type": "string",
+          "required": false,
+          "description": "Zoho customer id"
+        },
+        "customer_name": {
+          "type": "string",
+          "required": false,
+          "description": "Filter by customer display name (list)"
+        },
+        "status": {
+          "type": "string",
+          "required": false,
+          "description": "Filter by status (list) or set status (create/update)"
+        },
+        "date": {
+          "type": "string",
+          "required": false,
+          "description": "Date in YYYY-MM-DD"
+        },
+        "search_text": {
+          "type": "string",
+          "required": false,
+          "description": "Server-side full-text search across the resource"
+        },
         "organization-id": {
           "type": "string",
           "required": false,
@@ -276,6 +311,67 @@ export default {
           "type": "string",
           "required": false,
           "description": "Raw JSON body (overrides individual flags)"
+        },
+        "organization-id": {
+          "type": "string",
+          "required": false,
+          "description": "Organization id override (defaults to ZOHO_INVENTORY_ORG_ID env)"
+        }
+      }
+    },
+    "add-comment": {
+      "method": "POST",
+      "path": "/salesorders/:id/comments",
+      "description": "POST /salesorders/:id/comments",
+      "flags": {
+        "id": {
+          "type": "string",
+          "required": true,
+          "description": "Primary resource id"
+        },
+        "body": {
+          "type": "string",
+          "required": false,
+          "description": "Raw JSON body (overrides individual flags)"
+        },
+        "organization-id": {
+          "type": "string",
+          "required": false,
+          "description": "Organization id override (defaults to ZOHO_INVENTORY_ORG_ID env)"
+        }
+      }
+    },
+    "list-comments": {
+      "method": "GET",
+      "path": "/salesorders/:id/comments",
+      "description": "GET /salesorders/:id/comments",
+      "flags": {
+        "id": {
+          "type": "string",
+          "required": true,
+          "description": "Primary resource id"
+        },
+        "organization-id": {
+          "type": "string",
+          "required": false,
+          "description": "Organization id override (defaults to ZOHO_INVENTORY_ORG_ID env)"
+        }
+      }
+    },
+    "delete-comment": {
+      "method": "DELETE",
+      "path": "/salesorders/:id/comments/:commentId",
+      "description": "DELETE /salesorders/:id/comments/:commentId",
+      "flags": {
+        "id": {
+          "type": "string",
+          "required": true,
+          "description": "Primary resource id"
+        },
+        "commentId": {
+          "type": "string",
+          "required": true,
+          "description": "Comment id"
         },
         "organization-id": {
           "type": "string",

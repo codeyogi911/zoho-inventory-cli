@@ -96,11 +96,31 @@ function buildQuery(values, def) {
   return query;
 }
 
-// Flags that ride in the query string for non-GET actions (Zoho bulk-op
-// convention — `salesorder_ids`, `invoice_ids`, etc. go on the URL, not in
-// the body, even on POST/PUT/DELETE).
-function isQueryFlag(name) {
+// Flags that ride in the query string for non-GET actions. Two sources:
+//   1. Explicit per-action `queryFlags` declared in commands/<resource>.mjs
+//      (e.g. POST /creditnotes ?invoice_id= for Zoho convert-from-invoice).
+//   2. The `*_ids` heuristic for Zoho bulk-op endpoints.
+function isQueryFlag(name, def) {
+  if (def?.queryFlags && def.queryFlags.includes(name)) return true;
   return name.endsWith("_ids");
+}
+
+// Client-side filter for list endpoints whose Zoho-side filter is broken
+// (declared in commands/<resource>.mjs as `brokenListFilters`). Compares the
+// requested value against the raw API field of the same name, with a small
+// number of value-aware allowances for status text and dates (substring on
+// number-shaped fields gives users the prefix-match behavior they expect).
+function clientFilter(items, filters) {
+  const checks = Object.entries(filters);
+  return items.filter((row) =>
+    checks.every(([k, target]) => {
+      const v = row?.[k];
+      if (v === undefined || v === null) return false;
+      const a = String(v).toLowerCase();
+      const b = String(target).toLowerCase();
+      return a === b || a.includes(b);
+    }),
+  );
 }
 
 function buildBody(values, def, resource) {
@@ -110,14 +130,15 @@ function buildBody(values, def, resource) {
     try { return JSON.parse(values.body); }
     catch { errorOut("validation_error", "--body must be valid JSON"); }
   }
-  // Strip path params, reserved keys, and query-flagged keys (e.g. *_ids).
+  // Strip path params, reserved keys, and query-flagged keys (e.g. *_ids and
+  // explicit queryFlags such as Zoho's convert-from-invoice ?invoice_id=).
   const pathParams = new Set(pathParamNames(def.path));
   const stripped = {};
   for (const [k, v] of Object.entries(values)) {
     if (v === undefined) continue;
     if (pathParams.has(k)) continue;
     if (RESERVED_KEYS.has(k)) continue;
-    if (isQueryFlag(k)) continue;
+    if (isQueryFlag(k, def)) continue;
     stripped[k] = v;
   }
   const builder = PAYLOAD_BUILDERS[resource];
@@ -145,19 +166,42 @@ async function runResourceAction(resourceArg, actionArg, remaining, global, rest
   const path = interpolatePath(def.path, parsed.values);
   const body = buildBody(parsed.values, def, resourceArg);
 
-  // Page-pagination via --all on list actions.
-  if (global.all && actionArg === "list") {
+  // Detect broken-list-filter usage: Zoho silently ignores some filters on
+  // /salesreturns, /bills, /packages, etc. (returns full unfiltered list with
+  // HTTP 200). When the user passes one, drop it from the wire query, fetch
+  // the full list, and filter client-side. Print a stderr note explaining.
+  const brokenFilters = (actionArg === "list" && Array.isArray(def.brokenListFilters))
+    ? Object.fromEntries(
+        def.brokenListFilters
+          .filter((k) => parsed.values[k] !== undefined && parsed.values[k] !== "")
+          .map((k) => [k, String(parsed.values[k])]),
+      )
+    : {};
+  const hasBrokenFilters = Object.keys(brokenFilters).length > 0;
+  if (hasBrokenFilters) {
+    for (const k of Object.keys(brokenFilters)) parsed.values[k] = undefined;
+    if (!global.dry_run) {
+      process.stderr.write(
+        `note: ${resourceArg}.list filter(s) ${Object.keys(brokenFilters).map((k) => `--${k}`).join(", ")} are silently ignored by Zoho — fetching full list and filtering client-side.\n`,
+      );
+    }
+  }
+
+  // Page-pagination via --all on list actions, or implicitly when a broken
+  // filter forces the client-side fallback (full list needed for accuracy).
+  if ((global.all || hasBrokenFilters) && actionArg === "list") {
     const collected = [];
     const query = buildQuery(parsed.values, def);
     for await (const item of paginate({ method: def.method, path, query, version: VERSION, dryRun: !!global.dry_run, verbose: !!global.verbose })) {
       collected.push(item);
     }
-    output(collected, !!global.json);
+    const filtered = hasBrokenFilters ? clientFilter(collected, brokenFilters) : collected;
+    output(filtered, !!global.json);
     return;
   }
 
   // Build query: every GET sends one, and non-GET actions still need any
-  // *_ids flags + an --organization-id override on the URL.
+  // queryFlags + an --organization-id override on the URL.
   let query;
   if (def.method === "GET") {
     query = buildQuery(parsed.values, def);
@@ -165,7 +209,7 @@ async function runResourceAction(resourceArg, actionArg, remaining, global, rest
     query = {};
     for (const [k, v] of Object.entries(parsed.values)) {
       if (v === undefined) continue;
-      if (isQueryFlag(k)) query[k] = v;
+      if (isQueryFlag(k, def)) query[k] = v;
     }
     if (parsed.values["organization-id"]) query.organization_id = parsed.values["organization-id"];
     if (Object.keys(query).length === 0) query = undefined;

@@ -63,11 +63,6 @@ export default {
           "required": false,
           "description": "Carrier tracking number"
         },
-        "package_ids": {
-          "type": "string",
-          "required": false,
-          "description": "Comma-separated list of package ids"
-        },
         "salesorder_id": {
           "type": "string",
           "required": false,
@@ -83,7 +78,10 @@ export default {
           "required": false,
           "description": "Organization id override (defaults to ZOHO_INVENTORY_ORG_ID env)"
         }
-      }
+      },
+      "queryFlags": [
+        "salesorder_id"
+      ]
     },
     "update": {
       "method": "PUT",
@@ -150,7 +148,11 @@ export default {
           "required": false,
           "description": "Organization id override (defaults to ZOHO_INVENTORY_ORG_ID env)"
         }
-      }
+      },
+      "queryFlags": [
+        "package_ids",
+        "salesorder_id"
+      ]
     },
     "delete": {
       "method": "DELETE",

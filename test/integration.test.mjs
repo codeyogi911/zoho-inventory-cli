@@ -241,3 +241,52 @@ test("user-agent header is sent", async () => {
     assert.match(server.requests[0].headers["user-agent"], /zoho-inventory-cli\//);
   });
 });
+
+// ---------- queryFlags: convert-from-X via URL query, not body ----------
+
+test("credit-notes create routes invoice_id to URL query, not body (Zoho convert-from-invoice mode)", async () => {
+  await withMock({
+    "POST /creditnotes": (req) => ({ status: 200, body: { code: 0, creditnote: { creditnote_id: "cn-1", invoice_id: req.query.invoice_id ?? null, body_keys: Object.keys(req.body || {}) } } }),
+  }, async (server) => {
+    const r = await runJson(["credit-notes", "create", "--invoice_id", "INV-42", "--customer_id", "C-1", "--reference_number", "REF-X"], { env: { ...ENV, ZOHO_INVENTORY_BASE_URL: server.url } });
+    assert.equal(r.exitCode, 0, r.stderr);
+    assert.equal(server.requests[0].query.invoice_id, "INV-42");
+    assert.ok(!server.requests[0].body || server.requests[0].body.invoice_id === undefined,
+      `invoice_id leaked into body: ${JSON.stringify(server.requests[0].body)}`);
+    // Sanity: other body fields still went through.
+    assert.equal(server.requests[0].body.customer_id, "C-1");
+  });
+});
+
+test("packages create routes salesorder_id to URL query (REQUIRED by Zoho)", async () => {
+  await withMock({
+    "POST /packages": (req) => ({ status: 200, body: { code: 0, package: { package_id: "pkg-1", salesorder_id: req.query.salesorder_id } } }),
+  }, async (server) => {
+    const r = await runJson(["packages", "create", "--salesorder_id", "SO-99", "--package_number", "PKG-1"], { env: { ...ENV, ZOHO_INVENTORY_BASE_URL: server.url } });
+    assert.equal(r.exitCode, 0, r.stderr);
+    assert.equal(server.requests[0].query.salesorder_id, "SO-99");
+    assert.ok(!server.requests[0].body || server.requests[0].body.salesorder_id === undefined);
+  });
+});
+
+// ---------- brokenListFilters: client-side fallback ----------
+
+test("sales-returns list with --salesorder_id falls back to client-side filter (Zoho silently ignores it)", async () => {
+  await withMock({
+    "GET /salesreturns": (req) => {
+      // Sanity check: the broken filter must NOT be on the wire.
+      if (req.query.salesorder_id !== undefined) throw new Error(`broken filter leaked to wire: ${req.query.salesorder_id}`);
+      return { status: 200, body: { salesreturns: [
+        { salesreturn_id: "sr-1", salesorder_id: "SO-1" },
+        { salesreturn_id: "sr-2", salesorder_id: "SO-2" },
+        { salesreturn_id: "sr-3", salesorder_id: "SO-1" },
+      ], page_context: { page: 1, has_more_page: false } } };
+    },
+  }, async (server) => {
+    const r = await runJson(["sales-returns", "list", "--salesorder_id", "SO-1"], { env: { ...ENV, ZOHO_INVENTORY_BASE_URL: server.url } });
+    assert.equal(r.exitCode, 0, r.stderr);
+    assert.equal(r.json.length, 2);
+    assert.deepEqual(r.json.map((x) => x.salesreturn_id), ["sr-1", "sr-3"]);
+    assert.match(r.stderr, /silently ignored by Zoho/);
+  });
+});

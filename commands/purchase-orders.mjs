@@ -21,6 +21,41 @@ export default {
           "required": false,
           "description": "Results per page (server default 200)"
         },
+        "reference_number": {
+          "type": "string",
+          "required": false,
+          "description": "Free-form reference number (also a list filter on most endpoints — see help per resource for whether the API actually honors it)"
+        },
+        "purchaseorder_number": {
+          "type": "string",
+          "required": false,
+          "description": "Purchase order number override"
+        },
+        "vendor_id": {
+          "type": "string",
+          "required": false,
+          "description": "Zoho vendor id"
+        },
+        "vendor_name": {
+          "type": "string",
+          "required": false,
+          "description": "Filter by vendor display name (list)"
+        },
+        "status": {
+          "type": "string",
+          "required": false,
+          "description": "Filter by status (list) or set status (create/update)"
+        },
+        "date": {
+          "type": "string",
+          "required": false,
+          "description": "Date in YYYY-MM-DD"
+        },
+        "search_text": {
+          "type": "string",
+          "required": false,
+          "description": "Server-side full-text search across the resource"
+        },
         "organization-id": {
           "type": "string",
           "required": false,

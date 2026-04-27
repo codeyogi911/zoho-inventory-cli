@@ -21,6 +21,41 @@ export default {
           "required": false,
           "description": "Results per page (server default 200)"
         },
+        "reference_number": {
+          "type": "string",
+          "required": false,
+          "description": "Free-form reference number (also a list filter on most endpoints — see help per resource for whether the API actually honors it)"
+        },
+        "vendor_credit_number": {
+          "type": "string",
+          "required": false,
+          "description": "Vendor credit number override"
+        },
+        "vendor_id": {
+          "type": "string",
+          "required": false,
+          "description": "Zoho vendor id"
+        },
+        "vendor_name": {
+          "type": "string",
+          "required": false,
+          "description": "Filter by vendor display name (list)"
+        },
+        "status": {
+          "type": "string",
+          "required": false,
+          "description": "Filter by status (list) or set status (create/update)"
+        },
+        "date": {
+          "type": "string",
+          "required": false,
+          "description": "Date in YYYY-MM-DD"
+        },
+        "search_text": {
+          "type": "string",
+          "required": false,
+          "description": "Server-side full-text search across the resource"
+        },
         "organization-id": {
           "type": "string",
           "required": false,
@@ -85,6 +120,16 @@ export default {
           "required": false,
           "description": "JSON array of line items (use --body for complex shapes)"
         },
+        "bill_id": {
+          "type": "string",
+          "required": false,
+          "description": "Source bill id — passed as ?bill_id= URL query (Zoho convert-from-bill mode); body form is silently dropped"
+        },
+        "ignore_auto_number_generation": {
+          "type": "string",
+          "required": false,
+          "description": "true to bypass auto-numbering and supply your own number"
+        },
         "body": {
           "type": "string",
           "required": false,
@@ -95,7 +140,11 @@ export default {
           "required": false,
           "description": "Organization id override (defaults to ZOHO_INVENTORY_ORG_ID env)"
         }
-      }
+      },
+      "queryFlags": [
+        "bill_id",
+        "ignore_auto_number_generation"
+      ]
     },
     "update": {
       "method": "PUT",

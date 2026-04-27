@@ -68,7 +68,7 @@ export default {
         "reference_number": {
           "type": "string",
           "required": false,
-          "description": "Free-form reference number"
+          "description": "Free-form reference number (also a list filter on most endpoints — see help per resource for whether the API actually honors it)"
         },
         "date": {
           "type": "string",

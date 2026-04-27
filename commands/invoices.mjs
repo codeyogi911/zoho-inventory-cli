@@ -21,6 +21,46 @@ export default {
           "required": false,
           "description": "Results per page (server default 200)"
         },
+        "reference_number": {
+          "type": "string",
+          "required": false,
+          "description": "Free-form reference number (also a list filter on most endpoints — see help per resource for whether the API actually honors it)"
+        },
+        "invoice_number": {
+          "type": "string",
+          "required": false,
+          "description": "Invoice number override"
+        },
+        "customer_id": {
+          "type": "string",
+          "required": false,
+          "description": "Zoho customer id"
+        },
+        "customer_name": {
+          "type": "string",
+          "required": false,
+          "description": "Filter by customer display name (list)"
+        },
+        "status": {
+          "type": "string",
+          "required": false,
+          "description": "Filter by status (list) or set status (create/update)"
+        },
+        "date": {
+          "type": "string",
+          "required": false,
+          "description": "Date in YYYY-MM-DD"
+        },
+        "due_date": {
+          "type": "string",
+          "required": false,
+          "description": "Due date in YYYY-MM-DD"
+        },
+        "search_text": {
+          "type": "string",
+          "required": false,
+          "description": "Server-side full-text search across the resource"
+        },
         "organization-id": {
           "type": "string",
           "required": false,

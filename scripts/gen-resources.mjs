@@ -11,15 +11,32 @@ mkdirSync(OUT_DIR, { recursive: true });
 //   :id           — primary resource id (e.g. /contacts/:id, /salesorders/:id)
 //   :<otherName>  — nested ids (commentId, documentId, refundId, billId, contactId, taxAuthorityId, …)
 //
-// Each resource = { name, primaryFlag, extraFlags, actions: [{action, method, path, flags?}] }
-//   primaryFlag — the name of the primary id flag if the resource has one
-//   extraFlags  — common scalar body flags wired with --foo for ergonomics; rest goes via --body
-//   flags       — per-action override list of additional flag names
+// Each resource =
+//   { name, primaryFlag, extraFlags, listFilters, brokenListFilters,
+//     actions: [{action, method, path, flags?, queryFlags?}] }
+//
+//   primaryFlag       — the name of the primary id flag if the resource has one
+//   extraFlags        — common scalar body flags wired with --foo for ergonomics; rest goes via --body
+//   listFilters       — query-string filters exposed as --foo on the `list` action only.
+//                       Only declare filters that the Zoho docs document AND that observably
+//                       work (Zoho silently ignores undeclared params on some endpoints,
+//                       returning the unfiltered list with HTTP 200 — see brokenListFilters).
+//   brokenListFilters — list-action filters that the API silently ignores (e.g. /salesreturns,
+//                       /bills, /packages drop most filters Zoho's own docs imply should work).
+//                       The CLI still exposes them as flags but at runtime warns and
+//                       falls back to fetching the full list + filtering in-process.
+//   flags             — per-action override list of additional flag names
+//   queryFlags        — per-action: flag names that ride in the URL query string instead of
+//                       the JSON body. Used by Zoho's "convert-from-X" creates (e.g.
+//                       POST /creditnotes ?invoice_id=, POST /salesreturns ?salesorder_id=).
+//                       Putting these in the body is silently dropped — the resulting
+//                       record has no structural FK to the source.
 //
 // Conventions:
 //   - "name" for create/update gets surfaced as a top-level --name flag.
 //   - All non-GET non-DELETE actions accept --body '<json>'.
-//   - Primary id, --body, and the standard control flags are auto-stripped from the payload.
+//   - Primary id, --body, queryFlags, and the standard control flags are auto-stripped
+//     from the payload (queryFlags ride on the URL instead).
 
 const COMMON_BODY_FLAGS = ["name", "description", "status"];
 
@@ -153,6 +170,7 @@ const RESOURCES = [
     name: "sales-orders",
     primary: "id",
     extra: ["customer_id", "salesorder_number", "date", "shipment_date", "line_items", "discount", "is_inclusive_tax"],
+    listFilters: ["reference_number", "salesorder_number", "customer_id", "customer_name", "status", "date", "search_text"],
     actions: [
       { action: "list",         method: "GET",    path: "/salesorders" },
       { action: "get",          method: "GET",    path: "/salesorders/:id" },
@@ -163,16 +181,29 @@ const RESOURCES = [
       { action: "mark-confirmed", method: "POST", path: "/salesorders/:id/status/confirmed" },
       { action: "mark-void",      method: "POST", path: "/salesorders/:id/status/void" },
       { action: "bulk-confirm", method: "POST",   path: "/salesorders/status/confirmed", flags: ["salesorder_ids"] },
+      { action: "add-comment",    method: "POST",   path: "/salesorders/:id/comments" },
+      { action: "list-comments",  method: "GET",    path: "/salesorders/:id/comments" },
+      { action: "delete-comment", method: "DELETE", path: "/salesorders/:id/comments/:commentId" },
     ],
   },
   {
     name: "packages",
     primary: "id",
-    extra: ["package_number", "date", "line_items", "salesorder_id"],
+    extra: ["package_number", "date", "line_items"],
+    // Zoho docs list a filter set (status, customer_id, search_text, date,
+    // tracking_number, sort_column, filter_by, …) but in practice the
+    // exact-match forms of `package_number`, `salesorder_number`,
+    // `salesorder_id` are silently ignored — the response is the unfiltered
+    // page. Keep them as flags for ergonomics with runtime fallback.
+    brokenListFilters: ["reference_number", "package_number", "salesorder_id", "salesorder_number", "customer_id", "customer_name", "status", "date", "search_text"],
     actions: [
       { action: "list",       method: "GET",    path: "/packages" },
       { action: "get",        method: "GET",    path: "/packages/:id" },
-      { action: "create",     method: "POST",   path: "/packages", flags: ["salesorder_id"] },
+      // Per Zoho docs ?salesorder_id= is REQUIRED on POST /packages — the
+      // create is always "convert SO line items to a package". Marking it
+      // queryFlag (not a body field) ensures the URL is correct.
+      { action: "create",     method: "POST",   path: "/packages",
+        queryFlags: ["salesorder_id"] },
       { action: "update",     method: "PUT",    path: "/packages/:id" },
       { action: "delete",     method: "DELETE", path: "/packages/:id" },
       { action: "bulk-print", method: "GET",    path: "/packages/print", flags: ["package_ids"] },
@@ -181,11 +212,15 @@ const RESOURCES = [
   {
     name: "shipment-orders",
     primary: "id",
-    extra: ["shipment_number", "date", "delivery_method", "tracking_number", "package_ids", "salesorder_id"],
+    extra: ["shipment_number", "date", "delivery_method", "tracking_number"],
     actions: [
       { action: "get",            method: "GET",    path: "/shipmentorders/:id" },
-      { action: "create",         method: "POST",   path: "/shipmentorders", flags: ["salesorder_id"] },
-      { action: "update",         method: "PUT",    path: "/shipmentorders/:id" },
+      // Zoho docs put salesorder_id in the query string on POST and on PUT
+      // (and package_ids on PUT). Body forms of these silently no-op.
+      { action: "create",         method: "POST",   path: "/shipmentorders",
+        queryFlags: ["salesorder_id"] },
+      { action: "update",         method: "PUT",    path: "/shipmentorders/:id",
+        queryFlags: ["package_ids", "salesorder_id"] },
       { action: "delete",         method: "DELETE", path: "/shipmentorders/:id" },
       { action: "mark-delivered", method: "POST",   path: "/shipmentorders/:id/status/delivered" },
     ],
@@ -194,6 +229,7 @@ const RESOURCES = [
     name: "invoices",
     primary: "id",
     extra: ["customer_id", "invoice_number", "date", "due_date", "line_items", "is_inclusive_tax", "discount"],
+    listFilters: ["reference_number", "invoice_number", "customer_id", "customer_name", "status", "date", "due_date", "search_text"],
     extraFlagDefs: { commentId: "Comment id", paymentId: "Invoice payment id (deletion)", creditId: "Applied credit id (deletion)", templateId: "Template id" },
     actions: [
       { action: "list",                  method: "GET",    path: "/invoices" },
@@ -268,6 +304,7 @@ const RESOURCES = [
     name: "customer-payments",
     primary: "id",
     extra: ["customer_id", "payment_mode", "amount", "date", "reference_number", "invoices"],
+    listFilters: ["reference_number", "customer_id", "customer_name", "payment_mode", "date", "search_text"],
     actions: [
       { action: "list",                method: "GET",    path: "/customerpayments" },
       { action: "get",                 method: "GET",    path: "/customerpayments/:id" },
@@ -281,11 +318,20 @@ const RESOURCES = [
     name: "sales-returns",
     primary: "id",
     extraFlagDefs: { receiveId: "Sales return receive id" },
-    extra: ["salesorder_id", "date", "reason", "line_items"],
+    extra: ["date", "reason", "line_items"],
+    // Zoho docs only formally document organization_id + page + per_page on
+    // GET /salesreturns. Empirically, every other filter is silently dropped
+    // (HTTP 200, full unfiltered list returned). The CLI still exposes them
+    // for ergonomics and falls back to a client-side filter at runtime.
+    brokenListFilters: ["reference_number", "salesreturn_number", "salesorder_id", "customer_id", "customer_name", "status", "date", "search_text"],
     actions: [
       { action: "list",           method: "GET",    path: "/salesreturns" },
       { action: "get",            method: "GET",    path: "/salesreturns/:id" },
-      { action: "create",         method: "POST",   path: "/salesreturns" },
+      // ?salesorder_id= turns this into Zoho's "convert from salesorder"
+      // mode (documented). Putting salesorder_id in the body would not
+      // structurally link the return to the SO.
+      { action: "create",         method: "POST",   path: "/salesreturns",
+        queryFlags: ["salesorder_id"] },
       { action: "update",         method: "PUT",    path: "/salesreturns/:id" },
       { action: "delete",         method: "DELETE", path: "/salesreturns/:id" },
       { action: "create-receive", method: "POST",   path: "/salesreturnreceives" },
@@ -294,13 +340,18 @@ const RESOURCES = [
   },
   {
     name: "credit-notes",
+    listFilters: ["reference_number", "creditnote_number", "customer_id", "customer_name", "status", "date", "search_text"],
     primary: "id",
     extra: ["customer_id", "creditnote_number", "date", "line_items", "reference_number"],
     extraFlagDefs: { commentId: "Comment id", invoiceId: "Applied invoice id (deletion)", refundId: "Refund id", templateId: "Template id" },
     actions: [
       { action: "list",                       method: "GET",    path: "/creditnotes" },
       { action: "get",                        method: "GET",    path: "/creditnotes/:id" },
-      { action: "create",                     method: "POST",   path: "/creditnotes" },
+      { action: "create",                     method: "POST",   path: "/creditnotes",
+        // ?invoice_id= turns this into Zoho's "convert from invoice" mode
+        // (equivalent to clicking "Issue credit note" from an invoice in the UI).
+        // Putting invoice_id in the body is silently dropped.
+        queryFlags: ["invoice_id", "ignore_auto_number_generation"] },
       { action: "update",                     method: "PUT",    path: "/creditnotes/:id" },
       { action: "delete",                     method: "DELETE", path: "/creditnotes/:id" },
       { action: "email",                      method: "POST",   path: "/creditnotes/:id/email" },
@@ -333,6 +384,7 @@ const RESOURCES = [
     name: "purchase-orders",
     primary: "id",
     extra: ["vendor_id", "purchaseorder_number", "date", "delivery_date", "line_items"],
+    listFilters: ["reference_number", "purchaseorder_number", "vendor_id", "vendor_name", "status", "date", "search_text"],
     actions: [
       { action: "list",          method: "GET",    path: "/purchaseorders" },
       { action: "get",           method: "GET",    path: "/purchaseorders/:id" },
@@ -346,10 +398,13 @@ const RESOURCES = [
   {
     name: "purchase-receives",
     primary: "id",
-    extra: ["purchaseorder_id", "date", "line_items"],
+    extra: ["date", "line_items"],
     actions: [
       { action: "get",    method: "GET",    path: "/purchasereceives/:id" },
-      { action: "create", method: "POST",   path: "/purchasereceives" },
+      // Per Zoho docs ?purchaseorder_id= is required on POST — every receive
+      // is a "convert from PO" operation. Putting it in the body is dropped.
+      { action: "create", method: "POST",   path: "/purchasereceives",
+        queryFlags: ["purchaseorder_id"] },
       { action: "update", method: "PUT",    path: "/purchasereceives/:id" },
       { action: "delete", method: "DELETE", path: "/purchasereceives/:id" },
     ],
@@ -358,6 +413,9 @@ const RESOURCES = [
     name: "bills",
     primary: "id",
     extra: ["vendor_id", "bill_number", "date", "due_date", "line_items"],
+    // Zoho docs only formally document organization_id + page + per_page on
+    // GET /bills. Empirically every other filter is silently dropped.
+    brokenListFilters: ["reference_number", "bill_number", "vendor_id", "vendor_name", "status", "date", "due_date", "search_text"],
     actions: [
       { action: "list",                method: "GET",    path: "/bills" },
       { action: "get",                 method: "GET",    path: "/bills/:id" },
@@ -373,11 +431,15 @@ const RESOURCES = [
     name: "vendor-credits",
     primary: "id",
     extra: ["vendor_id", "vendor_credit_number", "date", "line_items"],
+    listFilters: ["reference_number", "vendor_credit_number", "vendor_id", "vendor_name", "status", "date", "search_text"],
     extraFlagDefs: { commentId: "Comment id", billId: "Bill id (apply/delete bills credited)", refundId: "Refund id" },
     actions: [
       { action: "list",                       method: "GET",    path: "/vendorcredits" },
       { action: "get",                        method: "GET",    path: "/vendorcredits/:id" },
-      { action: "create",                     method: "POST",   path: "/vendorcredits" },
+      // ?bill_id= turns this into Zoho's "convert from bill" mode (mirrors
+      // POST /creditnotes ?invoice_id=). Body bill_id is silently dropped.
+      { action: "create",                     method: "POST",   path: "/vendorcredits",
+        queryFlags: ["bill_id", "ignore_auto_number_generation"] },
       { action: "update",                     method: "PUT",    path: "/vendorcredits/:id" },
       { action: "delete",                     method: "DELETE", path: "/vendorcredits/:id" },
       { action: "convert-to-open",            method: "POST",   path: "/vendorcredits/:id/status/open" },
@@ -580,7 +642,11 @@ const FLAG_DESCRIPTIONS = {
   purchaseorder_number: "Purchase order number override",
   bill_number: "Bill number",
   due_date: "Due date in YYYY-MM-DD",
-  reference_number: "Free-form reference number",
+  reference_number: "Free-form reference number (also a list filter on most endpoints — see help per resource for whether the API actually honors it)",
+  search_text: "Server-side full-text search across the resource",
+  customer_name: "Filter by customer display name (list)",
+  vendor_name: "Filter by vendor display name (list)",
+  salesreturn_number: "Sales return number (list filter)",
   reason: "Reason for the operation (e.g. inventory adjustment)",
   adjustment_type: "quantity | value",
   shipment_date: "Shipment date in YYYY-MM-DD",
@@ -606,6 +672,9 @@ const FLAG_DESCRIPTIONS = {
   refundId: "Refund id",
   receiveId: "Sales return receive id",
   invoiceId: "Applied invoice id",
+  invoice_id: "Source invoice id — passed as ?invoice_id= URL query (Zoho convert-from-invoice mode); body form is silently dropped",
+  bill_id: "Source bill id — passed as ?bill_id= URL query (Zoho convert-from-bill mode); body form is silently dropped",
+  ignore_auto_number_generation: "true to bypass auto-numbering and supply your own number",
   billId: "Bill id (vendor credit application)",
   taxGroupId: "Tax group id",
   taxAuthorityId: "Tax authority id",
@@ -694,10 +763,23 @@ function buildAction(resource, action) {
     }
   }
 
-  // Pagination flags on list actions only.
+  // Pagination + listFilters on list actions only. Both honored and broken
+  // filters are exposed as flags; the broken set carries a warning marker
+  // in the description and is emitted separately so the runtime can apply
+  // the client-side fallback.
   if (action.action === "list") {
     flags.page = flagDef("page");
     flags.per_page = flagDef("per_page");
+    for (const k of resource.listFilters || []) {
+      if (!flags[k]) flags[k] = flagDef(k);
+    }
+    for (const k of resource.brokenListFilters || []) {
+      if (!flags[k]) {
+        flags[k] = flagDef(k, {
+          description: (FLAG_DESCRIPTIONS[k] || k) + " (BROKEN: Zoho silently ignores this filter; CLI auto-falls-back to a client-side filter on the full list)",
+        });
+      }
+    }
   }
 
   // Common body flags on create/update (top-level scalar fields for ergonomics).
@@ -705,6 +787,13 @@ function buildAction(resource, action) {
     for (const k of [...COMMON_BODY_FLAGS, ...(resource.extra || [])]) {
       if (!flags[k]) flags[k] = flagDef(k);
     }
+  }
+
+  // queryFlags ride on the URL, not in the body. Declared like body flags but
+  // tagged in the emitted action def so the runtime can route them correctly.
+  for (const k of action.queryFlags || []) {
+    const desc = FLAG_DESCRIPTIONS[k] || `${k} (URL query parameter)`;
+    if (!flags[k]) flags[k] = flagDef(k, { description: desc });
   }
 
   // Action-specific flag overrides.
@@ -725,7 +814,12 @@ function buildAction(resource, action) {
   // Org override always available.
   flags["organization-id"] = flagDef("organization-id");
 
-  return { method: action.method, path: action.path, description: actionDescription(action), flags };
+  const def = { method: action.method, path: action.path, description: actionDescription(action), flags };
+  if (action.queryFlags && action.queryFlags.length) def.queryFlags = [...action.queryFlags];
+  if (action.action === "list" && resource.brokenListFilters && resource.brokenListFilters.length) {
+    def.brokenListFilters = [...resource.brokenListFilters];
+  }
+  return def;
 }
 
 function actionDescription(action) {

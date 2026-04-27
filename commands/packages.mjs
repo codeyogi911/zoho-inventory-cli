@@ -21,12 +21,68 @@ export default {
           "required": false,
           "description": "Results per page (server default 200)"
         },
+        "reference_number": {
+          "type": "string",
+          "required": false,
+          "description": "Free-form reference number (also a list filter on most endpoints — see help per resource for whether the API actually honors it) (BROKEN: Zoho silently ignores this filter; CLI auto-falls-back to a client-side filter on the full list)"
+        },
+        "package_number": {
+          "type": "string",
+          "required": false,
+          "description": "Package number override (BROKEN: Zoho silently ignores this filter; CLI auto-falls-back to a client-side filter on the full list)"
+        },
+        "salesorder_id": {
+          "type": "string",
+          "required": false,
+          "description": "Parent sales order id (BROKEN: Zoho silently ignores this filter; CLI auto-falls-back to a client-side filter on the full list)"
+        },
+        "salesorder_number": {
+          "type": "string",
+          "required": false,
+          "description": "Sales order number override (BROKEN: Zoho silently ignores this filter; CLI auto-falls-back to a client-side filter on the full list)"
+        },
+        "customer_id": {
+          "type": "string",
+          "required": false,
+          "description": "Zoho customer id (BROKEN: Zoho silently ignores this filter; CLI auto-falls-back to a client-side filter on the full list)"
+        },
+        "customer_name": {
+          "type": "string",
+          "required": false,
+          "description": "Filter by customer display name (list) (BROKEN: Zoho silently ignores this filter; CLI auto-falls-back to a client-side filter on the full list)"
+        },
+        "status": {
+          "type": "string",
+          "required": false,
+          "description": "Filter by status (list) or set status (create/update) (BROKEN: Zoho silently ignores this filter; CLI auto-falls-back to a client-side filter on the full list)"
+        },
+        "date": {
+          "type": "string",
+          "required": false,
+          "description": "Date in YYYY-MM-DD (BROKEN: Zoho silently ignores this filter; CLI auto-falls-back to a client-side filter on the full list)"
+        },
+        "search_text": {
+          "type": "string",
+          "required": false,
+          "description": "Server-side full-text search across the resource (BROKEN: Zoho silently ignores this filter; CLI auto-falls-back to a client-side filter on the full list)"
+        },
         "organization-id": {
           "type": "string",
           "required": false,
           "description": "Organization id override (defaults to ZOHO_INVENTORY_ORG_ID env)"
         }
-      }
+      },
+      "brokenListFilters": [
+        "reference_number",
+        "package_number",
+        "salesorder_id",
+        "salesorder_number",
+        "customer_id",
+        "customer_name",
+        "status",
+        "date",
+        "search_text"
+      ]
     },
     "get": {
       "method": "GET",
@@ -95,7 +151,10 @@ export default {
           "required": false,
           "description": "Organization id override (defaults to ZOHO_INVENTORY_ORG_ID env)"
         }
-      }
+      },
+      "queryFlags": [
+        "salesorder_id"
+      ]
     },
     "update": {
       "method": "PUT",
@@ -136,11 +195,6 @@ export default {
           "type": "string",
           "required": false,
           "description": "JSON array of line items (use --body for complex shapes)"
-        },
-        "salesorder_id": {
-          "type": "string",
-          "required": false,
-          "description": "Parent sales order id"
         },
         "body": {
           "type": "string",

@@ -73,7 +73,7 @@ const clify = {
   ],
   contentHash: "sha256:zoho-inventory-2026-04-26-from-docs-crawl",
   generatedAt: "2026-04-26T00:00:00Z",
-  clifyVersion: "0.3.0",
+  clifyVersion: "0.5.0",
   nodeMinVersion: "20",
   auth: {
     envVar: "ZOHO_INVENTORY_API_KEY",

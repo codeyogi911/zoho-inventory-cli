@@ -43,11 +43,6 @@ export default {
           "required": false,
           "description": "Filter by status (list) or set status (create/update)"
         },
-        "purchaseorder_id": {
-          "type": "string",
-          "required": false,
-          "description": "Parent purchase order id"
-        },
         "date": {
           "type": "string",
           "required": false,
@@ -57,6 +52,11 @@ export default {
           "type": "string",
           "required": false,
           "description": "JSON array of line items (use --body for complex shapes)"
+        },
+        "purchaseorder_id": {
+          "type": "string",
+          "required": false,
+          "description": "Parent purchase order id"
         },
         "body": {
           "type": "string",
@@ -68,7 +68,10 @@ export default {
           "required": false,
           "description": "Organization id override (defaults to ZOHO_INVENTORY_ORG_ID env)"
         }
-      }
+      },
+      "queryFlags": [
+        "purchaseorder_id"
+      ]
     },
     "update": {
       "method": "PUT",
@@ -94,11 +97,6 @@ export default {
           "type": "string",
           "required": false,
           "description": "Filter by status (list) or set status (create/update)"
-        },
-        "purchaseorder_id": {
-          "type": "string",
-          "required": false,
-          "description": "Parent purchase order id"
         },
         "date": {
           "type": "string",

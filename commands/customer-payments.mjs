@@ -21,6 +21,36 @@ export default {
           "required": false,
           "description": "Results per page (server default 200)"
         },
+        "reference_number": {
+          "type": "string",
+          "required": false,
+          "description": "Free-form reference number (also a list filter on most endpoints — see help per resource for whether the API actually honors it)"
+        },
+        "customer_id": {
+          "type": "string",
+          "required": false,
+          "description": "Zoho customer id"
+        },
+        "customer_name": {
+          "type": "string",
+          "required": false,
+          "description": "Filter by customer display name (list)"
+        },
+        "payment_mode": {
+          "type": "string",
+          "required": false,
+          "description": "cash | bankremittance | check | creditcard | ..."
+        },
+        "date": {
+          "type": "string",
+          "required": false,
+          "description": "Date in YYYY-MM-DD"
+        },
+        "search_text": {
+          "type": "string",
+          "required": false,
+          "description": "Server-side full-text search across the resource"
+        },
         "organization-id": {
           "type": "string",
           "required": false,
@@ -88,7 +118,7 @@ export default {
         "reference_number": {
           "type": "string",
           "required": false,
-          "description": "Free-form reference number"
+          "description": "Free-form reference number (also a list filter on most endpoints — see help per resource for whether the API actually honors it)"
         },
         "invoices": {
           "type": "string",
@@ -155,7 +185,7 @@ export default {
         "reference_number": {
           "type": "string",
           "required": false,
-          "description": "Free-form reference number"
+          "description": "Free-form reference number (also a list filter on most endpoints — see help per resource for whether the API actually honors it)"
         },
         "invoices": {
           "type": "string",

@@ -1,7 +1,7 @@
 {
   "parsedAt": "2026-04-26T00:00:00Z",
-  "totalParsed": 316,
-  "totalIncluded": 316,
+  "totalParsed": 319,
+  "totalIncluded": 319,
   "totalDropped": 0,
   "endpoints": [
     {
@@ -492,6 +492,27 @@
       "path": "/salesorders/status/confirmed",
       "resource": "sales-orders",
       "action": "bulk-confirm",
+      "included": true
+    },
+    {
+      "method": "POST",
+      "path": "/salesorders/:id/comments",
+      "resource": "sales-orders",
+      "action": "add-comment",
+      "included": true
+    },
+    {
+      "method": "GET",
+      "path": "/salesorders/:id/comments",
+      "resource": "sales-orders",
+      "action": "list-comments",
+      "included": true
+    },
+    {
+      "method": "DELETE",
+      "path": "/salesorders/:id/comments/:commentId",
+      "resource": "sales-orders",
+      "action": "delete-comment",
       "included": true
     },
     {
