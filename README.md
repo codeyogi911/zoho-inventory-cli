@@ -31,6 +31,42 @@ zoho-inventory-cli/
 └── .github/workflows/test.yml     Node 20 + 22 CI
 ```
 
+## Install
+
+```bash
+npm install -g zoho-inventory-cli
+# or, ad-hoc:
+npx zoho-inventory-cli --help
+```
+
+### Use from another repo's Claude Code on the web session
+
+Drop this into the consumer repo so its cloud sessions get `zoho-inventory-cli` on PATH:
+
+`.claude/hooks/session-start.sh`
+```bash
+#!/bin/bash
+set -euo pipefail
+command -v zoho-inventory-cli >/dev/null || npm install -g zoho-inventory-cli@latest
+```
+
+`.claude/settings.json`
+```json
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          { "type": "command", "command": "$CLAUDE_PROJECT_DIR/.claude/hooks/session-start.sh" }
+        ]
+      }
+    ]
+  }
+}
+```
+
+Then `chmod +x .claude/hooks/session-start.sh` and commit. Provide the Zoho OAuth env vars (see Quickstart) via project secrets.
+
 ## Quickstart
 
 1. **Mint Zoho OAuth credentials.** Open the API Console for your DC (e.g. `https://api-console.zoho.in/`), create a Self Client, and generate a refresh token with scope `ZohoInventory.fullaccess.all`. Full walkthrough in `skills/zoho-inventory-cli-auth/SKILL.md`.
@@ -115,3 +151,14 @@ node scripts/gen-clify-meta.mjs   # rewrites coverage.json + .clify.json from th
 ```
 
 If the Zoho API gains a new endpoint, edit `scripts/gen-resources.mjs`'s `RESOURCES` table, re-run both, and validate.
+
+## Release
+
+Tag a version and push the tag:
+
+```
+npm version patch   # or minor / major — bumps package.json + creates tag
+git push --follow-tags
+```
+
+`.github/workflows/publish.yml` runs tests and `npm publish --provenance` on any `v*` tag. Requires an `NPM_TOKEN` repo secret (npm automation token).

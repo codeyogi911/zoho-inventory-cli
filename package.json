@@ -6,5 +6,32 @@
   "bin": { "zoho-inventory-cli": "./bin/zoho-inventory-cli.mjs" },
   "engines": { "node": ">=20" },
   "scripts": { "test": "node --test test/*.test.mjs" },
-  "license": "MIT"
+  "license": "MIT",
+  "author": "Shashwat Jain",
+  "homepage": "https://github.com/codeyogi911/zoho-inventory-cli#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/codeyogi911/zoho-inventory-cli.git"
+  },
+  "bugs": { "url": "https://github.com/codeyogi911/zoho-inventory-cli/issues" },
+  "keywords": [
+    "zoho",
+    "zoho-inventory",
+    "cli",
+    "agent",
+    "claude-code",
+    "llm-tools"
+  ],
+  "files": [
+    "bin/",
+    "lib/",
+    "commands/",
+    "knowledge/",
+    "skills/",
+    ".claude-plugin/",
+    "AGENTS.md",
+    "coverage.json",
+    ".clify.json"
+  ],
+  "publishConfig": { "access": "public" }
 }
