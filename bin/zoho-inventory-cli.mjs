@@ -192,7 +192,7 @@ async function runResourceAction(resourceArg, actionArg, remaining, global, rest
   if ((global.all || hasBrokenFilters) && actionArg === "list") {
     const collected = [];
     const query = buildQuery(parsed.values, def);
-    for await (const item of paginate({ method: def.method, path, query, version: VERSION, dryRun: !!global.dry_run, verbose: !!global.verbose })) {
+    for await (const item of paginate({ method: def.method, path, query, version: VERSION, dryRun: !!global.dry_run, verbose: !!global.verbose, showSecrets: !!global.show_secrets })) {
       collected.push(item);
     }
     const filtered = hasBrokenFilters ? clientFilter(collected, brokenFilters) : collected;
@@ -225,6 +225,7 @@ async function runResourceAction(resourceArg, actionArg, remaining, global, rest
     ifMatch: parsed.values["if-match"],
     dryRun: !!global.dry_run,
     verbose: !!global.verbose,
+    showSecrets: !!global.show_secrets,
     version: VERSION,
   });
 

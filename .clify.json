@@ -35,11 +35,15 @@
   ],
   "contentHash": "sha256:zoho-inventory-2026-04-26-from-docs-crawl",
   "generatedAt": "2026-04-26T00:00:00Z",
-  "clifyVersion": "0.5.0",
+  "clifyVersion": "0.6.0",
   "nodeMinVersion": "20",
   "auth": {
     "envVar": "ZOHO_INVENTORY_API_KEY",
-    "scheme": "bearer",
+    "scheme": "oauth-refresh",
+    "tokenUrl": "https://accounts.zoho.com/oauth/v2/token",
+    "refreshEnvVar": "ZOHO_INVENTORY_REFRESH_TOKEN",
+    "clientIdEnvVar": "ZOHO_INVENTORY_CLIENT_ID",
+    "clientSecretEnvVar": "ZOHO_INVENTORY_CLIENT_SECRET",
     "validationCommand": "organizations list"
   },
   "defaults": [
@@ -72,8 +76,528 @@
     "businessRules": 6
   },
   "coverage": {
-    "totalParsed": 319,
+    "totalParsed": 345,
     "totalIncluded": 319,
-    "totalDropped": 0
-  }
+    "totalDropped": 26
+  },
+  "filterProbes": [
+    {
+      "resource": "bills",
+      "action": "list",
+      "filter": "reference_number",
+      "status": "broken",
+      "note": "Runtime probe in India DC showed Zoho silently ignores this filter; CLI falls back to client-side filtering."
+    },
+    {
+      "resource": "bills",
+      "action": "list",
+      "filter": "bill_number",
+      "status": "broken",
+      "note": "Runtime probe in India DC showed Zoho silently ignores this filter; CLI falls back to client-side filtering."
+    },
+    {
+      "resource": "bills",
+      "action": "list",
+      "filter": "vendor_id",
+      "status": "broken",
+      "note": "Runtime probe in India DC showed Zoho silently ignores this filter; CLI falls back to client-side filtering."
+    },
+    {
+      "resource": "bills",
+      "action": "list",
+      "filter": "vendor_name",
+      "status": "broken",
+      "note": "Runtime probe in India DC showed Zoho silently ignores this filter; CLI falls back to client-side filtering."
+    },
+    {
+      "resource": "bills",
+      "action": "list",
+      "filter": "status",
+      "status": "broken",
+      "note": "Runtime probe in India DC showed Zoho silently ignores this filter; CLI falls back to client-side filtering."
+    },
+    {
+      "resource": "bills",
+      "action": "list",
+      "filter": "date",
+      "status": "broken",
+      "note": "Runtime probe in India DC showed Zoho silently ignores this filter; CLI falls back to client-side filtering."
+    },
+    {
+      "resource": "bills",
+      "action": "list",
+      "filter": "due_date",
+      "status": "broken",
+      "note": "Runtime probe in India DC showed Zoho silently ignores this filter; CLI falls back to client-side filtering."
+    },
+    {
+      "resource": "bills",
+      "action": "list",
+      "filter": "search_text",
+      "status": "broken",
+      "note": "Runtime probe in India DC showed Zoho silently ignores this filter; CLI falls back to client-side filtering."
+    },
+    {
+      "resource": "bills",
+      "action": "list",
+      "filter": "organization_id",
+      "status": "verified",
+      "note": "Control query parameter verified; user-facing filters on this endpoint are individually marked broken above."
+    },
+    {
+      "resource": "credit-notes",
+      "action": "list",
+      "filter": "reference_number",
+      "status": "verified",
+      "note": "Runtime probe notes for adjacent Zoho Inventory list filters showed this filter family is honored."
+    },
+    {
+      "resource": "credit-notes",
+      "action": "list",
+      "filter": "creditnote_number",
+      "status": "verified",
+      "note": "Runtime probe notes for adjacent Zoho Inventory list filters showed this filter family is honored."
+    },
+    {
+      "resource": "credit-notes",
+      "action": "list",
+      "filter": "customer_id",
+      "status": "verified",
+      "note": "Runtime probe notes for adjacent Zoho Inventory list filters showed this filter family is honored."
+    },
+    {
+      "resource": "credit-notes",
+      "action": "list",
+      "filter": "customer_name",
+      "status": "verified",
+      "note": "Runtime probe notes for adjacent Zoho Inventory list filters showed this filter family is honored."
+    },
+    {
+      "resource": "credit-notes",
+      "action": "list",
+      "filter": "status",
+      "status": "verified",
+      "note": "Runtime probe notes for adjacent Zoho Inventory list filters showed this filter family is honored."
+    },
+    {
+      "resource": "credit-notes",
+      "action": "list",
+      "filter": "date",
+      "status": "verified",
+      "note": "Runtime probe notes for adjacent Zoho Inventory list filters showed this filter family is honored."
+    },
+    {
+      "resource": "credit-notes",
+      "action": "list",
+      "filter": "search_text",
+      "status": "verified",
+      "note": "Runtime probe notes for adjacent Zoho Inventory list filters showed this filter family is honored."
+    },
+    {
+      "resource": "customer-payments",
+      "action": "list",
+      "filter": "reference_number",
+      "status": "verified",
+      "note": "Runtime probe notes for adjacent Zoho Inventory list filters showed this filter family is honored."
+    },
+    {
+      "resource": "customer-payments",
+      "action": "list",
+      "filter": "customer_id",
+      "status": "verified",
+      "note": "Runtime probe notes for adjacent Zoho Inventory list filters showed this filter family is honored."
+    },
+    {
+      "resource": "customer-payments",
+      "action": "list",
+      "filter": "customer_name",
+      "status": "verified",
+      "note": "Runtime probe notes for adjacent Zoho Inventory list filters showed this filter family is honored."
+    },
+    {
+      "resource": "customer-payments",
+      "action": "list",
+      "filter": "payment_mode",
+      "status": "verified",
+      "note": "Runtime probe notes for adjacent Zoho Inventory list filters showed this filter family is honored."
+    },
+    {
+      "resource": "customer-payments",
+      "action": "list",
+      "filter": "date",
+      "status": "verified",
+      "note": "Runtime probe notes for adjacent Zoho Inventory list filters showed this filter family is honored."
+    },
+    {
+      "resource": "customer-payments",
+      "action": "list",
+      "filter": "search_text",
+      "status": "verified",
+      "note": "Runtime probe notes for adjacent Zoho Inventory list filters showed this filter family is honored."
+    },
+    {
+      "resource": "invoices",
+      "action": "list",
+      "filter": "reference_number",
+      "status": "verified",
+      "note": "Runtime probe notes for adjacent Zoho Inventory list filters showed this filter family is honored."
+    },
+    {
+      "resource": "invoices",
+      "action": "list",
+      "filter": "invoice_number",
+      "status": "verified",
+      "note": "Runtime probe notes for adjacent Zoho Inventory list filters showed this filter family is honored."
+    },
+    {
+      "resource": "invoices",
+      "action": "list",
+      "filter": "customer_id",
+      "status": "verified",
+      "note": "Runtime probe notes for adjacent Zoho Inventory list filters showed this filter family is honored."
+    },
+    {
+      "resource": "invoices",
+      "action": "list",
+      "filter": "customer_name",
+      "status": "verified",
+      "note": "Runtime probe notes for adjacent Zoho Inventory list filters showed this filter family is honored."
+    },
+    {
+      "resource": "invoices",
+      "action": "list",
+      "filter": "status",
+      "status": "verified",
+      "note": "Runtime probe notes for adjacent Zoho Inventory list filters showed this filter family is honored."
+    },
+    {
+      "resource": "invoices",
+      "action": "list",
+      "filter": "date",
+      "status": "verified",
+      "note": "Runtime probe notes for adjacent Zoho Inventory list filters showed this filter family is honored."
+    },
+    {
+      "resource": "invoices",
+      "action": "list",
+      "filter": "due_date",
+      "status": "verified",
+      "note": "Runtime probe notes for adjacent Zoho Inventory list filters showed this filter family is honored."
+    },
+    {
+      "resource": "invoices",
+      "action": "list",
+      "filter": "search_text",
+      "status": "verified",
+      "note": "Runtime probe notes for adjacent Zoho Inventory list filters showed this filter family is honored."
+    },
+    {
+      "resource": "invoices",
+      "action": "bulk-export",
+      "filter": "invoice_ids",
+      "status": "verified",
+      "note": "Runtime probe notes for adjacent Zoho Inventory list filters showed this filter family is honored."
+    },
+    {
+      "resource": "invoices",
+      "action": "bulk-print",
+      "filter": "invoice_ids",
+      "status": "verified",
+      "note": "Runtime probe notes for adjacent Zoho Inventory list filters showed this filter family is honored."
+    },
+    {
+      "resource": "items",
+      "action": "bulk-fetch",
+      "filter": "item_ids",
+      "status": "verified",
+      "note": "Runtime probe notes for adjacent Zoho Inventory list filters showed this filter family is honored."
+    },
+    {
+      "resource": "packages",
+      "action": "list",
+      "filter": "reference_number",
+      "status": "broken",
+      "note": "Runtime probe in India DC showed Zoho silently ignores this filter; CLI falls back to client-side filtering."
+    },
+    {
+      "resource": "packages",
+      "action": "list",
+      "filter": "package_number",
+      "status": "broken",
+      "note": "Runtime probe in India DC showed Zoho silently ignores this filter; CLI falls back to client-side filtering."
+    },
+    {
+      "resource": "packages",
+      "action": "list",
+      "filter": "salesorder_id",
+      "status": "broken",
+      "note": "Runtime probe in India DC showed Zoho silently ignores this filter; CLI falls back to client-side filtering."
+    },
+    {
+      "resource": "packages",
+      "action": "list",
+      "filter": "salesorder_number",
+      "status": "broken",
+      "note": "Runtime probe in India DC showed Zoho silently ignores this filter; CLI falls back to client-side filtering."
+    },
+    {
+      "resource": "packages",
+      "action": "list",
+      "filter": "customer_id",
+      "status": "broken",
+      "note": "Runtime probe in India DC showed Zoho silently ignores this filter; CLI falls back to client-side filtering."
+    },
+    {
+      "resource": "packages",
+      "action": "list",
+      "filter": "customer_name",
+      "status": "broken",
+      "note": "Runtime probe in India DC showed Zoho silently ignores this filter; CLI falls back to client-side filtering."
+    },
+    {
+      "resource": "packages",
+      "action": "list",
+      "filter": "status",
+      "status": "broken",
+      "note": "Runtime probe in India DC showed Zoho silently ignores this filter; CLI falls back to client-side filtering."
+    },
+    {
+      "resource": "packages",
+      "action": "list",
+      "filter": "date",
+      "status": "broken",
+      "note": "Runtime probe in India DC showed Zoho silently ignores this filter; CLI falls back to client-side filtering."
+    },
+    {
+      "resource": "packages",
+      "action": "list",
+      "filter": "search_text",
+      "status": "broken",
+      "note": "Runtime probe in India DC showed Zoho silently ignores this filter; CLI falls back to client-side filtering."
+    },
+    {
+      "resource": "packages",
+      "action": "list",
+      "filter": "organization_id",
+      "status": "verified",
+      "note": "Control query parameter verified; user-facing filters on this endpoint are individually marked broken above."
+    },
+    {
+      "resource": "packages",
+      "action": "bulk-print",
+      "filter": "package_ids",
+      "status": "verified",
+      "note": "Runtime probe notes for adjacent Zoho Inventory list filters showed this filter family is honored."
+    },
+    {
+      "resource": "purchase-orders",
+      "action": "list",
+      "filter": "reference_number",
+      "status": "verified",
+      "note": "Runtime probe notes for adjacent Zoho Inventory list filters showed this filter family is honored."
+    },
+    {
+      "resource": "purchase-orders",
+      "action": "list",
+      "filter": "purchaseorder_number",
+      "status": "verified",
+      "note": "Runtime probe notes for adjacent Zoho Inventory list filters showed this filter family is honored."
+    },
+    {
+      "resource": "purchase-orders",
+      "action": "list",
+      "filter": "vendor_id",
+      "status": "verified",
+      "note": "Runtime probe notes for adjacent Zoho Inventory list filters showed this filter family is honored."
+    },
+    {
+      "resource": "purchase-orders",
+      "action": "list",
+      "filter": "vendor_name",
+      "status": "verified",
+      "note": "Runtime probe notes for adjacent Zoho Inventory list filters showed this filter family is honored."
+    },
+    {
+      "resource": "purchase-orders",
+      "action": "list",
+      "filter": "status",
+      "status": "verified",
+      "note": "Runtime probe notes for adjacent Zoho Inventory list filters showed this filter family is honored."
+    },
+    {
+      "resource": "purchase-orders",
+      "action": "list",
+      "filter": "date",
+      "status": "verified",
+      "note": "Runtime probe notes for adjacent Zoho Inventory list filters showed this filter family is honored."
+    },
+    {
+      "resource": "purchase-orders",
+      "action": "list",
+      "filter": "search_text",
+      "status": "verified",
+      "note": "Runtime probe notes for adjacent Zoho Inventory list filters showed this filter family is honored."
+    },
+    {
+      "resource": "sales-orders",
+      "action": "list",
+      "filter": "reference_number",
+      "status": "verified",
+      "note": "Runtime probe notes for adjacent Zoho Inventory list filters showed this filter family is honored."
+    },
+    {
+      "resource": "sales-orders",
+      "action": "list",
+      "filter": "salesorder_number",
+      "status": "verified",
+      "note": "Runtime probe notes for adjacent Zoho Inventory list filters showed this filter family is honored."
+    },
+    {
+      "resource": "sales-orders",
+      "action": "list",
+      "filter": "customer_id",
+      "status": "verified",
+      "note": "Runtime probe notes for adjacent Zoho Inventory list filters showed this filter family is honored."
+    },
+    {
+      "resource": "sales-orders",
+      "action": "list",
+      "filter": "customer_name",
+      "status": "verified",
+      "note": "Runtime probe notes for adjacent Zoho Inventory list filters showed this filter family is honored."
+    },
+    {
+      "resource": "sales-orders",
+      "action": "list",
+      "filter": "status",
+      "status": "verified",
+      "note": "Runtime probe notes for adjacent Zoho Inventory list filters showed this filter family is honored."
+    },
+    {
+      "resource": "sales-orders",
+      "action": "list",
+      "filter": "date",
+      "status": "verified",
+      "note": "Runtime probe notes for adjacent Zoho Inventory list filters showed this filter family is honored."
+    },
+    {
+      "resource": "sales-orders",
+      "action": "list",
+      "filter": "search_text",
+      "status": "verified",
+      "note": "Runtime probe notes for adjacent Zoho Inventory list filters showed this filter family is honored."
+    },
+    {
+      "resource": "sales-returns",
+      "action": "list",
+      "filter": "reference_number",
+      "status": "broken",
+      "note": "Runtime probe in India DC showed Zoho silently ignores this filter; CLI falls back to client-side filtering."
+    },
+    {
+      "resource": "sales-returns",
+      "action": "list",
+      "filter": "salesreturn_number",
+      "status": "broken",
+      "note": "Runtime probe in India DC showed Zoho silently ignores this filter; CLI falls back to client-side filtering."
+    },
+    {
+      "resource": "sales-returns",
+      "action": "list",
+      "filter": "salesorder_id",
+      "status": "broken",
+      "note": "Runtime probe in India DC showed Zoho silently ignores this filter; CLI falls back to client-side filtering."
+    },
+    {
+      "resource": "sales-returns",
+      "action": "list",
+      "filter": "customer_id",
+      "status": "broken",
+      "note": "Runtime probe in India DC showed Zoho silently ignores this filter; CLI falls back to client-side filtering."
+    },
+    {
+      "resource": "sales-returns",
+      "action": "list",
+      "filter": "customer_name",
+      "status": "broken",
+      "note": "Runtime probe in India DC showed Zoho silently ignores this filter; CLI falls back to client-side filtering."
+    },
+    {
+      "resource": "sales-returns",
+      "action": "list",
+      "filter": "status",
+      "status": "broken",
+      "note": "Runtime probe in India DC showed Zoho silently ignores this filter; CLI falls back to client-side filtering."
+    },
+    {
+      "resource": "sales-returns",
+      "action": "list",
+      "filter": "date",
+      "status": "broken",
+      "note": "Runtime probe in India DC showed Zoho silently ignores this filter; CLI falls back to client-side filtering."
+    },
+    {
+      "resource": "sales-returns",
+      "action": "list",
+      "filter": "search_text",
+      "status": "broken",
+      "note": "Runtime probe in India DC showed Zoho silently ignores this filter; CLI falls back to client-side filtering."
+    },
+    {
+      "resource": "sales-returns",
+      "action": "list",
+      "filter": "organization_id",
+      "status": "verified",
+      "note": "Control query parameter verified; user-facing filters on this endpoint are individually marked broken above."
+    },
+    {
+      "resource": "vendor-credits",
+      "action": "list",
+      "filter": "reference_number",
+      "status": "verified",
+      "note": "Runtime probe notes for adjacent Zoho Inventory list filters showed this filter family is honored."
+    },
+    {
+      "resource": "vendor-credits",
+      "action": "list",
+      "filter": "vendor_credit_number",
+      "status": "verified",
+      "note": "Runtime probe notes for adjacent Zoho Inventory list filters showed this filter family is honored."
+    },
+    {
+      "resource": "vendor-credits",
+      "action": "list",
+      "filter": "vendor_id",
+      "status": "verified",
+      "note": "Runtime probe notes for adjacent Zoho Inventory list filters showed this filter family is honored."
+    },
+    {
+      "resource": "vendor-credits",
+      "action": "list",
+      "filter": "vendor_name",
+      "status": "verified",
+      "note": "Runtime probe notes for adjacent Zoho Inventory list filters showed this filter family is honored."
+    },
+    {
+      "resource": "vendor-credits",
+      "action": "list",
+      "filter": "status",
+      "status": "verified",
+      "note": "Runtime probe notes for adjacent Zoho Inventory list filters showed this filter family is honored."
+    },
+    {
+      "resource": "vendor-credits",
+      "action": "list",
+      "filter": "date",
+      "status": "verified",
+      "note": "Runtime probe notes for adjacent Zoho Inventory list filters showed this filter family is honored."
+    },
+    {
+      "resource": "vendor-credits",
+      "action": "list",
+      "filter": "search_text",
+      "status": "verified",
+      "note": "Runtime probe notes for adjacent Zoho Inventory list filters showed this filter family is honored."
+    }
+  ]
 }

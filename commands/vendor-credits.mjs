@@ -220,7 +220,7 @@ export default {
         }
       }
     },
-    "convert-to-open": {
+    "mark-open": {
       "method": "POST",
       "path": "/vendorcredits/:id/status/open",
       "description": "POST /vendorcredits/:id/status/open",
@@ -242,7 +242,7 @@ export default {
         }
       }
     },
-    "void": {
+    "mark-void": {
       "method": "POST",
       "path": "/vendorcredits/:id/status/void",
       "description": "POST /vendorcredits/:id/status/void",

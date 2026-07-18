@@ -1,35 +1,182 @@
 {
   "parsedAt": "2026-04-26T00:00:00Z",
-  "totalParsed": 319,
+  "totalParsed": 345,
   "totalIncluded": 319,
-  "totalDropped": 0,
+  "totalDropped": 26,
   "endpoints": [
     {
       "method": "GET",
-      "path": "/organizations",
-      "resource": "organizations",
+      "path": "/bills",
+      "resource": "bills",
       "action": "list",
       "included": true
     },
     {
       "method": "GET",
-      "path": "/organizations/:id",
-      "resource": "organizations",
+      "path": "/bills/:id",
+      "resource": "bills",
       "action": "get",
       "included": true
     },
     {
       "method": "POST",
-      "path": "/organizations",
-      "resource": "organizations",
+      "path": "/bills",
+      "resource": "bills",
       "action": "create",
       "included": true
     },
     {
       "method": "PUT",
-      "path": "/organizations/:id",
-      "resource": "organizations",
+      "path": "/bills/:id",
+      "resource": "bills",
       "action": "update",
+      "included": true
+    },
+    {
+      "method": "DELETE",
+      "path": "/bills/:id",
+      "resource": "bills",
+      "action": "delete",
+      "included": true
+    },
+    {
+      "method": "PUT",
+      "path": "/bill/:id/customfields",
+      "resource": "bills",
+      "action": "update-custom-field",
+      "included": true
+    },
+    {
+      "method": "POST",
+      "path": "/bills/:id/status/open",
+      "resource": "bills",
+      "action": "mark-open",
+      "included": true
+    },
+    {
+      "method": "POST",
+      "path": "/bills/:id/status/void",
+      "resource": "bills",
+      "action": "mark-void",
+      "included": true
+    },
+    {
+      "method": "GET",
+      "path": "/bundles",
+      "resource": "bundles",
+      "action": "list",
+      "included": true
+    },
+    {
+      "method": "GET",
+      "path": "/bundles/:id",
+      "resource": "bundles",
+      "action": "get",
+      "included": true
+    },
+    {
+      "method": "POST",
+      "path": "/bundles",
+      "resource": "bundles",
+      "action": "create",
+      "included": true
+    },
+    {
+      "method": "DELETE",
+      "path": "/bundles/:id",
+      "resource": "bundles",
+      "action": "delete",
+      "included": true
+    },
+    {
+      "method": "GET",
+      "path": "/compositeitems",
+      "resource": "composite-items",
+      "action": "list",
+      "included": true
+    },
+    {
+      "method": "GET",
+      "path": "/compositeitems/:id",
+      "resource": "composite-items",
+      "action": "get",
+      "included": true
+    },
+    {
+      "method": "POST",
+      "path": "/compositeitems",
+      "resource": "composite-items",
+      "action": "create",
+      "included": true
+    },
+    {
+      "method": "PUT",
+      "path": "/compositeitems/:id",
+      "resource": "composite-items",
+      "action": "update",
+      "included": true
+    },
+    {
+      "method": "DELETE",
+      "path": "/compositeitems/:id",
+      "resource": "composite-items",
+      "action": "delete",
+      "included": true
+    },
+    {
+      "method": "POST",
+      "path": "/compositeitems/:id/active",
+      "resource": "composite-items",
+      "action": "mark-active",
+      "included": true
+    },
+    {
+      "method": "POST",
+      "path": "/compositeitems/:id/inactive",
+      "resource": "composite-items",
+      "action": "mark-inactive",
+      "included": true
+    },
+    {
+      "method": "GET",
+      "path": "/contacts/:contactId/contactpersons",
+      "resource": "contact-persons",
+      "action": "list",
+      "included": true
+    },
+    {
+      "method": "GET",
+      "path": "/contacts/:contactId/contactpersons/:id",
+      "resource": "contact-persons",
+      "action": "get",
+      "included": true
+    },
+    {
+      "method": "POST",
+      "path": "/contacts/contactpersons",
+      "resource": "contact-persons",
+      "action": "create",
+      "included": true
+    },
+    {
+      "method": "PUT",
+      "path": "/contacts/contactpersons/:id",
+      "resource": "contact-persons",
+      "action": "update",
+      "included": true
+    },
+    {
+      "method": "DELETE",
+      "path": "/contacts/contactpersons/:id",
+      "resource": "contact-persons",
+      "action": "delete",
+      "included": true
+    },
+    {
+      "method": "POST",
+      "path": "/contacts/contactpersons/:id/primary",
+      "resource": "contact-persons",
+      "action": "mark-as-primary",
       "included": true
     },
     {
@@ -114,979 +261,6 @@
       "path": "/contacts/:id/comments",
       "resource": "contacts",
       "action": "list-comments",
-      "included": true
-    },
-    {
-      "method": "GET",
-      "path": "/contacts/:contactId/contactpersons",
-      "resource": "contact-persons",
-      "action": "list",
-      "included": true
-    },
-    {
-      "method": "GET",
-      "path": "/contacts/:contactId/contactpersons/:id",
-      "resource": "contact-persons",
-      "action": "get",
-      "included": true
-    },
-    {
-      "method": "POST",
-      "path": "/contacts/contactpersons",
-      "resource": "contact-persons",
-      "action": "create",
-      "included": true
-    },
-    {
-      "method": "PUT",
-      "path": "/contacts/contactpersons/:id",
-      "resource": "contact-persons",
-      "action": "update",
-      "included": true
-    },
-    {
-      "method": "DELETE",
-      "path": "/contacts/contactpersons/:id",
-      "resource": "contact-persons",
-      "action": "delete",
-      "included": true
-    },
-    {
-      "method": "POST",
-      "path": "/contacts/contactpersons/:id/primary",
-      "resource": "contact-persons",
-      "action": "mark-as-primary",
-      "included": true
-    },
-    {
-      "method": "GET",
-      "path": "/itemgroups",
-      "resource": "item-groups",
-      "action": "list",
-      "included": true
-    },
-    {
-      "method": "GET",
-      "path": "/itemgroups/:id",
-      "resource": "item-groups",
-      "action": "get",
-      "included": true
-    },
-    {
-      "method": "POST",
-      "path": "/itemgroups",
-      "resource": "item-groups",
-      "action": "create",
-      "included": true
-    },
-    {
-      "method": "PUT",
-      "path": "/itemgroups/:id",
-      "resource": "item-groups",
-      "action": "update",
-      "included": true
-    },
-    {
-      "method": "DELETE",
-      "path": "/itemgroups/:id",
-      "resource": "item-groups",
-      "action": "delete",
-      "included": true
-    },
-    {
-      "method": "POST",
-      "path": "/itemgroups/:id/active",
-      "resource": "item-groups",
-      "action": "mark-active",
-      "included": true
-    },
-    {
-      "method": "POST",
-      "path": "/itemgroups/:id/inactive",
-      "resource": "item-groups",
-      "action": "mark-inactive",
-      "included": true
-    },
-    {
-      "method": "GET",
-      "path": "/items",
-      "resource": "items",
-      "action": "list",
-      "included": true
-    },
-    {
-      "method": "GET",
-      "path": "/items/:id",
-      "resource": "items",
-      "action": "get",
-      "included": true
-    },
-    {
-      "method": "POST",
-      "path": "/items",
-      "resource": "items",
-      "action": "create",
-      "included": true
-    },
-    {
-      "method": "PUT",
-      "path": "/items/:id",
-      "resource": "items",
-      "action": "update",
-      "included": true
-    },
-    {
-      "method": "DELETE",
-      "path": "/items/:id",
-      "resource": "items",
-      "action": "delete",
-      "included": true
-    },
-    {
-      "method": "GET",
-      "path": "/itemdetails",
-      "resource": "items",
-      "action": "bulk-fetch",
-      "included": true
-    },
-    {
-      "method": "PUT",
-      "path": "/item/:id/customfields",
-      "resource": "items",
-      "action": "update-custom-fields",
-      "included": true
-    },
-    {
-      "method": "DELETE",
-      "path": "/items/:id/image",
-      "resource": "items",
-      "action": "delete-image",
-      "included": true
-    },
-    {
-      "method": "POST",
-      "path": "/items/:id/active",
-      "resource": "items",
-      "action": "mark-active",
-      "included": true
-    },
-    {
-      "method": "POST",
-      "path": "/items/:id/inactive",
-      "resource": "items",
-      "action": "mark-inactive",
-      "included": true
-    },
-    {
-      "method": "GET",
-      "path": "/compositeitems",
-      "resource": "composite-items",
-      "action": "list",
-      "included": true
-    },
-    {
-      "method": "GET",
-      "path": "/compositeitems/:id",
-      "resource": "composite-items",
-      "action": "get",
-      "included": true
-    },
-    {
-      "method": "POST",
-      "path": "/compositeitems",
-      "resource": "composite-items",
-      "action": "create",
-      "included": true
-    },
-    {
-      "method": "PUT",
-      "path": "/compositeitems/:id",
-      "resource": "composite-items",
-      "action": "update",
-      "included": true
-    },
-    {
-      "method": "DELETE",
-      "path": "/compositeitems/:id",
-      "resource": "composite-items",
-      "action": "delete",
-      "included": true
-    },
-    {
-      "method": "POST",
-      "path": "/compositeitems/:id/active",
-      "resource": "composite-items",
-      "action": "mark-active",
-      "included": true
-    },
-    {
-      "method": "POST",
-      "path": "/compositeitems/:id/inactive",
-      "resource": "composite-items",
-      "action": "mark-inactive",
-      "included": true
-    },
-    {
-      "method": "GET",
-      "path": "/bundles",
-      "resource": "bundles",
-      "action": "list",
-      "included": true
-    },
-    {
-      "method": "GET",
-      "path": "/bundles/:id",
-      "resource": "bundles",
-      "action": "get",
-      "included": true
-    },
-    {
-      "method": "POST",
-      "path": "/bundles",
-      "resource": "bundles",
-      "action": "create",
-      "included": true
-    },
-    {
-      "method": "DELETE",
-      "path": "/bundles/:id",
-      "resource": "bundles",
-      "action": "delete",
-      "included": true
-    },
-    {
-      "method": "GET",
-      "path": "/inventoryadjustments",
-      "resource": "inventory-adjustments",
-      "action": "list",
-      "included": true
-    },
-    {
-      "method": "GET",
-      "path": "/inventoryadjustments/:id",
-      "resource": "inventory-adjustments",
-      "action": "get",
-      "included": true
-    },
-    {
-      "method": "POST",
-      "path": "/inventoryadjustments",
-      "resource": "inventory-adjustments",
-      "action": "create",
-      "included": true
-    },
-    {
-      "method": "PUT",
-      "path": "/inventoryadjustments/:id",
-      "resource": "inventory-adjustments",
-      "action": "update",
-      "included": true
-    },
-    {
-      "method": "DELETE",
-      "path": "/inventoryadjustments/:id",
-      "resource": "inventory-adjustments",
-      "action": "delete",
-      "included": true
-    },
-    {
-      "method": "GET",
-      "path": "/transferorders",
-      "resource": "transfer-orders",
-      "action": "list",
-      "included": true
-    },
-    {
-      "method": "GET",
-      "path": "/transferorders/:id",
-      "resource": "transfer-orders",
-      "action": "get",
-      "included": true
-    },
-    {
-      "method": "POST",
-      "path": "/transferorders",
-      "resource": "transfer-orders",
-      "action": "create",
-      "included": true
-    },
-    {
-      "method": "PUT",
-      "path": "/transferorders/:id",
-      "resource": "transfer-orders",
-      "action": "update",
-      "included": true
-    },
-    {
-      "method": "DELETE",
-      "path": "/transferorders/:id",
-      "resource": "transfer-orders",
-      "action": "delete",
-      "included": true
-    },
-    {
-      "method": "POST",
-      "path": "/transferorders/:id/markastransferred",
-      "resource": "transfer-orders",
-      "action": "mark-as-transferred",
-      "included": true
-    },
-    {
-      "method": "GET",
-      "path": "/salesorders",
-      "resource": "sales-orders",
-      "action": "list",
-      "included": true
-    },
-    {
-      "method": "GET",
-      "path": "/salesorders/:id",
-      "resource": "sales-orders",
-      "action": "get",
-      "included": true
-    },
-    {
-      "method": "POST",
-      "path": "/salesorders",
-      "resource": "sales-orders",
-      "action": "create",
-      "included": true
-    },
-    {
-      "method": "PUT",
-      "path": "/salesorders/:id",
-      "resource": "sales-orders",
-      "action": "update",
-      "included": true
-    },
-    {
-      "method": "DELETE",
-      "path": "/salesorders/:id",
-      "resource": "sales-orders",
-      "action": "delete",
-      "included": true
-    },
-    {
-      "method": "DELETE",
-      "path": "/salesorders",
-      "resource": "sales-orders",
-      "action": "bulk-delete",
-      "included": true
-    },
-    {
-      "method": "POST",
-      "path": "/salesorders/:id/status/confirmed",
-      "resource": "sales-orders",
-      "action": "mark-confirmed",
-      "included": true
-    },
-    {
-      "method": "POST",
-      "path": "/salesorders/:id/status/void",
-      "resource": "sales-orders",
-      "action": "mark-void",
-      "included": true
-    },
-    {
-      "method": "POST",
-      "path": "/salesorders/status/confirmed",
-      "resource": "sales-orders",
-      "action": "bulk-confirm",
-      "included": true
-    },
-    {
-      "method": "POST",
-      "path": "/salesorders/:id/comments",
-      "resource": "sales-orders",
-      "action": "add-comment",
-      "included": true
-    },
-    {
-      "method": "GET",
-      "path": "/salesorders/:id/comments",
-      "resource": "sales-orders",
-      "action": "list-comments",
-      "included": true
-    },
-    {
-      "method": "DELETE",
-      "path": "/salesorders/:id/comments/:commentId",
-      "resource": "sales-orders",
-      "action": "delete-comment",
-      "included": true
-    },
-    {
-      "method": "GET",
-      "path": "/packages",
-      "resource": "packages",
-      "action": "list",
-      "included": true
-    },
-    {
-      "method": "GET",
-      "path": "/packages/:id",
-      "resource": "packages",
-      "action": "get",
-      "included": true
-    },
-    {
-      "method": "POST",
-      "path": "/packages",
-      "resource": "packages",
-      "action": "create",
-      "included": true
-    },
-    {
-      "method": "PUT",
-      "path": "/packages/:id",
-      "resource": "packages",
-      "action": "update",
-      "included": true
-    },
-    {
-      "method": "DELETE",
-      "path": "/packages/:id",
-      "resource": "packages",
-      "action": "delete",
-      "included": true
-    },
-    {
-      "method": "GET",
-      "path": "/packages/print",
-      "resource": "packages",
-      "action": "bulk-print",
-      "included": true
-    },
-    {
-      "method": "GET",
-      "path": "/shipmentorders/:id",
-      "resource": "shipment-orders",
-      "action": "get",
-      "included": true
-    },
-    {
-      "method": "POST",
-      "path": "/shipmentorders",
-      "resource": "shipment-orders",
-      "action": "create",
-      "included": true
-    },
-    {
-      "method": "PUT",
-      "path": "/shipmentorders/:id",
-      "resource": "shipment-orders",
-      "action": "update",
-      "included": true
-    },
-    {
-      "method": "DELETE",
-      "path": "/shipmentorders/:id",
-      "resource": "shipment-orders",
-      "action": "delete",
-      "included": true
-    },
-    {
-      "method": "POST",
-      "path": "/shipmentorders/:id/status/delivered",
-      "resource": "shipment-orders",
-      "action": "mark-delivered",
-      "included": true
-    },
-    {
-      "method": "GET",
-      "path": "/invoices",
-      "resource": "invoices",
-      "action": "list",
-      "included": true
-    },
-    {
-      "method": "GET",
-      "path": "/invoices/:id",
-      "resource": "invoices",
-      "action": "get",
-      "included": true
-    },
-    {
-      "method": "POST",
-      "path": "/invoices",
-      "resource": "invoices",
-      "action": "create",
-      "included": true
-    },
-    {
-      "method": "PUT",
-      "path": "/invoices/:id",
-      "resource": "invoices",
-      "action": "update",
-      "included": true
-    },
-    {
-      "method": "DELETE",
-      "path": "/invoices/:id",
-      "resource": "invoices",
-      "action": "delete",
-      "included": true
-    },
-    {
-      "method": "POST",
-      "path": "/invoices/:id/status/sent",
-      "resource": "invoices",
-      "action": "mark-sent",
-      "included": true
-    },
-    {
-      "method": "POST",
-      "path": "/invoices/:id/status/void",
-      "resource": "invoices",
-      "action": "void",
-      "included": true
-    },
-    {
-      "method": "POST",
-      "path": "/invoices/:id/status/draft",
-      "resource": "invoices",
-      "action": "mark-draft",
-      "included": true
-    },
-    {
-      "method": "PUT",
-      "path": "/invoice/:id/customfields",
-      "resource": "invoices",
-      "action": "update-custom-field",
-      "included": true
-    },
-    {
-      "method": "POST",
-      "path": "/invoices/:id/email",
-      "resource": "invoices",
-      "action": "email",
-      "included": true
-    },
-    {
-      "method": "GET",
-      "path": "/invoices/:id/email",
-      "resource": "invoices",
-      "action": "get-email-content",
-      "included": true
-    },
-    {
-      "method": "POST",
-      "path": "/invoices/email",
-      "resource": "invoices",
-      "action": "email-invoices",
-      "included": true
-    },
-    {
-      "method": "GET",
-      "path": "/invoices/:id/paymentreminder",
-      "resource": "invoices",
-      "action": "get-payment-reminder",
-      "included": true
-    },
-    {
-      "method": "POST",
-      "path": "/invoices/:id/paymentreminder/disable",
-      "resource": "invoices",
-      "action": "disable-reminder",
-      "included": true
-    },
-    {
-      "method": "POST",
-      "path": "/invoices/:id/paymentreminder/enable",
-      "resource": "invoices",
-      "action": "enable-reminder",
-      "included": true
-    },
-    {
-      "method": "GET",
-      "path": "/invoices/pdf",
-      "resource": "invoices",
-      "action": "bulk-export",
-      "included": true
-    },
-    {
-      "method": "GET",
-      "path": "/invoices/print",
-      "resource": "invoices",
-      "action": "bulk-print",
-      "included": true
-    },
-    {
-      "method": "POST",
-      "path": "/invoices/:id/writeoff",
-      "resource": "invoices",
-      "action": "write-off",
-      "included": true
-    },
-    {
-      "method": "POST",
-      "path": "/invoices/:id/writeoff/cancel",
-      "resource": "invoices",
-      "action": "cancel-writeoff",
-      "included": true
-    },
-    {
-      "method": "POST",
-      "path": "/invoices/:id/credits",
-      "resource": "invoices",
-      "action": "apply-credits",
-      "included": true
-    },
-    {
-      "method": "GET",
-      "path": "/invoices/:id/payments",
-      "resource": "invoices",
-      "action": "list-payments",
-      "included": true
-    },
-    {
-      "method": "GET",
-      "path": "/invoices/:id/creditsapplied",
-      "resource": "invoices",
-      "action": "list-credits-applied",
-      "included": true
-    },
-    {
-      "method": "DELETE",
-      "path": "/invoices/:id/payments/:paymentId",
-      "resource": "invoices",
-      "action": "delete-payment",
-      "included": true
-    },
-    {
-      "method": "DELETE",
-      "path": "/invoices/:id/creditsapplied/:creditId",
-      "resource": "invoices",
-      "action": "delete-credit",
-      "included": true
-    },
-    {
-      "method": "PUT",
-      "path": "/invoices/:id/address/billing",
-      "resource": "invoices",
-      "action": "update-billing-address",
-      "included": true
-    },
-    {
-      "method": "PUT",
-      "path": "/invoices/:id/address/shipping",
-      "resource": "invoices",
-      "action": "update-shipping-address",
-      "included": true
-    },
-    {
-      "method": "GET",
-      "path": "/invoices/templates",
-      "resource": "invoices",
-      "action": "list-templates",
-      "included": true
-    },
-    {
-      "method": "PUT",
-      "path": "/invoices/:id/templates/:templateId",
-      "resource": "invoices",
-      "action": "update-template",
-      "included": true
-    },
-    {
-      "method": "POST",
-      "path": "/invoices/:id/attachment",
-      "resource": "invoices",
-      "action": "add-attachment",
-      "included": true
-    },
-    {
-      "method": "GET",
-      "path": "/invoices/:id/attachment",
-      "resource": "invoices",
-      "action": "get-attachment",
-      "included": true
-    },
-    {
-      "method": "PUT",
-      "path": "/invoices/:id/attachment",
-      "resource": "invoices",
-      "action": "update-attachment",
-      "included": true
-    },
-    {
-      "method": "DELETE",
-      "path": "/invoices/:id/attachment",
-      "resource": "invoices",
-      "action": "delete-attachment",
-      "included": true
-    },
-    {
-      "method": "POST",
-      "path": "/invoices/:id/comments",
-      "resource": "invoices",
-      "action": "add-comment",
-      "included": true
-    },
-    {
-      "method": "GET",
-      "path": "/invoices/:id/comments",
-      "resource": "invoices",
-      "action": "list-comments",
-      "included": true
-    },
-    {
-      "method": "PUT",
-      "path": "/invoices/:id/comments/:commentId",
-      "resource": "invoices",
-      "action": "update-comment",
-      "included": true
-    },
-    {
-      "method": "DELETE",
-      "path": "/invoices/:id/comments/:commentId",
-      "resource": "invoices",
-      "action": "delete-comment",
-      "included": true
-    },
-    {
-      "method": "GET",
-      "path": "/retainerinvoices",
-      "resource": "retainer-invoices",
-      "action": "list",
-      "included": true
-    },
-    {
-      "method": "GET",
-      "path": "/retainerinvoices/:id",
-      "resource": "retainer-invoices",
-      "action": "get",
-      "included": true
-    },
-    {
-      "method": "POST",
-      "path": "/retainerinvoices",
-      "resource": "retainer-invoices",
-      "action": "create",
-      "included": true
-    },
-    {
-      "method": "PUT",
-      "path": "/retainerinvoices/:id",
-      "resource": "retainer-invoices",
-      "action": "update",
-      "included": true
-    },
-    {
-      "method": "DELETE",
-      "path": "/retainerinvoices/:id",
-      "resource": "retainer-invoices",
-      "action": "delete",
-      "included": true
-    },
-    {
-      "method": "POST",
-      "path": "/retainerinvoices/:id/status/sent",
-      "resource": "retainer-invoices",
-      "action": "mark-sent",
-      "included": true
-    },
-    {
-      "method": "POST",
-      "path": "/retainerinvoices/:id/status/void",
-      "resource": "retainer-invoices",
-      "action": "void",
-      "included": true
-    },
-    {
-      "method": "POST",
-      "path": "/retainerinvoices/:id/status/draft",
-      "resource": "retainer-invoices",
-      "action": "mark-draft",
-      "included": true
-    },
-    {
-      "method": "POST",
-      "path": "/retainerinvoices/:id/submit",
-      "resource": "retainer-invoices",
-      "action": "submit-approval",
-      "included": true
-    },
-    {
-      "method": "POST",
-      "path": "/retainerinvoices/:id/approve",
-      "resource": "retainer-invoices",
-      "action": "approve",
-      "included": true
-    },
-    {
-      "method": "POST",
-      "path": "/retainerinvoices/:id/email",
-      "resource": "retainer-invoices",
-      "action": "email",
-      "included": true
-    },
-    {
-      "method": "GET",
-      "path": "/retainerinvoices/:id/email",
-      "resource": "retainer-invoices",
-      "action": "get-email-content",
-      "included": true
-    },
-    {
-      "method": "PUT",
-      "path": "/retainerinvoices/:id/address/billing",
-      "resource": "retainer-invoices",
-      "action": "update-billing-address",
-      "included": true
-    },
-    {
-      "method": "GET",
-      "path": "/retainerinvoices/templates",
-      "resource": "retainer-invoices",
-      "action": "list-templates",
-      "included": true
-    },
-    {
-      "method": "PUT",
-      "path": "/retainerinvoices/:id/templates/:templateId",
-      "resource": "retainer-invoices",
-      "action": "update-template",
-      "included": true
-    },
-    {
-      "method": "POST",
-      "path": "/retainerinvoices/:id/attachment",
-      "resource": "retainer-invoices",
-      "action": "add-attachment",
-      "included": true
-    },
-    {
-      "method": "GET",
-      "path": "/retainerinvoices/:id/attachment",
-      "resource": "retainer-invoices",
-      "action": "get-attachment",
-      "included": true
-    },
-    {
-      "method": "DELETE",
-      "path": "/retainerinvoices/:id/documents/:documentId",
-      "resource": "retainer-invoices",
-      "action": "delete-attachment",
-      "included": true
-    },
-    {
-      "method": "POST",
-      "path": "/retainerinvoices/:id/comments",
-      "resource": "retainer-invoices",
-      "action": "add-comment",
-      "included": true
-    },
-    {
-      "method": "GET",
-      "path": "/retainerinvoices/:id/comments",
-      "resource": "retainer-invoices",
-      "action": "list-comments",
-      "included": true
-    },
-    {
-      "method": "PUT",
-      "path": "/retainerinvoices/:id/comments/:commentId",
-      "resource": "retainer-invoices",
-      "action": "update-comment",
-      "included": true
-    },
-    {
-      "method": "DELETE",
-      "path": "/retainerinvoices/:id/comments/:commentId",
-      "resource": "retainer-invoices",
-      "action": "delete-comment",
-      "included": true
-    },
-    {
-      "method": "GET",
-      "path": "/customerpayments",
-      "resource": "customer-payments",
-      "action": "list",
-      "included": true
-    },
-    {
-      "method": "GET",
-      "path": "/customerpayments/:id",
-      "resource": "customer-payments",
-      "action": "get",
-      "included": true
-    },
-    {
-      "method": "POST",
-      "path": "/customerpayments",
-      "resource": "customer-payments",
-      "action": "create",
-      "included": true
-    },
-    {
-      "method": "PUT",
-      "path": "/customerpayments/:id",
-      "resource": "customer-payments",
-      "action": "update",
-      "included": true
-    },
-    {
-      "method": "DELETE",
-      "path": "/customerpayments/:id",
-      "resource": "customer-payments",
-      "action": "delete",
-      "included": true
-    },
-    {
-      "method": "PUT",
-      "path": "/customerpayment/:id/customfields",
-      "resource": "customer-payments",
-      "action": "update-custom-field",
-      "included": true
-    },
-    {
-      "method": "GET",
-      "path": "/salesreturns",
-      "resource": "sales-returns",
-      "action": "list",
-      "included": true
-    },
-    {
-      "method": "GET",
-      "path": "/salesreturns/:id",
-      "resource": "sales-returns",
-      "action": "get",
-      "included": true
-    },
-    {
-      "method": "POST",
-      "path": "/salesreturns",
-      "resource": "sales-returns",
-      "action": "create",
-      "included": true
-    },
-    {
-      "method": "PUT",
-      "path": "/salesreturns/:id",
-      "resource": "sales-returns",
-      "action": "update",
-      "included": true
-    },
-    {
-      "method": "DELETE",
-      "path": "/salesreturns/:id",
-      "resource": "sales-returns",
-      "action": "delete",
-      "included": true
-    },
-    {
-      "method": "POST",
-      "path": "/salesreturnreceives",
-      "resource": "sales-returns",
-      "action": "create-receive",
-      "included": true
-    },
-    {
-      "method": "DELETE",
-      "path": "/salesreturnreceives/:receiveId",
-      "resource": "sales-returns",
-      "action": "delete-receive",
       "included": true
     },
     {
@@ -1294,6 +468,776 @@
     },
     {
       "method": "GET",
+      "path": "/settings/currencies",
+      "resource": "currencies",
+      "action": "list",
+      "included": true
+    },
+    {
+      "method": "GET",
+      "path": "/settings/currencies/:id",
+      "resource": "currencies",
+      "action": "get",
+      "included": true
+    },
+    {
+      "method": "POST",
+      "path": "/settings/currencies",
+      "resource": "currencies",
+      "action": "create",
+      "included": true
+    },
+    {
+      "method": "PUT",
+      "path": "/settings/currencies/:id",
+      "resource": "currencies",
+      "action": "update",
+      "included": true
+    },
+    {
+      "method": "DELETE",
+      "path": "/settings/currencies/:id",
+      "resource": "currencies",
+      "action": "delete",
+      "included": true
+    },
+    {
+      "method": "GET",
+      "path": "/customerpayments",
+      "resource": "customer-payments",
+      "action": "list",
+      "included": true
+    },
+    {
+      "method": "GET",
+      "path": "/customerpayments/:id",
+      "resource": "customer-payments",
+      "action": "get",
+      "included": true
+    },
+    {
+      "method": "POST",
+      "path": "/customerpayments",
+      "resource": "customer-payments",
+      "action": "create",
+      "included": true
+    },
+    {
+      "method": "PUT",
+      "path": "/customerpayments/:id",
+      "resource": "customer-payments",
+      "action": "update",
+      "included": true
+    },
+    {
+      "method": "DELETE",
+      "path": "/customerpayments/:id",
+      "resource": "customer-payments",
+      "action": "delete",
+      "included": true
+    },
+    {
+      "method": "PUT",
+      "path": "/customerpayment/:id/customfields",
+      "resource": "customer-payments",
+      "action": "update-custom-field",
+      "included": true
+    },
+    {
+      "method": "GET",
+      "path": "/deliverychallans",
+      "resource": "delivery-challans",
+      "action": "list",
+      "included": true
+    },
+    {
+      "method": "GET",
+      "path": "/deliverychallans/:id",
+      "resource": "delivery-challans",
+      "action": "get",
+      "included": true
+    },
+    {
+      "method": "POST",
+      "path": "/deliverychallans",
+      "resource": "delivery-challans",
+      "action": "create",
+      "included": true
+    },
+    {
+      "method": "PUT",
+      "path": "/deliverychallans/:id",
+      "resource": "delivery-challans",
+      "action": "update",
+      "included": true
+    },
+    {
+      "method": "DELETE",
+      "path": "/deliverychallans/:id",
+      "resource": "delivery-challans",
+      "action": "delete",
+      "included": true
+    },
+    {
+      "method": "POST",
+      "path": "/deliverychallans/:id/status/open",
+      "resource": "delivery-challans",
+      "action": "mark-open",
+      "included": true
+    },
+    {
+      "method": "POST",
+      "path": "/deliverychallans/:id/status/delivered",
+      "resource": "delivery-challans",
+      "action": "mark-delivered",
+      "included": true
+    },
+    {
+      "method": "POST",
+      "path": "/deliverychallans/:id/status/returned",
+      "resource": "delivery-challans",
+      "action": "mark-returned",
+      "included": true
+    },
+    {
+      "method": "POST",
+      "path": "/deliverychallans/:id/status/undelivered",
+      "resource": "delivery-challans",
+      "action": "mark-undelivered",
+      "included": true
+    },
+    {
+      "method": "PUT",
+      "path": "/deliverychallans/return",
+      "resource": "delivery-challans",
+      "action": "return-items",
+      "included": true
+    },
+    {
+      "method": "PUT",
+      "path": "/deliverychallans/undo/return",
+      "resource": "delivery-challans",
+      "action": "undo-return",
+      "included": true
+    },
+    {
+      "method": "POST",
+      "path": "/deliverychallans/:id/attachment",
+      "resource": "delivery-challans",
+      "action": "add-attachment",
+      "included": true
+    },
+    {
+      "method": "GET",
+      "path": "/deliverychallans/:id/documents/:documentId",
+      "resource": "delivery-challans",
+      "action": "get-attachment",
+      "included": true
+    },
+    {
+      "method": "DELETE",
+      "path": "/deliverychallans/:id/documents/:documentId",
+      "resource": "delivery-challans",
+      "action": "delete-attachment",
+      "included": true
+    },
+    {
+      "method": "GET",
+      "path": "/deliverychallans/templates",
+      "resource": "delivery-challans",
+      "action": "list-templates",
+      "included": true
+    },
+    {
+      "method": "PUT",
+      "path": "/deliverychallans/:id/templates/:templateId",
+      "resource": "delivery-challans",
+      "action": "update-template",
+      "included": true
+    },
+    {
+      "method": "PUT",
+      "path": "/deliverychallans/:id/address/shipping",
+      "resource": "delivery-challans",
+      "action": "update-shipping-address",
+      "included": true
+    },
+    {
+      "method": "GET",
+      "path": "/inventoryadjustments",
+      "resource": "inventory-adjustments",
+      "action": "list",
+      "included": true
+    },
+    {
+      "method": "GET",
+      "path": "/inventoryadjustments/:id",
+      "resource": "inventory-adjustments",
+      "action": "get",
+      "included": true
+    },
+    {
+      "method": "POST",
+      "path": "/inventoryadjustments",
+      "resource": "inventory-adjustments",
+      "action": "create",
+      "included": true
+    },
+    {
+      "method": "PUT",
+      "path": "/inventoryadjustments/:id",
+      "resource": "inventory-adjustments",
+      "action": "update",
+      "included": true
+    },
+    {
+      "method": "DELETE",
+      "path": "/inventoryadjustments/:id",
+      "resource": "inventory-adjustments",
+      "action": "delete",
+      "included": true
+    },
+    {
+      "method": "GET",
+      "path": "/invoices",
+      "resource": "invoices",
+      "action": "list",
+      "included": true
+    },
+    {
+      "method": "GET",
+      "path": "/invoices/:id",
+      "resource": "invoices",
+      "action": "get",
+      "included": true
+    },
+    {
+      "method": "POST",
+      "path": "/invoices",
+      "resource": "invoices",
+      "action": "create",
+      "included": true
+    },
+    {
+      "method": "PUT",
+      "path": "/invoices/:id",
+      "resource": "invoices",
+      "action": "update",
+      "included": true
+    },
+    {
+      "method": "DELETE",
+      "path": "/invoices/:id",
+      "resource": "invoices",
+      "action": "delete",
+      "included": true
+    },
+    {
+      "method": "POST",
+      "path": "/invoices/:id/status/sent",
+      "resource": "invoices",
+      "action": "mark-sent",
+      "included": true
+    },
+    {
+      "method": "POST",
+      "path": "/invoices/:id/status/void",
+      "resource": "invoices",
+      "action": "mark-void",
+      "included": true
+    },
+    {
+      "method": "POST",
+      "path": "/invoices/:id/status/draft",
+      "resource": "invoices",
+      "action": "mark-draft",
+      "included": true
+    },
+    {
+      "method": "PUT",
+      "path": "/invoice/:id/customfields",
+      "resource": "invoices",
+      "action": "update-custom-field",
+      "included": true
+    },
+    {
+      "method": "POST",
+      "path": "/invoices/:id/email",
+      "resource": "invoices",
+      "action": "email",
+      "included": true
+    },
+    {
+      "method": "GET",
+      "path": "/invoices/:id/email",
+      "resource": "invoices",
+      "action": "get-email-content",
+      "included": true
+    },
+    {
+      "method": "POST",
+      "path": "/invoices/email",
+      "resource": "invoices",
+      "action": "email-invoices",
+      "included": true
+    },
+    {
+      "method": "GET",
+      "path": "/invoices/:id/paymentreminder",
+      "resource": "invoices",
+      "action": "get-payment-reminder",
+      "included": true
+    },
+    {
+      "method": "POST",
+      "path": "/invoices/:id/paymentreminder/disable",
+      "resource": "invoices",
+      "action": "disable-reminder",
+      "included": true
+    },
+    {
+      "method": "POST",
+      "path": "/invoices/:id/paymentreminder/enable",
+      "resource": "invoices",
+      "action": "enable-reminder",
+      "included": true
+    },
+    {
+      "method": "GET",
+      "path": "/invoices/pdf",
+      "resource": "invoices",
+      "action": "bulk-export",
+      "included": true
+    },
+    {
+      "method": "GET",
+      "path": "/invoices/print",
+      "resource": "invoices",
+      "action": "bulk-print",
+      "included": true
+    },
+    {
+      "method": "POST",
+      "path": "/invoices/:id/writeoff",
+      "resource": "invoices",
+      "action": "write-off",
+      "included": true
+    },
+    {
+      "method": "POST",
+      "path": "/invoices/:id/writeoff/cancel",
+      "resource": "invoices",
+      "action": "cancel-writeoff",
+      "included": true
+    },
+    {
+      "method": "POST",
+      "path": "/invoices/:id/credits",
+      "resource": "invoices",
+      "action": "apply-credits",
+      "included": true
+    },
+    {
+      "method": "GET",
+      "path": "/invoices/:id/payments",
+      "resource": "invoices",
+      "action": "list-payments",
+      "included": true
+    },
+    {
+      "method": "GET",
+      "path": "/invoices/:id/creditsapplied",
+      "resource": "invoices",
+      "action": "list-credits-applied",
+      "included": true
+    },
+    {
+      "method": "DELETE",
+      "path": "/invoices/:id/payments/:paymentId",
+      "resource": "invoices",
+      "action": "delete-payment",
+      "included": true
+    },
+    {
+      "method": "DELETE",
+      "path": "/invoices/:id/creditsapplied/:creditId",
+      "resource": "invoices",
+      "action": "delete-credit",
+      "included": true
+    },
+    {
+      "method": "PUT",
+      "path": "/invoices/:id/address/billing",
+      "resource": "invoices",
+      "action": "update-billing-address",
+      "included": true
+    },
+    {
+      "method": "PUT",
+      "path": "/invoices/:id/address/shipping",
+      "resource": "invoices",
+      "action": "update-shipping-address",
+      "included": true
+    },
+    {
+      "method": "GET",
+      "path": "/invoices/templates",
+      "resource": "invoices",
+      "action": "list-templates",
+      "included": true
+    },
+    {
+      "method": "PUT",
+      "path": "/invoices/:id/templates/:templateId",
+      "resource": "invoices",
+      "action": "update-template",
+      "included": true
+    },
+    {
+      "method": "POST",
+      "path": "/invoices/:id/attachment",
+      "resource": "invoices",
+      "action": "add-attachment",
+      "included": true
+    },
+    {
+      "method": "GET",
+      "path": "/invoices/:id/attachment",
+      "resource": "invoices",
+      "action": "get-attachment",
+      "included": true
+    },
+    {
+      "method": "PUT",
+      "path": "/invoices/:id/attachment",
+      "resource": "invoices",
+      "action": "update-attachment",
+      "included": true
+    },
+    {
+      "method": "DELETE",
+      "path": "/invoices/:id/attachment",
+      "resource": "invoices",
+      "action": "delete-attachment",
+      "included": true
+    },
+    {
+      "method": "POST",
+      "path": "/invoices/:id/comments",
+      "resource": "invoices",
+      "action": "add-comment",
+      "included": true
+    },
+    {
+      "method": "GET",
+      "path": "/invoices/:id/comments",
+      "resource": "invoices",
+      "action": "list-comments",
+      "included": true
+    },
+    {
+      "method": "PUT",
+      "path": "/invoices/:id/comments/:commentId",
+      "resource": "invoices",
+      "action": "update-comment",
+      "included": true
+    },
+    {
+      "method": "DELETE",
+      "path": "/invoices/:id/comments/:commentId",
+      "resource": "invoices",
+      "action": "delete-comment",
+      "included": true
+    },
+    {
+      "method": "GET",
+      "path": "/itemgroups",
+      "resource": "item-groups",
+      "action": "list",
+      "included": true
+    },
+    {
+      "method": "GET",
+      "path": "/itemgroups/:id",
+      "resource": "item-groups",
+      "action": "get",
+      "included": true
+    },
+    {
+      "method": "POST",
+      "path": "/itemgroups",
+      "resource": "item-groups",
+      "action": "create",
+      "included": true
+    },
+    {
+      "method": "PUT",
+      "path": "/itemgroups/:id",
+      "resource": "item-groups",
+      "action": "update",
+      "included": true
+    },
+    {
+      "method": "DELETE",
+      "path": "/itemgroups/:id",
+      "resource": "item-groups",
+      "action": "delete",
+      "included": true
+    },
+    {
+      "method": "POST",
+      "path": "/itemgroups/:id/active",
+      "resource": "item-groups",
+      "action": "mark-active",
+      "included": true
+    },
+    {
+      "method": "POST",
+      "path": "/itemgroups/:id/inactive",
+      "resource": "item-groups",
+      "action": "mark-inactive",
+      "included": true
+    },
+    {
+      "method": "GET",
+      "path": "/items",
+      "resource": "items",
+      "action": "list",
+      "included": true
+    },
+    {
+      "method": "GET",
+      "path": "/items/:id",
+      "resource": "items",
+      "action": "get",
+      "included": true
+    },
+    {
+      "method": "POST",
+      "path": "/items",
+      "resource": "items",
+      "action": "create",
+      "included": true
+    },
+    {
+      "method": "PUT",
+      "path": "/items/:id",
+      "resource": "items",
+      "action": "update",
+      "included": true
+    },
+    {
+      "method": "DELETE",
+      "path": "/items/:id",
+      "resource": "items",
+      "action": "delete",
+      "included": true
+    },
+    {
+      "method": "GET",
+      "path": "/itemdetails",
+      "resource": "items",
+      "action": "bulk-fetch",
+      "included": true
+    },
+    {
+      "method": "PUT",
+      "path": "/item/:id/customfields",
+      "resource": "items",
+      "action": "update-custom-fields",
+      "included": true
+    },
+    {
+      "method": "DELETE",
+      "path": "/items/:id/image",
+      "resource": "items",
+      "action": "delete-image",
+      "included": true
+    },
+    {
+      "method": "POST",
+      "path": "/items/:id/active",
+      "resource": "items",
+      "action": "mark-active",
+      "included": true
+    },
+    {
+      "method": "POST",
+      "path": "/items/:id/inactive",
+      "resource": "items",
+      "action": "mark-inactive",
+      "included": true
+    },
+    {
+      "method": "POST",
+      "path": "/settings/locations/enable",
+      "resource": "locations",
+      "action": "enable",
+      "included": true
+    },
+    {
+      "method": "GET",
+      "path": "/locations",
+      "resource": "locations",
+      "action": "list",
+      "included": true
+    },
+    {
+      "method": "POST",
+      "path": "/locations",
+      "resource": "locations",
+      "action": "create",
+      "included": true
+    },
+    {
+      "method": "PUT",
+      "path": "/locations/:id",
+      "resource": "locations",
+      "action": "update",
+      "included": true
+    },
+    {
+      "method": "DELETE",
+      "path": "/locations/:id",
+      "resource": "locations",
+      "action": "delete",
+      "included": true
+    },
+    {
+      "method": "POST",
+      "path": "/locations/:id/active",
+      "resource": "locations",
+      "action": "mark-active",
+      "included": true
+    },
+    {
+      "method": "POST",
+      "path": "/locations/:id/inactive",
+      "resource": "locations",
+      "action": "mark-inactive",
+      "included": true
+    },
+    {
+      "method": "POST",
+      "path": "/locations/:id/markasprimary",
+      "resource": "locations",
+      "action": "mark-primary",
+      "included": true
+    },
+    {
+      "method": "GET",
+      "path": "/organizations",
+      "resource": "organizations",
+      "action": "list",
+      "included": true
+    },
+    {
+      "method": "GET",
+      "path": "/organizations/:id",
+      "resource": "organizations",
+      "action": "get",
+      "included": true
+    },
+    {
+      "method": "POST",
+      "path": "/organizations",
+      "resource": "organizations",
+      "action": "create",
+      "included": true
+    },
+    {
+      "method": "PUT",
+      "path": "/organizations/:id",
+      "resource": "organizations",
+      "action": "update",
+      "included": true
+    },
+    {
+      "method": "GET",
+      "path": "/packages",
+      "resource": "packages",
+      "action": "list",
+      "included": true
+    },
+    {
+      "method": "GET",
+      "path": "/packages/:id",
+      "resource": "packages",
+      "action": "get",
+      "included": true
+    },
+    {
+      "method": "POST",
+      "path": "/packages",
+      "resource": "packages",
+      "action": "create",
+      "included": true
+    },
+    {
+      "method": "PUT",
+      "path": "/packages/:id",
+      "resource": "packages",
+      "action": "update",
+      "included": true
+    },
+    {
+      "method": "DELETE",
+      "path": "/packages/:id",
+      "resource": "packages",
+      "action": "delete",
+      "included": true
+    },
+    {
+      "method": "GET",
+      "path": "/packages/print",
+      "resource": "packages",
+      "action": "bulk-print",
+      "included": true
+    },
+    {
+      "method": "GET",
+      "path": "/pricebooks",
+      "resource": "price-lists",
+      "action": "list",
+      "included": true
+    },
+    {
+      "method": "POST",
+      "path": "/pricebooks",
+      "resource": "price-lists",
+      "action": "create",
+      "included": true
+    },
+    {
+      "method": "PUT",
+      "path": "/pricebooks/:id",
+      "resource": "price-lists",
+      "action": "update",
+      "included": true
+    },
+    {
+      "method": "DELETE",
+      "path": "/pricebooks/:id",
+      "resource": "price-lists",
+      "action": "delete",
+      "included": true
+    },
+    {
+      "method": "POST",
+      "path": "/pricebooks/:id/active",
+      "resource": "price-lists",
+      "action": "mark-active",
+      "included": true
+    },
+    {
+      "method": "POST",
+      "path": "/pricebooks/:id/inactive",
+      "resource": "price-lists",
+      "action": "mark-inactive",
+      "included": true
+    },
+    {
+      "method": "GET",
       "path": "/purchaseorders",
       "resource": "purchase-orders",
       "action": "list",
@@ -1371,366 +1315,422 @@
     },
     {
       "method": "GET",
-      "path": "/bills",
-      "resource": "bills",
+      "path": "/reportingtags",
+      "resource": "reporting-tags",
       "action": "list",
       "included": true
     },
     {
-      "method": "GET",
-      "path": "/bills/:id",
-      "resource": "bills",
-      "action": "get",
-      "included": true
-    },
-    {
       "method": "POST",
-      "path": "/bills",
-      "resource": "bills",
+      "path": "/reportingtags",
+      "resource": "reporting-tags",
       "action": "create",
       "included": true
     },
     {
       "method": "PUT",
-      "path": "/bills/:id",
-      "resource": "bills",
+      "path": "/reportingtags/:id",
+      "resource": "reporting-tags",
       "action": "update",
       "included": true
     },
     {
       "method": "DELETE",
-      "path": "/bills/:id",
-      "resource": "bills",
+      "path": "/reportingtags/:id",
+      "resource": "reporting-tags",
       "action": "delete",
       "included": true
     },
     {
+      "method": "POST",
+      "path": "/reportingtags/:id",
+      "resource": "reporting-tags",
+      "action": "mark-default-option",
+      "included": true
+    },
+    {
       "method": "PUT",
-      "path": "/bill/:id/customfields",
-      "resource": "bills",
-      "action": "update-custom-field",
+      "path": "/reportingtags/:id/options",
+      "resource": "reporting-tags",
+      "action": "update-options",
+      "included": true
+    },
+    {
+      "method": "PUT",
+      "path": "/reportingtags/:id/criteria",
+      "resource": "reporting-tags",
+      "action": "update-visibility-conditions",
       "included": true
     },
     {
       "method": "POST",
-      "path": "/bills/:id/status/open",
-      "resource": "bills",
-      "action": "mark-open",
+      "path": "/reportingtags/:id/active",
+      "resource": "reporting-tags",
+      "action": "mark-active",
       "included": true
     },
     {
       "method": "POST",
-      "path": "/bills/:id/status/void",
-      "resource": "bills",
+      "path": "/reportingtags/:id/inactive",
+      "resource": "reporting-tags",
+      "action": "mark-inactive",
+      "included": true
+    },
+    {
+      "method": "POST",
+      "path": "/reportingtags/:id/option/:optionId/active",
+      "resource": "reporting-tags",
+      "action": "mark-option-active",
+      "included": true
+    },
+    {
+      "method": "POST",
+      "path": "/reportingtags/:id/option/:optionId/inactive",
+      "resource": "reporting-tags",
+      "action": "mark-option-inactive",
+      "included": true
+    },
+    {
+      "method": "GET",
+      "path": "/reportingtags/options",
+      "resource": "reporting-tags",
+      "action": "get-options-detail",
+      "included": true
+    },
+    {
+      "method": "GET",
+      "path": "/reportingtags/:id/options/all",
+      "resource": "reporting-tags",
+      "action": "get-all-options",
+      "included": true
+    },
+    {
+      "method": "PUT",
+      "path": "/reportingtags/reorder",
+      "resource": "reporting-tags",
+      "action": "reorder",
+      "included": true
+    },
+    {
+      "method": "GET",
+      "path": "/retainerinvoices",
+      "resource": "retainer-invoices",
+      "action": "list",
+      "included": true
+    },
+    {
+      "method": "GET",
+      "path": "/retainerinvoices/:id",
+      "resource": "retainer-invoices",
+      "action": "get",
+      "included": true
+    },
+    {
+      "method": "POST",
+      "path": "/retainerinvoices",
+      "resource": "retainer-invoices",
+      "action": "create",
+      "included": true
+    },
+    {
+      "method": "PUT",
+      "path": "/retainerinvoices/:id",
+      "resource": "retainer-invoices",
+      "action": "update",
+      "included": true
+    },
+    {
+      "method": "DELETE",
+      "path": "/retainerinvoices/:id",
+      "resource": "retainer-invoices",
+      "action": "delete",
+      "included": true
+    },
+    {
+      "method": "POST",
+      "path": "/retainerinvoices/:id/status/sent",
+      "resource": "retainer-invoices",
+      "action": "mark-sent",
+      "included": true
+    },
+    {
+      "method": "POST",
+      "path": "/retainerinvoices/:id/status/void",
+      "resource": "retainer-invoices",
       "action": "mark-void",
       "included": true
     },
     {
-      "method": "GET",
-      "path": "/vendorcredits",
-      "resource": "vendor-credits",
-      "action": "list",
-      "included": true
-    },
-    {
-      "method": "GET",
-      "path": "/vendorcredits/:id",
-      "resource": "vendor-credits",
-      "action": "get",
+      "method": "POST",
+      "path": "/retainerinvoices/:id/status/draft",
+      "resource": "retainer-invoices",
+      "action": "mark-draft",
       "included": true
     },
     {
       "method": "POST",
-      "path": "/vendorcredits",
-      "resource": "vendor-credits",
-      "action": "create",
-      "included": true
-    },
-    {
-      "method": "PUT",
-      "path": "/vendorcredits/:id",
-      "resource": "vendor-credits",
-      "action": "update",
-      "included": true
-    },
-    {
-      "method": "DELETE",
-      "path": "/vendorcredits/:id",
-      "resource": "vendor-credits",
-      "action": "delete",
+      "path": "/retainerinvoices/:id/submit",
+      "resource": "retainer-invoices",
+      "action": "submit-approval",
       "included": true
     },
     {
       "method": "POST",
-      "path": "/vendorcredits/:id/status/open",
-      "resource": "vendor-credits",
-      "action": "convert-to-open",
-      "included": true
-    },
-    {
-      "method": "POST",
-      "path": "/vendorcredits/:id/status/void",
-      "resource": "vendor-credits",
-      "action": "void",
-      "included": true
-    },
-    {
-      "method": "POST",
-      "path": "/vendorcredits/:id/submit",
-      "resource": "vendor-credits",
-      "action": "submit",
-      "included": true
-    },
-    {
-      "method": "POST",
-      "path": "/vendorcredits/:id/approve",
-      "resource": "vendor-credits",
+      "path": "/retainerinvoices/:id/approve",
+      "resource": "retainer-invoices",
       "action": "approve",
       "included": true
     },
     {
       "method": "POST",
-      "path": "/vendorcredits/:id/bills",
-      "resource": "vendor-credits",
-      "action": "apply-credits-to-bill",
+      "path": "/retainerinvoices/:id/email",
+      "resource": "retainer-invoices",
+      "action": "email",
       "included": true
     },
     {
       "method": "GET",
-      "path": "/vendorcredits/:id/bills",
-      "resource": "vendor-credits",
-      "action": "list-bills-credited",
-      "included": true
-    },
-    {
-      "method": "DELETE",
-      "path": "/vendorcredits/:id/bills/:billId",
-      "resource": "vendor-credits",
-      "action": "delete-bills-credited",
-      "included": true
-    },
-    {
-      "method": "POST",
-      "path": "/vendorcredits/:id/refunds",
-      "resource": "vendor-credits",
-      "action": "refund",
-      "included": true
-    },
-    {
-      "method": "GET",
-      "path": "/vendorcredits/:id/refunds",
-      "resource": "vendor-credits",
-      "action": "list-refunds",
-      "included": true
-    },
-    {
-      "method": "GET",
-      "path": "/vendorcredits/:id/refunds/:refundId",
-      "resource": "vendor-credits",
-      "action": "get-refund",
+      "path": "/retainerinvoices/:id/email",
+      "resource": "retainer-invoices",
+      "action": "get-email-content",
       "included": true
     },
     {
       "method": "PUT",
-      "path": "/vendorcredits/:id/refunds/:refundId",
-      "resource": "vendor-credits",
-      "action": "update-refund",
-      "included": true
-    },
-    {
-      "method": "DELETE",
-      "path": "/vendorcredits/:id/refunds/:refundId",
-      "resource": "vendor-credits",
-      "action": "delete-refund",
+      "path": "/retainerinvoices/:id/address/billing",
+      "resource": "retainer-invoices",
+      "action": "update-billing-address",
       "included": true
     },
     {
       "method": "GET",
-      "path": "/vendorcredits/refunds",
-      "resource": "vendor-credits",
-      "action": "list-vendor-credit-refunds",
+      "path": "/retainerinvoices/templates",
+      "resource": "retainer-invoices",
+      "action": "list-templates",
+      "included": true
+    },
+    {
+      "method": "PUT",
+      "path": "/retainerinvoices/:id/templates/:templateId",
+      "resource": "retainer-invoices",
+      "action": "update-template",
       "included": true
     },
     {
       "method": "POST",
-      "path": "/vendorcredits/:id/comments",
-      "resource": "vendor-credits",
+      "path": "/retainerinvoices/:id/attachment",
+      "resource": "retainer-invoices",
+      "action": "add-attachment",
+      "included": true
+    },
+    {
+      "method": "GET",
+      "path": "/retainerinvoices/:id/attachment",
+      "resource": "retainer-invoices",
+      "action": "get-attachment",
+      "included": true
+    },
+    {
+      "method": "DELETE",
+      "path": "/retainerinvoices/:id/documents/:documentId",
+      "resource": "retainer-invoices",
+      "action": "delete-attachment",
+      "included": true
+    },
+    {
+      "method": "POST",
+      "path": "/retainerinvoices/:id/comments",
+      "resource": "retainer-invoices",
       "action": "add-comment",
       "included": true
     },
     {
       "method": "GET",
-      "path": "/vendorcredits/:id/comments",
-      "resource": "vendor-credits",
+      "path": "/retainerinvoices/:id/comments",
+      "resource": "retainer-invoices",
       "action": "list-comments",
       "included": true
     },
     {
+      "method": "PUT",
+      "path": "/retainerinvoices/:id/comments/:commentId",
+      "resource": "retainer-invoices",
+      "action": "update-comment",
+      "included": true
+    },
+    {
       "method": "DELETE",
-      "path": "/vendorcredits/:id/comments/:commentId",
-      "resource": "vendor-credits",
+      "path": "/retainerinvoices/:id/comments/:commentId",
+      "resource": "retainer-invoices",
       "action": "delete-comment",
       "included": true
     },
     {
-      "method": "POST",
-      "path": "/settings/locations/enable",
-      "resource": "locations",
-      "action": "enable",
-      "included": true
-    },
-    {
       "method": "GET",
-      "path": "/locations",
-      "resource": "locations",
-      "action": "list",
-      "included": true
-    },
-    {
-      "method": "POST",
-      "path": "/locations",
-      "resource": "locations",
-      "action": "create",
-      "included": true
-    },
-    {
-      "method": "PUT",
-      "path": "/locations/:id",
-      "resource": "locations",
-      "action": "update",
-      "included": true
-    },
-    {
-      "method": "DELETE",
-      "path": "/locations/:id",
-      "resource": "locations",
-      "action": "delete",
-      "included": true
-    },
-    {
-      "method": "POST",
-      "path": "/locations/:id/active",
-      "resource": "locations",
-      "action": "mark-active",
-      "included": true
-    },
-    {
-      "method": "POST",
-      "path": "/locations/:id/inactive",
-      "resource": "locations",
-      "action": "mark-inactive",
-      "included": true
-    },
-    {
-      "method": "POST",
-      "path": "/locations/:id/markasprimary",
-      "resource": "locations",
-      "action": "mark-primary",
-      "included": true
-    },
-    {
-      "method": "GET",
-      "path": "/pricebooks",
-      "resource": "price-lists",
-      "action": "list",
-      "included": true
-    },
-    {
-      "method": "POST",
-      "path": "/pricebooks",
-      "resource": "price-lists",
-      "action": "create",
-      "included": true
-    },
-    {
-      "method": "PUT",
-      "path": "/pricebooks/:id",
-      "resource": "price-lists",
-      "action": "update",
-      "included": true
-    },
-    {
-      "method": "DELETE",
-      "path": "/pricebooks/:id",
-      "resource": "price-lists",
-      "action": "delete",
-      "included": true
-    },
-    {
-      "method": "POST",
-      "path": "/pricebooks/:id/active",
-      "resource": "price-lists",
-      "action": "mark-active",
-      "included": true
-    },
-    {
-      "method": "POST",
-      "path": "/pricebooks/:id/inactive",
-      "resource": "price-lists",
-      "action": "mark-inactive",
-      "included": true
-    },
-    {
-      "method": "GET",
-      "path": "/users",
-      "resource": "users",
+      "path": "/salesorders",
+      "resource": "sales-orders",
       "action": "list",
       "included": true
     },
     {
       "method": "GET",
-      "path": "/users/:id",
-      "resource": "users",
+      "path": "/salesorders/:id",
+      "resource": "sales-orders",
       "action": "get",
       "included": true
     },
     {
       "method": "POST",
-      "path": "/users",
-      "resource": "users",
+      "path": "/salesorders",
+      "resource": "sales-orders",
       "action": "create",
       "included": true
     },
     {
       "method": "PUT",
-      "path": "/users/:id",
-      "resource": "users",
+      "path": "/salesorders/:id",
+      "resource": "sales-orders",
       "action": "update",
       "included": true
     },
     {
       "method": "DELETE",
-      "path": "/users/:id",
-      "resource": "users",
+      "path": "/salesorders/:id",
+      "resource": "sales-orders",
       "action": "delete",
       "included": true
     },
     {
+      "method": "DELETE",
+      "path": "/salesorders",
+      "resource": "sales-orders",
+      "action": "bulk-delete",
+      "included": true
+    },
+    {
+      "method": "POST",
+      "path": "/salesorders/:id/status/confirmed",
+      "resource": "sales-orders",
+      "action": "mark-confirmed",
+      "included": true
+    },
+    {
+      "method": "POST",
+      "path": "/salesorders/:id/status/void",
+      "resource": "sales-orders",
+      "action": "mark-void",
+      "included": true
+    },
+    {
+      "method": "POST",
+      "path": "/salesorders/status/confirmed",
+      "resource": "sales-orders",
+      "action": "bulk-confirm",
+      "included": true
+    },
+    {
+      "method": "POST",
+      "path": "/salesorders/:id/comments",
+      "resource": "sales-orders",
+      "action": "add-comment",
+      "included": true
+    },
+    {
       "method": "GET",
-      "path": "/users/me",
-      "resource": "users",
-      "action": "get-current-user",
+      "path": "/salesorders/:id/comments",
+      "resource": "sales-orders",
+      "action": "list-comments",
+      "included": true
+    },
+    {
+      "method": "DELETE",
+      "path": "/salesorders/:id/comments/:commentId",
+      "resource": "sales-orders",
+      "action": "delete-comment",
+      "included": true
+    },
+    {
+      "method": "GET",
+      "path": "/salesreturns",
+      "resource": "sales-returns",
+      "action": "list",
+      "included": true
+    },
+    {
+      "method": "GET",
+      "path": "/salesreturns/:id",
+      "resource": "sales-returns",
+      "action": "get",
       "included": true
     },
     {
       "method": "POST",
-      "path": "/users/:id/invite",
-      "resource": "users",
-      "action": "invite",
+      "path": "/salesreturns",
+      "resource": "sales-returns",
+      "action": "create",
+      "included": true
+    },
+    {
+      "method": "PUT",
+      "path": "/salesreturns/:id",
+      "resource": "sales-returns",
+      "action": "update",
+      "included": true
+    },
+    {
+      "method": "DELETE",
+      "path": "/salesreturns/:id",
+      "resource": "sales-returns",
+      "action": "delete",
       "included": true
     },
     {
       "method": "POST",
-      "path": "/users/:id/active",
-      "resource": "users",
-      "action": "mark-active",
+      "path": "/salesreturnreceives",
+      "resource": "sales-returns",
+      "action": "create-receive",
+      "included": true
+    },
+    {
+      "method": "DELETE",
+      "path": "/salesreturnreceives/:receiveId",
+      "resource": "sales-returns",
+      "action": "delete-receive",
+      "included": true
+    },
+    {
+      "method": "GET",
+      "path": "/shipmentorders/:id",
+      "resource": "shipment-orders",
+      "action": "get",
       "included": true
     },
     {
       "method": "POST",
-      "path": "/users/:id/inactive",
-      "resource": "users",
-      "action": "mark-inactive",
+      "path": "/shipmentorders",
+      "resource": "shipment-orders",
+      "action": "create",
+      "included": true
+    },
+    {
+      "method": "PUT",
+      "path": "/shipmentorders/:id",
+      "resource": "shipment-orders",
+      "action": "update",
+      "included": true
+    },
+    {
+      "method": "DELETE",
+      "path": "/shipmentorders/:id",
+      "resource": "shipment-orders",
+      "action": "delete",
+      "included": true
+    },
+    {
+      "method": "POST",
+      "path": "/shipmentorders/:id/status/delivered",
+      "resource": "shipment-orders",
+      "action": "mark-delivered",
       "included": true
     },
     {
@@ -1987,255 +1987,515 @@
     },
     {
       "method": "GET",
-      "path": "/settings/currencies",
-      "resource": "currencies",
+      "path": "/transferorders",
+      "resource": "transfer-orders",
       "action": "list",
       "included": true
     },
     {
       "method": "GET",
-      "path": "/settings/currencies/:id",
-      "resource": "currencies",
+      "path": "/transferorders/:id",
+      "resource": "transfer-orders",
       "action": "get",
       "included": true
     },
     {
       "method": "POST",
-      "path": "/settings/currencies",
-      "resource": "currencies",
+      "path": "/transferorders",
+      "resource": "transfer-orders",
       "action": "create",
       "included": true
     },
     {
       "method": "PUT",
-      "path": "/settings/currencies/:id",
-      "resource": "currencies",
+      "path": "/transferorders/:id",
+      "resource": "transfer-orders",
       "action": "update",
       "included": true
     },
     {
       "method": "DELETE",
-      "path": "/settings/currencies/:id",
-      "resource": "currencies",
+      "path": "/transferorders/:id",
+      "resource": "transfer-orders",
       "action": "delete",
       "included": true
     },
     {
+      "method": "POST",
+      "path": "/transferorders/:id/markastransferred",
+      "resource": "transfer-orders",
+      "action": "mark-as-transferred",
+      "included": true
+    },
+    {
       "method": "GET",
-      "path": "/deliverychallans",
-      "resource": "delivery-challans",
+      "path": "/users",
+      "resource": "users",
       "action": "list",
       "included": true
     },
     {
       "method": "GET",
-      "path": "/deliverychallans/:id",
-      "resource": "delivery-challans",
+      "path": "/users/:id",
+      "resource": "users",
       "action": "get",
       "included": true
     },
     {
       "method": "POST",
-      "path": "/deliverychallans",
-      "resource": "delivery-challans",
+      "path": "/users",
+      "resource": "users",
       "action": "create",
       "included": true
     },
     {
       "method": "PUT",
-      "path": "/deliverychallans/:id",
-      "resource": "delivery-challans",
+      "path": "/users/:id",
+      "resource": "users",
       "action": "update",
       "included": true
     },
     {
       "method": "DELETE",
-      "path": "/deliverychallans/:id",
-      "resource": "delivery-challans",
+      "path": "/users/:id",
+      "resource": "users",
       "action": "delete",
       "included": true
     },
     {
-      "method": "POST",
-      "path": "/deliverychallans/:id/status/open",
-      "resource": "delivery-challans",
-      "action": "mark-open",
-      "included": true
-    },
-    {
-      "method": "POST",
-      "path": "/deliverychallans/:id/status/delivered",
-      "resource": "delivery-challans",
-      "action": "mark-delivered",
-      "included": true
-    },
-    {
-      "method": "POST",
-      "path": "/deliverychallans/:id/status/returned",
-      "resource": "delivery-challans",
-      "action": "mark-returned",
-      "included": true
-    },
-    {
-      "method": "POST",
-      "path": "/deliverychallans/:id/status/undelivered",
-      "resource": "delivery-challans",
-      "action": "mark-undelivered",
-      "included": true
-    },
-    {
-      "method": "PUT",
-      "path": "/deliverychallans/return",
-      "resource": "delivery-challans",
-      "action": "return-items",
-      "included": true
-    },
-    {
-      "method": "PUT",
-      "path": "/deliverychallans/undo/return",
-      "resource": "delivery-challans",
-      "action": "undo-return",
-      "included": true
-    },
-    {
-      "method": "POST",
-      "path": "/deliverychallans/:id/attachment",
-      "resource": "delivery-challans",
-      "action": "add-attachment",
-      "included": true
-    },
-    {
       "method": "GET",
-      "path": "/deliverychallans/:id/documents/:documentId",
-      "resource": "delivery-challans",
-      "action": "get-attachment",
-      "included": true
-    },
-    {
-      "method": "DELETE",
-      "path": "/deliverychallans/:id/documents/:documentId",
-      "resource": "delivery-challans",
-      "action": "delete-attachment",
-      "included": true
-    },
-    {
-      "method": "GET",
-      "path": "/deliverychallans/templates",
-      "resource": "delivery-challans",
-      "action": "list-templates",
-      "included": true
-    },
-    {
-      "method": "PUT",
-      "path": "/deliverychallans/:id/templates/:templateId",
-      "resource": "delivery-challans",
-      "action": "update-template",
-      "included": true
-    },
-    {
-      "method": "PUT",
-      "path": "/deliverychallans/:id/address/shipping",
-      "resource": "delivery-challans",
-      "action": "update-shipping-address",
-      "included": true
-    },
-    {
-      "method": "GET",
-      "path": "/reportingtags",
-      "resource": "reporting-tags",
-      "action": "list",
+      "path": "/users/me",
+      "resource": "users",
+      "action": "get-current-user",
       "included": true
     },
     {
       "method": "POST",
-      "path": "/reportingtags",
-      "resource": "reporting-tags",
-      "action": "create",
-      "included": true
-    },
-    {
-      "method": "PUT",
-      "path": "/reportingtags/:id",
-      "resource": "reporting-tags",
-      "action": "update",
-      "included": true
-    },
-    {
-      "method": "DELETE",
-      "path": "/reportingtags/:id",
-      "resource": "reporting-tags",
-      "action": "delete",
+      "path": "/users/:id/invite",
+      "resource": "users",
+      "action": "invite",
       "included": true
     },
     {
       "method": "POST",
-      "path": "/reportingtags/:id",
-      "resource": "reporting-tags",
-      "action": "mark-default-option",
-      "included": true
-    },
-    {
-      "method": "PUT",
-      "path": "/reportingtags/:id/options",
-      "resource": "reporting-tags",
-      "action": "update-options",
-      "included": true
-    },
-    {
-      "method": "PUT",
-      "path": "/reportingtags/:id/criteria",
-      "resource": "reporting-tags",
-      "action": "update-visibility-conditions",
-      "included": true
-    },
-    {
-      "method": "POST",
-      "path": "/reportingtags/:id/active",
-      "resource": "reporting-tags",
+      "path": "/users/:id/active",
+      "resource": "users",
       "action": "mark-active",
       "included": true
     },
     {
       "method": "POST",
-      "path": "/reportingtags/:id/inactive",
-      "resource": "reporting-tags",
+      "path": "/users/:id/inactive",
+      "resource": "users",
       "action": "mark-inactive",
       "included": true
     },
     {
-      "method": "POST",
-      "path": "/reportingtags/:id/option/:optionId/active",
-      "resource": "reporting-tags",
-      "action": "mark-option-active",
-      "included": true
-    },
-    {
-      "method": "POST",
-      "path": "/reportingtags/:id/option/:optionId/inactive",
-      "resource": "reporting-tags",
-      "action": "mark-option-inactive",
+      "method": "GET",
+      "path": "/vendorcredits",
+      "resource": "vendor-credits",
+      "action": "list",
       "included": true
     },
     {
       "method": "GET",
-      "path": "/reportingtags/options",
-      "resource": "reporting-tags",
-      "action": "get-options-detail",
+      "path": "/vendorcredits/:id",
+      "resource": "vendor-credits",
+      "action": "get",
       "included": true
     },
     {
-      "method": "GET",
-      "path": "/reportingtags/:id/options/all",
-      "resource": "reporting-tags",
-      "action": "get-all-options",
+      "method": "POST",
+      "path": "/vendorcredits",
+      "resource": "vendor-credits",
+      "action": "create",
       "included": true
     },
     {
       "method": "PUT",
-      "path": "/reportingtags/reorder",
-      "resource": "reporting-tags",
-      "action": "reorder",
+      "path": "/vendorcredits/:id",
+      "resource": "vendor-credits",
+      "action": "update",
       "included": true
+    },
+    {
+      "method": "DELETE",
+      "path": "/vendorcredits/:id",
+      "resource": "vendor-credits",
+      "action": "delete",
+      "included": true
+    },
+    {
+      "method": "POST",
+      "path": "/vendorcredits/:id/status/open",
+      "resource": "vendor-credits",
+      "action": "mark-open",
+      "included": true
+    },
+    {
+      "method": "POST",
+      "path": "/vendorcredits/:id/status/void",
+      "resource": "vendor-credits",
+      "action": "mark-void",
+      "included": true
+    },
+    {
+      "method": "POST",
+      "path": "/vendorcredits/:id/submit",
+      "resource": "vendor-credits",
+      "action": "submit",
+      "included": true
+    },
+    {
+      "method": "POST",
+      "path": "/vendorcredits/:id/approve",
+      "resource": "vendor-credits",
+      "action": "approve",
+      "included": true
+    },
+    {
+      "method": "POST",
+      "path": "/vendorcredits/:id/bills",
+      "resource": "vendor-credits",
+      "action": "apply-credits-to-bill",
+      "included": true
+    },
+    {
+      "method": "GET",
+      "path": "/vendorcredits/:id/bills",
+      "resource": "vendor-credits",
+      "action": "list-bills-credited",
+      "included": true
+    },
+    {
+      "method": "DELETE",
+      "path": "/vendorcredits/:id/bills/:billId",
+      "resource": "vendor-credits",
+      "action": "delete-bills-credited",
+      "included": true
+    },
+    {
+      "method": "POST",
+      "path": "/vendorcredits/:id/refunds",
+      "resource": "vendor-credits",
+      "action": "refund",
+      "included": true
+    },
+    {
+      "method": "GET",
+      "path": "/vendorcredits/:id/refunds",
+      "resource": "vendor-credits",
+      "action": "list-refunds",
+      "included": true
+    },
+    {
+      "method": "GET",
+      "path": "/vendorcredits/:id/refunds/:refundId",
+      "resource": "vendor-credits",
+      "action": "get-refund",
+      "included": true
+    },
+    {
+      "method": "PUT",
+      "path": "/vendorcredits/:id/refunds/:refundId",
+      "resource": "vendor-credits",
+      "action": "update-refund",
+      "included": true
+    },
+    {
+      "method": "DELETE",
+      "path": "/vendorcredits/:id/refunds/:refundId",
+      "resource": "vendor-credits",
+      "action": "delete-refund",
+      "included": true
+    },
+    {
+      "method": "GET",
+      "path": "/vendorcredits/refunds",
+      "resource": "vendor-credits",
+      "action": "list-vendor-credit-refunds",
+      "included": true
+    },
+    {
+      "method": "POST",
+      "path": "/vendorcredits/:id/comments",
+      "resource": "vendor-credits",
+      "action": "add-comment",
+      "included": true
+    },
+    {
+      "method": "GET",
+      "path": "/vendorcredits/:id/comments",
+      "resource": "vendor-credits",
+      "action": "list-comments",
+      "included": true
+    },
+    {
+      "method": "DELETE",
+      "path": "/vendorcredits/:id/comments/:commentId",
+      "resource": "vendor-credits",
+      "action": "delete-comment",
+      "included": true
+    },
+    {
+      "method": "GET",
+      "path": "/bills/:id/comments",
+      "resource": "bills",
+      "action": "comments-family-asymmetry",
+      "included": false,
+      "dropped": true,
+      "reason": "sibling-asymmetry-confirmed",
+      "note": "Explicitly recorded by clify 0.6.0: comments is not part of this resource surface in the generated CLI."
+    },
+    {
+      "method": "GET",
+      "path": "/bundles/:id/comments",
+      "resource": "bundles",
+      "action": "comments-family-asymmetry",
+      "included": false,
+      "dropped": true,
+      "reason": "sibling-asymmetry-confirmed",
+      "note": "Explicitly recorded by clify 0.6.0: comments is not part of this resource surface in the generated CLI."
+    },
+    {
+      "method": "GET",
+      "path": "/composite-items/:id/comments",
+      "resource": "composite-items",
+      "action": "comments-family-asymmetry",
+      "included": false,
+      "dropped": true,
+      "reason": "sibling-asymmetry-confirmed",
+      "note": "Explicitly recorded by clify 0.6.0: comments is not part of this resource surface in the generated CLI."
+    },
+    {
+      "method": "GET",
+      "path": "/contact-persons/:id/comments",
+      "resource": "contact-persons",
+      "action": "comments-family-asymmetry",
+      "included": false,
+      "dropped": true,
+      "reason": "sibling-asymmetry-confirmed",
+      "note": "Explicitly recorded by clify 0.6.0: comments is not part of this resource surface in the generated CLI."
+    },
+    {
+      "method": "GET",
+      "path": "/credit-notes/:id/comments",
+      "resource": "credit-notes",
+      "action": "comments-family-asymmetry",
+      "included": false,
+      "dropped": true,
+      "reason": "sibling-asymmetry-confirmed",
+      "note": "Explicitly recorded by clify 0.6.0: comments is not part of this resource surface in the generated CLI."
+    },
+    {
+      "method": "GET",
+      "path": "/currencies/:id/comments",
+      "resource": "currencies",
+      "action": "comments-family-asymmetry",
+      "included": false,
+      "dropped": true,
+      "reason": "sibling-asymmetry-confirmed",
+      "note": "Explicitly recorded by clify 0.6.0: comments is not part of this resource surface in the generated CLI."
+    },
+    {
+      "method": "GET",
+      "path": "/customer-payments/:id/comments",
+      "resource": "customer-payments",
+      "action": "comments-family-asymmetry",
+      "included": false,
+      "dropped": true,
+      "reason": "sibling-asymmetry-confirmed",
+      "note": "Explicitly recorded by clify 0.6.0: comments is not part of this resource surface in the generated CLI."
+    },
+    {
+      "method": "GET",
+      "path": "/delivery-challans/:id/comments",
+      "resource": "delivery-challans",
+      "action": "comments-family-asymmetry",
+      "included": false,
+      "dropped": true,
+      "reason": "sibling-asymmetry-confirmed",
+      "note": "Explicitly recorded by clify 0.6.0: comments is not part of this resource surface in the generated CLI."
+    },
+    {
+      "method": "GET",
+      "path": "/inventory-adjustments/:id/comments",
+      "resource": "inventory-adjustments",
+      "action": "comments-family-asymmetry",
+      "included": false,
+      "dropped": true,
+      "reason": "sibling-asymmetry-confirmed",
+      "note": "Explicitly recorded by clify 0.6.0: comments is not part of this resource surface in the generated CLI."
+    },
+    {
+      "method": "GET",
+      "path": "/item-groups/:id/comments",
+      "resource": "item-groups",
+      "action": "comments-family-asymmetry",
+      "included": false,
+      "dropped": true,
+      "reason": "sibling-asymmetry-confirmed",
+      "note": "Explicitly recorded by clify 0.6.0: comments is not part of this resource surface in the generated CLI."
+    },
+    {
+      "method": "GET",
+      "path": "/items/:id/comments",
+      "resource": "items",
+      "action": "comments-family-asymmetry",
+      "included": false,
+      "dropped": true,
+      "reason": "sibling-asymmetry-confirmed",
+      "note": "Explicitly recorded by clify 0.6.0: comments is not part of this resource surface in the generated CLI."
+    },
+    {
+      "method": "GET",
+      "path": "/locations/:id/comments",
+      "resource": "locations",
+      "action": "comments-family-asymmetry",
+      "included": false,
+      "dropped": true,
+      "reason": "sibling-asymmetry-confirmed",
+      "note": "Explicitly recorded by clify 0.6.0: comments is not part of this resource surface in the generated CLI."
+    },
+    {
+      "method": "GET",
+      "path": "/organizations/:id/comments",
+      "resource": "organizations",
+      "action": "comments-family-asymmetry",
+      "included": false,
+      "dropped": true,
+      "reason": "sibling-asymmetry-confirmed",
+      "note": "Explicitly recorded by clify 0.6.0: comments is not part of this resource surface in the generated CLI."
+    },
+    {
+      "method": "GET",
+      "path": "/packages/:id/comments",
+      "resource": "packages",
+      "action": "comments-family-asymmetry",
+      "included": false,
+      "dropped": true,
+      "reason": "sibling-asymmetry-confirmed",
+      "note": "Explicitly recorded by clify 0.6.0: comments is not part of this resource surface in the generated CLI."
+    },
+    {
+      "method": "GET",
+      "path": "/price-lists/:id/comments",
+      "resource": "price-lists",
+      "action": "comments-family-asymmetry",
+      "included": false,
+      "dropped": true,
+      "reason": "sibling-asymmetry-confirmed",
+      "note": "Explicitly recorded by clify 0.6.0: comments is not part of this resource surface in the generated CLI."
+    },
+    {
+      "method": "GET",
+      "path": "/purchase-orders/:id/comments",
+      "resource": "purchase-orders",
+      "action": "comments-family-asymmetry",
+      "included": false,
+      "dropped": true,
+      "reason": "sibling-asymmetry-confirmed",
+      "note": "Explicitly recorded by clify 0.6.0: comments is not part of this resource surface in the generated CLI."
+    },
+    {
+      "method": "GET",
+      "path": "/purchase-receives/:id/comments",
+      "resource": "purchase-receives",
+      "action": "comments-family-asymmetry",
+      "included": false,
+      "dropped": true,
+      "reason": "sibling-asymmetry-confirmed",
+      "note": "Explicitly recorded by clify 0.6.0: comments is not part of this resource surface in the generated CLI."
+    },
+    {
+      "method": "GET",
+      "path": "/reporting-tags/:id/comments",
+      "resource": "reporting-tags",
+      "action": "comments-family-asymmetry",
+      "included": false,
+      "dropped": true,
+      "reason": "sibling-asymmetry-confirmed",
+      "note": "Explicitly recorded by clify 0.6.0: comments is not part of this resource surface in the generated CLI."
+    },
+    {
+      "method": "GET",
+      "path": "/retainer-invoices/:id/comments",
+      "resource": "retainer-invoices",
+      "action": "comments-family-asymmetry",
+      "included": false,
+      "dropped": true,
+      "reason": "sibling-asymmetry-confirmed",
+      "note": "Explicitly recorded by clify 0.6.0: comments is not part of this resource surface in the generated CLI."
+    },
+    {
+      "method": "GET",
+      "path": "/sales-orders/:id/comments",
+      "resource": "sales-orders",
+      "action": "comments-family-asymmetry",
+      "included": false,
+      "dropped": true,
+      "reason": "sibling-asymmetry-confirmed",
+      "note": "Explicitly recorded by clify 0.6.0: comments is not part of this resource surface in the generated CLI."
+    },
+    {
+      "method": "GET",
+      "path": "/sales-returns/:id/comments",
+      "resource": "sales-returns",
+      "action": "comments-family-asymmetry",
+      "included": false,
+      "dropped": true,
+      "reason": "sibling-asymmetry-confirmed",
+      "note": "Explicitly recorded by clify 0.6.0: comments is not part of this resource surface in the generated CLI."
+    },
+    {
+      "method": "GET",
+      "path": "/shipment-orders/:id/comments",
+      "resource": "shipment-orders",
+      "action": "comments-family-asymmetry",
+      "included": false,
+      "dropped": true,
+      "reason": "sibling-asymmetry-confirmed",
+      "note": "Explicitly recorded by clify 0.6.0: comments is not part of this resource surface in the generated CLI."
+    },
+    {
+      "method": "GET",
+      "path": "/taxes/:id/comments",
+      "resource": "taxes",
+      "action": "comments-family-asymmetry",
+      "included": false,
+      "dropped": true,
+      "reason": "sibling-asymmetry-confirmed",
+      "note": "Explicitly recorded by clify 0.6.0: comments is not part of this resource surface in the generated CLI."
+    },
+    {
+      "method": "GET",
+      "path": "/transfer-orders/:id/comments",
+      "resource": "transfer-orders",
+      "action": "comments-family-asymmetry",
+      "included": false,
+      "dropped": true,
+      "reason": "sibling-asymmetry-confirmed",
+      "note": "Explicitly recorded by clify 0.6.0: comments is not part of this resource surface in the generated CLI."
+    },
+    {
+      "method": "GET",
+      "path": "/users/:id/comments",
+      "resource": "users",
+      "action": "comments-family-asymmetry",
+      "included": false,
+      "dropped": true,
+      "reason": "sibling-asymmetry-confirmed",
+      "note": "Explicitly recorded by clify 0.6.0: comments is not part of this resource surface in the generated CLI."
+    },
+    {
+      "method": "GET",
+      "path": "/vendor-credits/:id/comments",
+      "resource": "vendor-credits",
+      "action": "comments-family-asymmetry",
+      "included": false,
+      "dropped": true,
+      "reason": "sibling-asymmetry-confirmed",
+      "note": "Explicitly recorded by clify 0.6.0: comments is not part of this resource surface in the generated CLI."
     }
   ]
 }

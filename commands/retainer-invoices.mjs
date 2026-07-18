@@ -193,7 +193,7 @@ export default {
         }
       }
     },
-    "void": {
+    "mark-void": {
       "method": "POST",
       "path": "/retainerinvoices/:id/status/void",
       "description": "POST /retainerinvoices/:id/status/void",

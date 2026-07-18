@@ -263,7 +263,7 @@ export default {
         }
       }
     },
-    "void": {
+    "mark-void": {
       "method": "POST",
       "path": "/invoices/:id/status/void",
       "description": "POST /invoices/:id/status/void",

@@ -81,6 +81,15 @@ test("--dry-run does not make network requests", async () => {
   assert.equal(r.json.method, "GET");
 });
 
+test("dry-run output redacts credential-shaped values", async () => {
+  const r = await runJson(["items", "list", "--dry-run"], {
+    env: { ZOHO_INVENTORY_API_KEY: "supersecrettoken12345abcdef", ZOHO_INVENTORY_BASE_URL: "http://127.0.0.1:1" },
+  });
+  assert.equal(r.exitCode, 0);
+  assert.equal(r.json.headers.authorization, "<redacted>");
+  assert.ok(!JSON.stringify(r.json).includes("supersecrettoken12345abcdef"));
+});
+
 test("source has no hardcoded secrets", () => {
   const src = readFileSync(join(REPO_ROOT, "bin/zoho-inventory-cli.mjs"), "utf8");
   const PATTERNS = [/sk_live_[A-Za-z0-9]{20,}/, /ghp_[A-Za-z0-9]{20,}/, /Bearer\s+[A-Za-z0-9_\-]{30,}/, /xoxb-[A-Za-z0-9-]{20,}/];

@@ -6,6 +6,16 @@ Covers **29 resources / 316 endpoints** — items, contacts, sales orders, packa
 
 Auto-refreshes OAuth on every run; injects `organization_id` automatically; honors all eight Zoho data-centers.
 
+## Install
+
+```bash
+git clone <repo-url>
+cd zoho-inventory-cli
+npm install
+npm link
+zoho-inventory-cli --version
+```
+
 ## Layout
 
 ```
@@ -21,7 +31,7 @@ zoho-inventory-cli/
 │   ├── output.mjs                 output, errorOut
 │   └── payload.mjs                shared body-builder
 ├── commands/                      one .mjs per Zoho resource (29 + login)
-├── skills/                        zoho-inventory-cli-{workflow,auth,resources,knowledge}
+├── skills/                        zoho-inventory-cli umbrella skill
 ├── knowledge/                     business rules and quirks (read these first)
 ├── test/                          smoke + integration + auth, mock-server-driven
 ├── scripts/                       gen-resources.mjs, gen-clify-meta.mjs (regen helpers)
@@ -31,7 +41,7 @@ zoho-inventory-cli/
 └── .github/workflows/test.yml     Node 20 + 22 CI
 ```
 
-## Quickstart
+## Authenticate
 
 1. **Mint Zoho OAuth credentials.** Open the API Console for your DC (e.g. `https://api-console.zoho.in/`), create a Self Client, and generate a refresh token with scope `ZohoInventory.fullaccess.all`. Full walkthrough in `skills/zoho-inventory-cli-auth/SKILL.md`.
 2. **Set env vars** (or copy `.env.example` to `.env`):

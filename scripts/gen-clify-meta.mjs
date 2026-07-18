@@ -73,11 +73,15 @@ const clify = {
   ],
   contentHash: "sha256:zoho-inventory-2026-04-26-from-docs-crawl",
   generatedAt: "2026-04-26T00:00:00Z",
-  clifyVersion: "0.5.0",
+  clifyVersion: "0.6.0",
   nodeMinVersion: "20",
   auth: {
     envVar: "ZOHO_INVENTORY_API_KEY",
-    scheme: "bearer",
+    scheme: "oauth-refresh",
+    tokenUrl: "https://accounts.zoho.com/oauth/v2/token",
+    refreshEnvVar: "ZOHO_INVENTORY_REFRESH_TOKEN",
+    clientIdEnvVar: "ZOHO_INVENTORY_CLIENT_ID",
+    clientSecretEnvVar: "ZOHO_INVENTORY_CLIENT_SECRET",
     validationCommand: "organizations list",
   },
   defaults: [
