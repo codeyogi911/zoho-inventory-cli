@@ -367,7 +367,7 @@ const RESOURCES = [
       { action: "get-email-content",          method: "GET",    path: "/creditnotes/:id/email" },
       { action: "void",                       method: "POST",   path: "/creditnotes/:id/void" },
       { action: "convert-to-draft",           method: "POST",   path: "/creditnotes/:id/status/draft" },
-      { action: "convert-to-open",            method: "POST",   path: "/creditnotes/:id/converttoopen" },
+      { action: "convert-to-open",            method: "POST",   path: "/creditnotes/:id/status/open" },
       { action: "submit",                     method: "POST",   path: "/creditnotes/:id/submit" },
       { action: "approve",                    method: "POST",   path: "/creditnotes/:id/approve" },
       { action: "email-history",              method: "GET",    path: "/creditnotes/:id/emailhistory" },

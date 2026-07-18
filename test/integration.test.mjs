@@ -307,6 +307,21 @@ test("credit-notes convert-to-draft uses the documented status route", async () 
   });
 });
 
+test("credit-notes convert-to-open uses the live status route", async () => {
+  const server = await mockApi({
+    "POST /creditnotes/cn-1/status/open": { status: 200, body: { code: 0, message: "Status of the credit note has been changed to open." } },
+  });
+  try {
+    const r = await runJson(["credit-notes", "convert-to-open", "--id", "cn-1"], {
+      env: { ...ENV, ZOHO_INVENTORY_BASE_URL: server.url },
+    });
+    assert.equal(r.exitCode, 0, r.stderr);
+    assert.equal(server.requests.length, 1);
+    assert.equal(server.requests[0].method, "POST");
+    assert.equal(server.requests[0].path, "/creditnotes/cn-1/status/open");
+  } finally { await server.close(); }
+});
+
 test("packages create routes salesorder_id to URL query (REQUIRED by Zoho)", async () => {
   await withMock({
     "POST /packages": (req) => ({ status: 200, body: { code: 0, package: { package_id: "pkg-1", salesorder_id: req.query.salesorder_id } } }),

@@ -1189,7 +1189,7 @@
     },
     {
       "method": "POST",
-      "path": "/creditnotes/:id/converttoopen",
+      "path": "/creditnotes/:id/status/open",
       "resource": "credit-notes",
       "action": "convert-to-open",
       "included": true

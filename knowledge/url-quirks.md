@@ -43,5 +43,9 @@ Status changes don't always use the same path pattern:
 - Tasks: `POST /tasks/{id}/markasopen` etc — no `/status/` segment.
 - Transfer orders: `POST /transferorders/{id}/markastransferred` — same.
 - Locations: `POST /locations/{id}/active`, `/inactive`, `/markasprimary` — yet another shape.
+- Credit notes: the current India tenant opens a Draft Credit Note through
+  `POST /creditnotes/{id}/status/open`. Zoho Inventory's prose still lists the
+  stale `/converttoopen` path, which returns `URL not supported`; Zoho Books
+  documents the live status route.
 
 The CLI normalizes the *action verb* (`mark-open`, `mark-active`, `mark-primary`) but the path templates honor the documented quirks.
