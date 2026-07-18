@@ -18,6 +18,10 @@ Zoho Inventory uses OAuth 2.0 with refresh tokens. Access tokens expire after ~1
 2. Cached access token in `~/.config/zoho-inventory-cli/credentials.json` if not yet expired.
 3. Otherwise, exchange `ZOHO_INVENTORY_REFRESH_TOKEN` + `_CLIENT_ID` + `_CLIENT_SECRET` (from env or stored creds) at `https://accounts.zoho.<dc>/oauth/v2/token` and cache the result.
 
+Concurrent CLI processes coordinate through a short-lived refresh lock. The
+first process refreshes and atomically writes the cache; waiting processes
+re-read that token instead of issuing competing refresh requests.
+
 Set the trio (refresh token, client id, client secret) once via `zoho-inventory-cli login` or env vars and the CLI auto-refreshes thereafter.
 
 ## Generating the refresh token

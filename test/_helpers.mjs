@@ -10,7 +10,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 export const REPO_ROOT = resolve(__dirname, "..");
 export const CLI = resolve(REPO_ROOT, "bin/zoho-inventory-cli.mjs");
 
-export function run(args = [], { env = {}, timeoutMs = 10000 } = {}) {
+export function run(args = [], { env = {}, timeoutMs = 10000, home } = {}) {
   return new Promise((resolveRun) => {
     // Start from process.env, then strip every ZOHO_INVENTORY_* var the
     // shell might be exporting — the parent shell likely has live OAuth
@@ -24,7 +24,7 @@ export function run(args = [], { env = {}, timeoutMs = 10000 } = {}) {
     // (~/.config/zoho-inventory-cli/credentials.json) can't leak between tests
     // — without this, an OAuth-refresh test caches a token that the next
     // "auth missing" test then finds and uses.
-    cleanEnv.HOME = mkdtempSync(join(tmpdir(), "zoho-cli-home-"));
+    cleanEnv.HOME = home || mkdtempSync(join(tmpdir(), "zoho-cli-home-"));
     Object.assign(cleanEnv, env);
     cleanEnv.__ZOHO_INVENTORY_FORCE_JSON_ERR = "1";
     const child = spawn(process.execPath, [CLI, ...args], { env: cleanEnv });

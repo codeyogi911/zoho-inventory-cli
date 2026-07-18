@@ -2,6 +2,9 @@
 // 401/403 mapping, OAuth refresh flow against a mock accounts endpoint.
 import test from "node:test";
 import assert from "node:assert/strict";
+import { mkdtempSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
 import { mockApi } from "./_mock-server.mjs";
 import { run, runJson } from "./_helpers.mjs";
 
@@ -70,6 +73,40 @@ test("OAuth refresh flow: env-trio mints an access token from the accounts mock"
     assert.equal(accountsServer.requests[0].query.refresh_token, "1000.refreshxyz");
     // The API request should carry the freshly minted access token.
     assert.equal(apiServer.requests[0].headers.authorization, "Zoho-oauthtoken minted-from-refresh-token-abc123");
+  } finally {
+    await apiServer.close();
+    await accountsServer.close();
+  }
+});
+
+test("concurrent CLI processes share one OAuth refresh", async () => {
+  const apiServer = await mockApi({ "GET /items": { status: 200, body: { items: [], page_context: { has_more_page: false } } } });
+  const accountsServer = await mockApi({
+    "POST /oauth/v2/token": async () => {
+      await new Promise((resolve) => setTimeout(resolve, 100));
+      return { status: 200, body: { access_token: "shared-concurrent-token", expires_in: 3600 } };
+    },
+  });
+  const home = mkdtempSync(join(tmpdir(), "zoho-cli-shared-home-"));
+  const env = {
+    ZOHO_INVENTORY_REFRESH_TOKEN: "1000.refreshxyz",
+    ZOHO_INVENTORY_CLIENT_ID: "1000.client",
+    ZOHO_INVENTORY_CLIENT_SECRET: "secret",
+    ZOHO_INVENTORY_ORG_ID: "60030298567",
+    ZOHO_INVENTORY_BASE_URL: apiServer.url,
+    ZOHO_INVENTORY_ACCOUNTS_URL: accountsServer.url,
+  };
+
+  try {
+    const results = await Promise.all([
+      runJson(["items", "list"], { env, home }),
+      runJson(["items", "list"], { env, home }),
+    ]);
+    assert.equal(results[0].exitCode, 0, results[0].stderr);
+    assert.equal(results[1].exitCode, 0, results[1].stderr);
+    assert.equal(accountsServer.requests.length, 1);
+    assert.equal(apiServer.requests.length, 2);
+    assert.ok(apiServer.requests.every((request) => request.headers.authorization === "Zoho-oauthtoken shared-concurrent-token"));
   } finally {
     await apiServer.close();
     await accountsServer.close();
