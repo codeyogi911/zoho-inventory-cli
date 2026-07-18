@@ -350,10 +350,11 @@ const RESOURCES = [
       { action: "list",                       method: "GET",    path: "/creditnotes" },
       { action: "get",                        method: "GET",    path: "/creditnotes/:id" },
       { action: "create",                     method: "POST",   path: "/creditnotes",
-        // ?invoice_id= turns this into Zoho's "convert from invoice" mode
-        // (equivalent to clicking "Issue credit note" from an invoice in the UI).
-        // Putting invoice_id in the body is silently dropped.
-        queryFlags: ["invoice_id", "ignore_auto_number_generation"] },
+        // ?invoice_id= turns this into Zoho's "convert from invoice" mode.
+        // ?salesreturn_id= additionally selects Zoho's Sales Return -> Credit
+        // Note conversion path. Putting either id in the body is silently
+        // dropped by the India-DC backend.
+        queryFlags: ["invoice_id", "salesreturn_id", "ignore_auto_number_generation"] },
       { action: "update",                     method: "PUT",    path: "/creditnotes/:id" },
       { action: "delete",                     method: "DELETE", path: "/creditnotes/:id" },
       { action: "email",                      method: "POST",   path: "/creditnotes/:id/email" },
@@ -675,6 +676,7 @@ const FLAG_DESCRIPTIONS = {
   receiveId: "Sales return receive id",
   invoiceId: "Applied invoice id",
   invoice_id: "Source invoice id — passed as ?invoice_id= URL query (Zoho convert-from-invoice mode); body form is silently dropped",
+  salesreturn_id: "Source sales return id — passed as ?salesreturn_id= URL query (Zoho Sales Return to Credit Note conversion); body form is silently dropped",
   bill_id: "Source bill id — passed as ?bill_id= URL query (Zoho convert-from-bill mode); body form is silently dropped",
   ignore_auto_number_generation: "true to bypass auto-numbering and supply your own number",
   billId: "Bill id (vendor credit application)",

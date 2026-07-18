@@ -244,15 +244,18 @@ test("user-agent header is sent", async () => {
 
 // ---------- queryFlags: convert-from-X via URL query, not body ----------
 
-test("credit-notes create routes invoice_id to URL query, not body (Zoho convert-from-invoice mode)", async () => {
+test("credit-notes create routes invoice and sales return ids to URL query, not body", async () => {
   await withMock({
-    "POST /creditnotes": (req) => ({ status: 200, body: { code: 0, creditnote: { creditnote_id: "cn-1", invoice_id: req.query.invoice_id ?? null, body_keys: Object.keys(req.body || {}) } } }),
+    "POST /creditnotes": (req) => ({ status: 200, body: { code: 0, creditnote: { creditnote_id: "cn-1", invoice_id: req.query.invoice_id ?? null, salesreturn_id: req.query.salesreturn_id ?? null, body_keys: Object.keys(req.body || {}) } } }),
   }, async (server) => {
-    const r = await runJson(["credit-notes", "create", "--invoice_id", "INV-42", "--customer_id", "C-1", "--reference_number", "REF-X"], { env: { ...ENV, ZOHO_INVENTORY_BASE_URL: server.url } });
+    const r = await runJson(["credit-notes", "create", "--invoice_id", "INV-42", "--salesreturn_id", "SR-42", "--customer_id", "C-1", "--reference_number", "REF-X"], { env: { ...ENV, ZOHO_INVENTORY_BASE_URL: server.url } });
     assert.equal(r.exitCode, 0, r.stderr);
     assert.equal(server.requests[0].query.invoice_id, "INV-42");
+    assert.equal(server.requests[0].query.salesreturn_id, "SR-42");
     assert.ok(!server.requests[0].body || server.requests[0].body.invoice_id === undefined,
       `invoice_id leaked into body: ${JSON.stringify(server.requests[0].body)}`);
+    assert.ok(!server.requests[0].body || server.requests[0].body.salesreturn_id === undefined,
+      `salesreturn_id leaked into body: ${JSON.stringify(server.requests[0].body)}`);
     // Sanity: other body fields still went through.
     assert.equal(server.requests[0].body.customer_id, "C-1");
   });

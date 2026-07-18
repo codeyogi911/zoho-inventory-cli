@@ -130,6 +130,11 @@ export default {
           "required": false,
           "description": "Source invoice id — passed as ?invoice_id= URL query (Zoho convert-from-invoice mode); body form is silently dropped"
         },
+        "salesreturn_id": {
+          "type": "string",
+          "required": false,
+          "description": "Source sales return id — passed as ?salesreturn_id= URL query (Zoho Sales Return to Credit Note conversion); body form is silently dropped"
+        },
         "ignore_auto_number_generation": {
           "type": "string",
           "required": false,
@@ -148,6 +153,7 @@ export default {
       },
       "queryFlags": [
         "invoice_id",
+        "salesreturn_id",
         "ignore_auto_number_generation"
       ]
     },
