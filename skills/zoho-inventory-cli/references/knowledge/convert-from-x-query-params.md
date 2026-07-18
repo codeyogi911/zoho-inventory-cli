@@ -21,7 +21,7 @@ date but has no structural link back to the source.
 
 | Action | Wire pattern | Required? |
 |---|---|---|
-| `POST /creditnotes` | `?invoice_id=<INV>` | No (optional convert mode — equivalent to UI's "Issue credit note from invoice") |
+| `POST /creditnotes` | `?invoice_id=<INV>&salesreturn_id=<SR>` | No (optional convert mode; include both IDs for the Sales Return to Credit Note path) |
 | `POST /salesreturns` | `?salesorder_id=<SO>` | No (optional convert-from-SO mode) |
 | `POST /packages` | `?salesorder_id=<SO>` | **Yes** — every package is by definition derived from a SO |
 | `POST /shipmentorders` | `?salesorder_id=<SO>` | Optional |
@@ -35,11 +35,11 @@ them from the body and routes them to the URL. To verify a given action:
 
 ```
 node bin/zoho-inventory-cli.mjs credit-notes create \
-  --dry-run --invoice_id <INV> --customer_id <C>
+  --dry-run --invoice_id <INV> --salesreturn_id <SR> --customer_id <C>
 ```
 
-`__dryRun.url` should contain `?invoice_id=<INV>` and `__dryRun.body` must
-not include `invoice_id`.
+`__dryRun.url` should contain both IDs and `__dryRun.body` must include neither
+`invoice_id` nor `salesreturn_id`.
 
 ## Why this matters
 

@@ -1,9 +1,18 @@
 // Build coverage.json + .clify.json from the live registry of resource modules.
-import { writeFileSync } from "node:fs";
-import { pathToFileURL } from "node:url";
-import { join } from "node:path";
+// Curated evidence that does not live in the registry — dropped-endpoint
+// records (included:false, with reason/note) and India-DC filterProbes — is
+// preserved from the existing files, never clobbered by a regen.
+import { readFileSync, writeFileSync, existsSync } from "node:fs";
+import { pathToFileURL, fileURLToPath } from "node:url";
+import { dirname, join } from "node:path";
 
-const REPO = "/Users/shashwatjain/Repos/zoho-inventory-cli";
+const REPO = join(dirname(fileURLToPath(import.meta.url)), "..");
+
+function readJsonIfExists(path) {
+  return existsSync(path) ? JSON.parse(readFileSync(path, "utf8")) : null;
+}
+const prevCoverage = readJsonIfExists(join(REPO, "coverage.json"));
+const prevClify = readJsonIfExists(join(REPO, ".clify.json"));
 const COMMAND_FILES = [
   "organizations","contacts","contact-persons","item-groups","items",
   "composite-items","bundles","inventory-adjustments","transfer-orders",
@@ -17,21 +26,30 @@ const resources = await Promise.all(
   COMMAND_FILES.map((f) => import(pathToFileURL(join(REPO, "commands", `${f}.mjs`)).href).then((m) => m.default)),
 );
 
+const endpointKey = (e) => `${e.method} ${e.path} ${e.resource} ${e.action}`;
+const prevByKey = new Map((prevCoverage?.endpoints ?? []).map((e) => [endpointKey(e), e]));
+
 const endpoints = [];
 const multiPart = [];
 for (const r of resources) {
   for (const [action, def] of Object.entries(r.actions)) {
-    endpoints.push({ method: def.method, path: def.path, resource: r.name, action, included: true });
+    const rec = { method: def.method, path: def.path, resource: r.name, action, included: true };
+    const prev = prevByKey.get(endpointKey(rec));
+    if (prev?.note) rec.note = prev.note;
+    endpoints.push(rec);
     if (def.flags?.file?.required) multiPart.push(`${r.name}.${action}`);
   }
 }
 
+// Dropped endpoints are curated records, not registry-derived — carry them all.
+const dropped = (prevCoverage?.endpoints ?? []).filter((e) => e.included === false);
+
 const coverage = {
-  parsedAt: "2026-04-26T00:00:00Z",
-  totalParsed: endpoints.length,
+  parsedAt: prevCoverage?.parsedAt ?? "2026-04-26T00:00:00Z",
+  totalParsed: endpoints.length + dropped.length,
   totalIncluded: endpoints.length,
-  totalDropped: 0,
-  endpoints,
+  totalDropped: dropped.length,
+  endpoints: [...endpoints, ...dropped],
 };
 
 writeFileSync(join(REPO, "coverage.json"), JSON.stringify(coverage, null, 2) + "\n");
@@ -99,11 +117,13 @@ const clify = {
     businessRules: 6,
   },
   coverage: {
-    totalParsed: endpoints.length,
+    totalParsed: endpoints.length + dropped.length,
     totalIncluded: endpoints.length,
-    totalDropped: 0,
+    totalDropped: dropped.length,
   },
 };
 
+if (prevClify?.filterProbes) clify.filterProbes = prevClify.filterProbes;
+
 writeFileSync(join(REPO, ".clify.json"), JSON.stringify(clify, null, 2) + "\n");
-console.log(`Wrote coverage.json (${endpoints.length} endpoints) and .clify.json (multipart: ${multiPart.length})`);
+console.log(`Wrote coverage.json (${endpoints.length} included + ${dropped.length} dropped) and .clify.json (multipart: ${multiPart.length}, filterProbes: ${clify.filterProbes?.length ?? 0})`);
