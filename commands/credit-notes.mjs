@@ -321,8 +321,8 @@ export default {
     },
     "convert-to-open": {
       "method": "POST",
-      "path": "/creditnotes/:id/converttoopen",
-      "description": "POST /creditnotes/:id/converttoopen",
+      "path": "/creditnotes/:id/status/open",
+      "description": "POST /creditnotes/:id/status/open",
       "flags": {
         "id": {
           "type": "string",

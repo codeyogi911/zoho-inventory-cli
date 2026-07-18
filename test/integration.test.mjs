@@ -258,6 +258,16 @@ test("credit-notes create routes invoice_id to URL query, not body (Zoho convert
   });
 });
 
+test("credit-notes convert-to-open uses the official /status/open route (India DC rejects /converttoopen)", async () => {
+  await withMock({
+    "POST /creditnotes/cn-7/status/open": () => ({ status: 200, body: { code: 0, message: "The status of the credit note has been changed to open." } }),
+  }, async (server) => {
+    const r = await runJson(["credit-notes", "convert-to-open", "--id", "cn-7"], { env: { ...ENV, ZOHO_INVENTORY_BASE_URL: server.url } });
+    assert.equal(r.exitCode, 0, r.stderr);
+    assert.match(server.requests[0].path, /\/creditnotes\/cn-7\/status\/open/);
+  });
+});
+
 test("packages create routes salesorder_id to URL query (REQUIRED by Zoho)", async () => {
   await withMock({
     "POST /packages": (req) => ({ status: 200, body: { code: 0, package: { package_id: "pkg-1", salesorder_id: req.query.salesorder_id } } }),
