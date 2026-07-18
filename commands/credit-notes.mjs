@@ -293,8 +293,8 @@ export default {
     },
     "convert-to-draft": {
       "method": "POST",
-      "path": "/creditnotes/:id/draft",
-      "description": "POST /creditnotes/:id/draft",
+      "path": "/creditnotes/:id/status/draft",
+      "description": "POST /creditnotes/:id/status/draft",
       "flags": {
         "id": {
           "type": "string",

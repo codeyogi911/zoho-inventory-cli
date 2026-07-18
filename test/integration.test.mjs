@@ -258,6 +258,22 @@ test("credit-notes create routes invoice_id to URL query, not body (Zoho convert
   });
 });
 
+test("credit-notes convert-to-draft uses the documented status route", async () => {
+  await withMock({
+    "POST /creditnotes/:id/status/draft": (_req, params) => ({
+      status: 200,
+      body: { code: 0, message: "Credit note converted to draft", creditnote_id: params.id },
+    }),
+  }, async (server) => {
+    const r = await runJson(["credit-notes", "convert-to-draft", "--id", "CN-42"], {
+      env: { ...ENV, ZOHO_INVENTORY_BASE_URL: server.url },
+    });
+    assert.equal(r.exitCode, 0, r.stderr);
+    assert.equal(server.requests[0].method, "POST");
+    assert.equal(server.requests[0].path, "/creditnotes/CN-42/status/draft");
+  });
+});
+
 test("packages create routes salesorder_id to URL query (REQUIRED by Zoho)", async () => {
   await withMock({
     "POST /packages": (req) => ({ status: 200, body: { code: 0, package: { package_id: "pkg-1", salesorder_id: req.query.salesorder_id } } }),

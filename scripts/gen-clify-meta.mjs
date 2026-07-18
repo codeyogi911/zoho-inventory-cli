@@ -1,9 +1,9 @@
 // Build coverage.json + .clify.json from the live registry of resource modules.
 import { writeFileSync } from "node:fs";
-import { pathToFileURL } from "node:url";
-import { join } from "node:path";
+import { fileURLToPath, pathToFileURL } from "node:url";
+import { dirname, join } from "node:path";
 
-const REPO = "/Users/shashwatjain/Repos/zoho-inventory-cli";
+const REPO = join(dirname(fileURLToPath(import.meta.url)), "..");
 const COMMAND_FILES = [
   "organizations","contacts","contact-persons","item-groups","items",
   "composite-items","bundles","inventory-adjustments","transfer-orders",

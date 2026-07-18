@@ -2,9 +2,11 @@
 // Source of truth = the RESOURCES table below, derived from the API catalog
 // at https://www.zoho.com/inventory/api/v1/.
 import { writeFileSync, mkdirSync } from "node:fs";
-import { join } from "node:path";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
 
-const OUT_DIR = "/Users/shashwatjain/Repos/zoho-inventory-cli/commands";
+const REPO_ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
+const OUT_DIR = join(REPO_ROOT, "commands");
 mkdirSync(OUT_DIR, { recursive: true });
 
 // Path placeholder convention:
@@ -357,7 +359,7 @@ const RESOURCES = [
       { action: "email",                      method: "POST",   path: "/creditnotes/:id/email" },
       { action: "get-email-content",          method: "GET",    path: "/creditnotes/:id/email" },
       { action: "void",                       method: "POST",   path: "/creditnotes/:id/void" },
-      { action: "convert-to-draft",           method: "POST",   path: "/creditnotes/:id/draft" },
+      { action: "convert-to-draft",           method: "POST",   path: "/creditnotes/:id/status/draft" },
       { action: "convert-to-open",            method: "POST",   path: "/creditnotes/:id/converttoopen" },
       { action: "submit",                     method: "POST",   path: "/creditnotes/:id/submit" },
       { action: "approve",                    method: "POST",   path: "/creditnotes/:id/approve" },

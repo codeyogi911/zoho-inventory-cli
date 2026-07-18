@@ -1147,7 +1147,7 @@
     },
     {
       "method": "POST",
-      "path": "/creditnotes/:id/draft",
+      "path": "/creditnotes/:id/status/draft",
       "resource": "credit-notes",
       "action": "convert-to-draft",
       "included": true
