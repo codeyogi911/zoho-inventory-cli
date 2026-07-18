@@ -100,6 +100,36 @@ test("items delete returns ok", async () => {
   });
 });
 
+// ---------- customer-payments: nested refund actions ----------
+
+test("customer-payments refund actions use the documented nested paths", async () => {
+  await withMock({
+    "GET /customerpayments/:id/refunds/:refundId": (_req, params) => ({
+      status: 200,
+      body: { payment_refund: { payment_id: params.id, payment_refund_id: params.refundId } },
+    }),
+    "DELETE /customerpayments/:id/refunds/:refundId": (_req, params) => ({
+      status: 200,
+      body: { code: 0, message: "Refund deleted", payment_id: params.id, refund_id: params.refundId },
+    }),
+  }, async (server) => {
+    const getResult = await runJson(
+      ["customer-payments", "get-refund", "--id", "PAY-1", "--refundId", "REF-1"],
+      { env: { ...ENV, ZOHO_INVENTORY_BASE_URL: server.url } }
+    );
+    assert.equal(getResult.exitCode, 0, getResult.stderr);
+    assert.equal(server.requests[0].path, "/customerpayments/PAY-1/refunds/REF-1");
+
+    const deleteResult = await runJson(
+      ["customer-payments", "delete-refund", "--id", "PAY-1", "--refundId", "REF-1"],
+      { env: { ...ENV, ZOHO_INVENTORY_BASE_URL: server.url } }
+    );
+    assert.equal(deleteResult.exitCode, 0, deleteResult.stderr);
+    assert.equal(server.requests[1].method, "DELETE");
+    assert.equal(server.requests[1].path, "/customerpayments/PAY-1/refunds/REF-1");
+  });
+});
+
 // ---------- contact-persons: nested path with --contactId ----------
 
 test("contact-persons list interpolates parent contact id", async () => {

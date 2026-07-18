@@ -1,7 +1,7 @@
 {
   "parsedAt": "2026-04-26T00:00:00Z",
-  "totalParsed": 319,
-  "totalIncluded": 319,
+  "totalParsed": 324,
+  "totalIncluded": 324,
   "totalDropped": 0,
   "endpoints": [
     {
@@ -1031,6 +1031,41 @@
       "path": "/customerpayments/:id",
       "resource": "customer-payments",
       "action": "delete",
+      "included": true
+    },
+    {
+      "method": "POST",
+      "path": "/customerpayments/:id/refunds",
+      "resource": "customer-payments",
+      "action": "refund",
+      "included": true
+    },
+    {
+      "method": "GET",
+      "path": "/customerpayments/:id/refunds",
+      "resource": "customer-payments",
+      "action": "list-refunds",
+      "included": true
+    },
+    {
+      "method": "GET",
+      "path": "/customerpayments/:id/refunds/:refundId",
+      "resource": "customer-payments",
+      "action": "get-refund",
+      "included": true
+    },
+    {
+      "method": "PUT",
+      "path": "/customerpayments/:id/refunds/:refundId",
+      "resource": "customer-payments",
+      "action": "update-refund",
+      "included": true
+    },
+    {
+      "method": "DELETE",
+      "path": "/customerpayments/:id/refunds/:refundId",
+      "resource": "customer-payments",
+      "action": "delete-refund",
       "included": true
     },
     {
