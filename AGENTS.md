@@ -2,6 +2,23 @@
 
 You are operating `zoho-inventory-cli` — a wrapper over the Zoho Inventory API at `https://www.zohoapis.<dc>/inventory/v1`.
 
+## Source of truth
+
+Zoho publishes **no OpenAPI spec and no markdown** for Inventory. `npm run docs:api`
+extracts text from the official HTML pages into `docs/api/` (17 resources) — a
+convenience mirror for grepping offline, **not** a citable spec. Every file carries its
+canonical URL: when a detail matters, open it. If the extraction and the page disagree,
+the page wins.
+
+That is weaker than the sibling CLIs, and deliberately labelled so: `zoho-desk-cli`
+renders Zoho's official OAS, `amazon-sp-api-cli` renders Amazon's official models, and
+`shopify-admin-cli` mirrors Shopify's own markdown. Only here is the local copy derived.
+
+11 CLI resources have no Inventory page — mostly Books-side (credit notes, customer
+payments, vendor credits, retainer invoices, taxes), and the Books docs host returns 403
+to automated fetches. `docs/api/README.md` lists them. Diagnose from the docs, not from
+the error string.
+
 ## Before you act
 
 1. **Read every file in `knowledge/`.** Especially: `oauth-refresh.md`, `header-format.md`, `organization-id.md`, `pagination.md`, `india-gst-and-locations.md`, `sales-order-cycle.md`, `url-quirks.md`. The Zoho API has Indian-tax rules, an opinionated SO cycle, and several inconsistent URL conventions that aren't obvious from `--help`.
