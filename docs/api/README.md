@@ -13,23 +13,23 @@ Regenerate with `npm run docs:api`. Do not hand-edit.
 
 | resource | source | bytes |
 |---|---|---|
-| [sales-orders](sales-orders.md) | [`/salesorders/`](https://www.zoho.com/inventory/api/v1/salesorders/) | 114758 |
-| [invoices](invoices.md) | [`/invoices/`](https://www.zoho.com/inventory/api/v1/invoices/) | 235736 |
-| [contacts](contacts.md) | [`/contacts/`](https://www.zoho.com/inventory/api/v1/contacts/) | 105177 |
-| [items](items.md) | [`/items/`](https://www.zoho.com/inventory/api/v1/items/) | 193088 |
-| [purchase-orders](purchase-orders.md) | [`/purchaseorders/`](https://www.zoho.com/inventory/api/v1/purchaseorders/) | 109359 |
-| [bills](bills.md) | [`/bills/`](https://www.zoho.com/inventory/api/v1/bills/) | 104765 |
-| [sales-returns](sales-returns.md) | [`/salesreturns/`](https://www.zoho.com/inventory/api/v1/salesreturns/) | 65796 |
-| [packages](packages.md) | [`/packages/`](https://www.zoho.com/inventory/api/v1/packages/) | 64241 |
-| [shipment-orders](shipment-orders.md) | [`/shipmentorders/`](https://www.zoho.com/inventory/api/v1/shipmentorders/) | 52238 |
-| [organizations](organizations.md) | [`/organizations/`](https://www.zoho.com/inventory/api/v1/organizations/) | 38826 |
-| [item-groups](item-groups.md) | [`/itemgroups/`](https://www.zoho.com/inventory/api/v1/itemgroups/) | 48922 |
-| [composite-items](composite-items.md) | [`/compositeitems/`](https://www.zoho.com/inventory/api/v1/compositeitems/) | 118944 |
-| [transfer-orders](transfer-orders.md) | [`/transferorders/`](https://www.zoho.com/inventory/api/v1/transferorders/) | 76363 |
-| [purchase-receives](purchase-receives.md) | [`/purchasereceives/`](https://www.zoho.com/inventory/api/v1/purchasereceives/) | 110496 |
-| [inventory-adjustments](inventory-adjustments.md) | [`/inventoryadjustments/`](https://www.zoho.com/inventory/api/v1/inventoryadjustments/) | 70753 |
-| [users](users.md) | [`/users/`](https://www.zoho.com/inventory/api/v1/users/) | 47676 |
-| [locations](locations.md) | [`/locations/`](https://www.zoho.com/inventory/api/v1/locations/) | 58085 |
+| [sales-orders](sales-orders.md) | [`/salesorders/`](https://www.zoho.com/inventory/api/v1/salesorders/) | 97457 |
+| [invoices](invoices.md) | [`/invoices/`](https://www.zoho.com/inventory/api/v1/invoices/) | 218546 |
+| [contacts](contacts.md) | [`/contacts/`](https://www.zoho.com/inventory/api/v1/contacts/) | 88048 |
+| [items](items.md) | [`/items/`](https://www.zoho.com/inventory/api/v1/items/) | 175731 |
+| [purchase-orders](purchase-orders.md) | [`/purchaseorders/`](https://www.zoho.com/inventory/api/v1/purchaseorders/) | 92097 |
+| [bills](bills.md) | [`/bills/`](https://www.zoho.com/inventory/api/v1/bills/) | 87541 |
+| [sales-returns](sales-returns.md) | [`/salesreturns/`](https://www.zoho.com/inventory/api/v1/salesreturns/) | 48545 |
+| [packages](packages.md) | [`/packages/`](https://www.zoho.com/inventory/api/v1/packages/) | 47004 |
+| [shipment-orders](shipment-orders.md) | [`/shipmentorders/`](https://www.zoho.com/inventory/api/v1/shipmentorders/) | 34796 |
+| [organizations](organizations.md) | [`/organizations/`](https://www.zoho.com/inventory/api/v1/organizations/) | 21700 |
+| [item-groups](item-groups.md) | [`/itemgroups/`](https://www.zoho.com/inventory/api/v1/itemgroups/) | 31615 |
+| [composite-items](composite-items.md) | [`/compositeitems/`](https://www.zoho.com/inventory/api/v1/compositeitems/) | 101668 |
+| [transfer-orders](transfer-orders.md) | [`/transferorders/`](https://www.zoho.com/inventory/api/v1/transferorders/) | 59159 |
+| [purchase-receives](purchase-receives.md) | [`/purchasereceives/`](https://www.zoho.com/inventory/api/v1/purchasereceives/) | 93315 |
+| [inventory-adjustments](inventory-adjustments.md) | [`/inventoryadjustments/`](https://www.zoho.com/inventory/api/v1/inventoryadjustments/) | 53494 |
+| [users](users.md) | [`/users/`](https://www.zoho.com/inventory/api/v1/users/) | 30511 |
+| [locations](locations.md) | [`/locations/`](https://www.zoho.com/inventory/api/v1/locations/) | 40864 |
 
 ## Not available
 
