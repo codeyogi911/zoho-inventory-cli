@@ -407,15 +407,24 @@ const RESOURCES = [
   {
     name: "purchase-receives",
     primary: "id",
-    extra: ["date", "line_items"],
+    extra: ["date", "line_items", "receive_number", "notes", "terms", "reference_number"],
+    // Per Zoho docs, create/update accept status: in_transit | received directly
+    // (no separate transition call is required to land in either state); the
+    // setstatusasintransit/setstatusasreceived actions below are the dedicated
+    // transition endpoints for an existing receive (e.g. flipping a draft, or
+    // moving in_transit -> received once goods physically arrive).
+    listFilters: ["status", "vendor_id", "vendor_name", "purchaseorder_number", "purchasereceive_number", "tracking_number", "from_date", "to_date", "search_text"],
     actions: [
-      { action: "get",    method: "GET",    path: "/purchasereceives/:id" },
+      { action: "list",             method: "GET",    path: "/purchasereceives" },
+      { action: "get",               method: "GET",    path: "/purchasereceives/:id" },
       // Per Zoho docs ?purchaseorder_id= is required on POST — every receive
       // is a "convert from PO" operation. Putting it in the body is dropped.
-      { action: "create", method: "POST",   path: "/purchasereceives",
+      { action: "create",            method: "POST",   path: "/purchasereceives",
         queryFlags: ["purchaseorder_id"] },
-      { action: "update", method: "PUT",    path: "/purchasereceives/:id" },
-      { action: "delete", method: "DELETE", path: "/purchasereceives/:id" },
+      { action: "update",            method: "PUT",    path: "/purchasereceives/:id" },
+      { action: "delete",            method: "DELETE", path: "/purchasereceives/:id" },
+      { action: "mark-in-transit",   method: "POST",   path: "/purchasereceives/:id/setstatusasintransit" },
+      { action: "mark-received",     method: "POST",   path: "/purchasereceives/:id/setstatusasreceived" },
     ],
   },
   {

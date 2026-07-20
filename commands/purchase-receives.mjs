@@ -6,6 +6,73 @@ import { buildPayload } from "../lib/payload.mjs";
 export default {
   name: "purchase-receives",
   actions: {
+    "list": {
+      "method": "GET",
+      "path": "/purchasereceives",
+      "description": "GET /purchasereceives",
+      "flags": {
+        "page": {
+          "type": "string",
+          "required": false,
+          "description": "Page number for pagination (default 1)"
+        },
+        "per_page": {
+          "type": "string",
+          "required": false,
+          "description": "Results per page (server default 200)"
+        },
+        "status": {
+          "type": "string",
+          "required": false,
+          "description": "Filter by status (list) or set status (create/update)"
+        },
+        "vendor_id": {
+          "type": "string",
+          "required": false,
+          "description": "Zoho vendor id"
+        },
+        "vendor_name": {
+          "type": "string",
+          "required": false,
+          "description": "Filter by vendor display name (list)"
+        },
+        "purchaseorder_number": {
+          "type": "string",
+          "required": false,
+          "description": "Purchase order number override"
+        },
+        "purchasereceive_number": {
+          "type": "string",
+          "required": false,
+          "description": "--purchasereceive_number"
+        },
+        "tracking_number": {
+          "type": "string",
+          "required": false,
+          "description": "Carrier tracking number"
+        },
+        "from_date": {
+          "type": "string",
+          "required": false,
+          "description": "--from_date"
+        },
+        "to_date": {
+          "type": "string",
+          "required": false,
+          "description": "--to_date"
+        },
+        "search_text": {
+          "type": "string",
+          "required": false,
+          "description": "Server-side full-text search across the resource"
+        },
+        "organization-id": {
+          "type": "string",
+          "required": false,
+          "description": "Organization id override (defaults to ZOHO_INVENTORY_ORG_ID env)"
+        }
+      }
+    },
     "get": {
       "method": "GET",
       "path": "/purchasereceives/:id",
@@ -52,6 +119,26 @@ export default {
           "type": "string",
           "required": false,
           "description": "JSON array of line items (use --body for complex shapes)"
+        },
+        "receive_number": {
+          "type": "string",
+          "required": false,
+          "description": "--receive_number"
+        },
+        "notes": {
+          "type": "string",
+          "required": false,
+          "description": "--notes"
+        },
+        "terms": {
+          "type": "string",
+          "required": false,
+          "description": "--terms"
+        },
+        "reference_number": {
+          "type": "string",
+          "required": false,
+          "description": "Free-form reference number (also a list filter on most endpoints — see help per resource for whether the API actually honors it)"
         },
         "purchaseorder_id": {
           "type": "string",
@@ -108,6 +195,26 @@ export default {
           "required": false,
           "description": "JSON array of line items (use --body for complex shapes)"
         },
+        "receive_number": {
+          "type": "string",
+          "required": false,
+          "description": "--receive_number"
+        },
+        "notes": {
+          "type": "string",
+          "required": false,
+          "description": "--notes"
+        },
+        "terms": {
+          "type": "string",
+          "required": false,
+          "description": "--terms"
+        },
+        "reference_number": {
+          "type": "string",
+          "required": false,
+          "description": "Free-form reference number (also a list filter on most endpoints — see help per resource for whether the API actually honors it)"
+        },
         "body": {
           "type": "string",
           "required": false,
@@ -129,6 +236,50 @@ export default {
           "type": "string",
           "required": true,
           "description": "Primary resource id"
+        },
+        "organization-id": {
+          "type": "string",
+          "required": false,
+          "description": "Organization id override (defaults to ZOHO_INVENTORY_ORG_ID env)"
+        }
+      }
+    },
+    "mark-in-transit": {
+      "method": "POST",
+      "path": "/purchasereceives/:id/setstatusasintransit",
+      "description": "POST /purchasereceives/:id/setstatusasintransit",
+      "flags": {
+        "id": {
+          "type": "string",
+          "required": true,
+          "description": "Primary resource id"
+        },
+        "body": {
+          "type": "string",
+          "required": false,
+          "description": "Raw JSON body (overrides individual flags)"
+        },
+        "organization-id": {
+          "type": "string",
+          "required": false,
+          "description": "Organization id override (defaults to ZOHO_INVENTORY_ORG_ID env)"
+        }
+      }
+    },
+    "mark-received": {
+      "method": "POST",
+      "path": "/purchasereceives/:id/setstatusasreceived",
+      "description": "POST /purchasereceives/:id/setstatusasreceived",
+      "flags": {
+        "id": {
+          "type": "string",
+          "required": true,
+          "description": "Primary resource id"
+        },
+        "body": {
+          "type": "string",
+          "required": false,
+          "description": "Raw JSON body (overrides individual flags)"
         },
         "organization-id": {
           "type": "string",
