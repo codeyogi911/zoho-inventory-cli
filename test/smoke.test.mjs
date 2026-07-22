@@ -79,7 +79,7 @@ test("--dry-run does not make network requests", async () => {
   assert.equal(r.exitCode, 0);
   assert.equal(r.json.__dryRun, true);
   assert.equal(r.json.method, "GET");
-  assert.equal(r.json.headers.authorization, "[REDACTED]");
+  assert.equal(r.json.headers.authorization, "<redacted>");
   assert.ok(!r.stdout.includes("test-token-that-must-not-leak"));
 });
 
