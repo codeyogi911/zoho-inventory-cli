@@ -206,3 +206,50 @@ test("oauth-refresh: cached token evicted server-side self-heals (drop cache, re
     tmp.cleanup();
   }
 });
+
+test("oauth-refresh: concurrent CLI processes share one refresh instead of racing", async () => {
+  // Regression test for the 2026-07-22 live incident: without coordination,
+  // two processes that both see an expired cache at once each mint their
+  // own access token, and each mint can evict the other's (Zoho's shared-
+  // client live-token cap). withRefreshLock should mean only one process
+  // ever calls the token endpoint; the other waits and reuses that result.
+  const tmp = mkTmp();
+  const apiServer = await mockApi({ "GET /items": { status: 200, body: { items: [], page_context: { has_more_page: false } } } });
+  const accountsServer = await mockApi({
+    "POST /oauth/v2/token": async () => {
+      // Hold the response open briefly so both spawned processes are
+      // guaranteed to be mid-refresh-attempt at the same time — without
+      // this the two child processes could run sequentially by accident
+      // and the test would pass even with no lock at all.
+      await new Promise((resolve) => setTimeout(resolve, 150));
+      return { status: 200, body: { access_token: "shared-concurrent-token", expires_in: 3600 } };
+    },
+  });
+  const env = {
+    ZOHO_INVENTORY_REFRESH_TOKEN: "1000.refreshxyz",
+    ZOHO_INVENTORY_CLIENT_ID: "1000.client",
+    ZOHO_INVENTORY_CLIENT_SECRET: "secret",
+    ZOHO_INVENTORY_ORG_ID: "60030298567",
+    ZOHO_INVENTORY_BASE_URL: apiServer.url,
+    ZOHO_INVENTORY_ACCOUNTS_URL: accountsServer.url,
+    __ZOHO_INVENTORY_DEV_CONFIG_DIR: tmp.dir,
+  };
+  try {
+    const [r1, r2] = await Promise.all([
+      runJson(["items", "list"], { env }),
+      runJson(["items", "list"], { env }),
+    ]);
+    assert.equal(r1.exitCode, 0, r1.stderr);
+    assert.equal(r2.exitCode, 0, r2.stderr);
+    assert.equal(accountsServer.requests.length, 1, "only one process should have hit the token endpoint");
+    assert.equal(apiServer.requests.length, 2);
+    assert.ok(
+      apiServer.requests.every((req) => req.headers.authorization === "Zoho-oauthtoken shared-concurrent-token"),
+      "both processes should have used the single winning refresh's token"
+    );
+  } finally {
+    await apiServer.close();
+    await accountsServer.close();
+    tmp.cleanup();
+  }
+});

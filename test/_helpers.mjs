@@ -23,7 +23,9 @@ export function run(args = [], { env = {}, timeoutMs = 10000 } = {}) {
     // Each spawn gets its own throwaway HOME so the CLI's credential store
     // (~/.config/zoho-inventory-cli/credentials.json) can't leak between tests
     // — without this, an OAuth-refresh test caches a token that the next
-    // "auth missing" test then finds and uses.
+    // "auth missing" test then finds and uses. Tests that need two spawned
+    // processes to share one credential store instead pass an explicit
+    // __ZOHO_INVENTORY_DEV_CONFIG_DIR via `env`.
     cleanEnv.HOME = mkdtempSync(join(tmpdir(), "zoho-cli-home-"));
     Object.assign(cleanEnv, env);
     cleanEnv.__ZOHO_INVENTORY_FORCE_JSON_ERR = "1";
