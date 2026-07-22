@@ -74,11 +74,13 @@ test("auth missing → auth_missing", async () => {
 
 test("--dry-run does not make network requests", async () => {
   const r = await runJson(["items", "list", "--dry-run"], {
-    env: { ZOHO_INVENTORY_API_KEY: "test", ZOHO_INVENTORY_BASE_URL: "http://127.0.0.1:1" },
+    env: { ZOHO_INVENTORY_API_KEY: "test-token-that-must-not-leak", ZOHO_INVENTORY_BASE_URL: "http://127.0.0.1:1" },
   });
   assert.equal(r.exitCode, 0);
   assert.equal(r.json.__dryRun, true);
   assert.equal(r.json.method, "GET");
+  assert.equal(r.json.headers.authorization, "[REDACTED]");
+  assert.ok(!r.stdout.includes("test-token-that-must-not-leak"));
 });
 
 test("dry-run output redacts credential-shaped values", async () => {

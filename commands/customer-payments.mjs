@@ -221,6 +221,116 @@ export default {
         }
       }
     },
+    "refund": {
+      "method": "POST",
+      "path": "/customerpayments/:id/refunds",
+      "description": "POST /customerpayments/:id/refunds",
+      "flags": {
+        "id": {
+          "type": "string",
+          "required": true,
+          "description": "Primary resource id"
+        },
+        "body": {
+          "type": "string",
+          "required": false,
+          "description": "Raw JSON body (overrides individual flags)"
+        },
+        "organization-id": {
+          "type": "string",
+          "required": false,
+          "description": "Organization id override (defaults to ZOHO_INVENTORY_ORG_ID env)"
+        }
+      }
+    },
+    "list-refunds": {
+      "method": "GET",
+      "path": "/customerpayments/:id/refunds",
+      "description": "GET /customerpayments/:id/refunds",
+      "flags": {
+        "id": {
+          "type": "string",
+          "required": true,
+          "description": "Primary resource id"
+        },
+        "organization-id": {
+          "type": "string",
+          "required": false,
+          "description": "Organization id override (defaults to ZOHO_INVENTORY_ORG_ID env)"
+        }
+      }
+    },
+    "get-refund": {
+      "method": "GET",
+      "path": "/customerpayments/:id/refunds/:refundId",
+      "description": "GET /customerpayments/:id/refunds/:refundId",
+      "flags": {
+        "id": {
+          "type": "string",
+          "required": true,
+          "description": "Primary resource id"
+        },
+        "refundId": {
+          "type": "string",
+          "required": true,
+          "description": "Customer payment refund id"
+        },
+        "organization-id": {
+          "type": "string",
+          "required": false,
+          "description": "Organization id override (defaults to ZOHO_INVENTORY_ORG_ID env)"
+        }
+      }
+    },
+    "update-refund": {
+      "method": "PUT",
+      "path": "/customerpayments/:id/refunds/:refundId",
+      "description": "PUT /customerpayments/:id/refunds/:refundId",
+      "flags": {
+        "id": {
+          "type": "string",
+          "required": true,
+          "description": "Primary resource id"
+        },
+        "refundId": {
+          "type": "string",
+          "required": true,
+          "description": "Customer payment refund id"
+        },
+        "body": {
+          "type": "string",
+          "required": false,
+          "description": "Raw JSON body (overrides individual flags)"
+        },
+        "organization-id": {
+          "type": "string",
+          "required": false,
+          "description": "Organization id override (defaults to ZOHO_INVENTORY_ORG_ID env)"
+        }
+      }
+    },
+    "delete-refund": {
+      "method": "DELETE",
+      "path": "/customerpayments/:id/refunds/:refundId",
+      "description": "DELETE /customerpayments/:id/refunds/:refundId",
+      "flags": {
+        "id": {
+          "type": "string",
+          "required": true,
+          "description": "Primary resource id"
+        },
+        "refundId": {
+          "type": "string",
+          "required": true,
+          "description": "Customer payment refund id"
+        },
+        "organization-id": {
+          "type": "string",
+          "required": false,
+          "description": "Organization id override (defaults to ZOHO_INVENTORY_ORG_ID env)"
+        }
+      }
+    },
     "update-custom-field": {
       "method": "PUT",
       "path": "/customerpayment/:id/customfields",

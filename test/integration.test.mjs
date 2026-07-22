@@ -100,6 +100,36 @@ test("items delete returns ok", async () => {
   });
 });
 
+// ---------- customer-payments: nested refund actions ----------
+
+test("customer-payments refund actions use the documented nested paths", async () => {
+  await withMock({
+    "GET /customerpayments/:id/refunds/:refundId": (_req, params) => ({
+      status: 200,
+      body: { payment_refund: { payment_id: params.id, payment_refund_id: params.refundId } },
+    }),
+    "DELETE /customerpayments/:id/refunds/:refundId": (_req, params) => ({
+      status: 200,
+      body: { code: 0, message: "Refund deleted", payment_id: params.id, refund_id: params.refundId },
+    }),
+  }, async (server) => {
+    const getResult = await runJson(
+      ["customer-payments", "get-refund", "--id", "PAY-1", "--refundId", "REF-1"],
+      { env: { ...ENV, ZOHO_INVENTORY_BASE_URL: server.url } }
+    );
+    assert.equal(getResult.exitCode, 0, getResult.stderr);
+    assert.equal(server.requests[0].path, "/customerpayments/PAY-1/refunds/REF-1");
+
+    const deleteResult = await runJson(
+      ["customer-payments", "delete-refund", "--id", "PAY-1", "--refundId", "REF-1"],
+      { env: { ...ENV, ZOHO_INVENTORY_BASE_URL: server.url } }
+    );
+    assert.equal(deleteResult.exitCode, 0, deleteResult.stderr);
+    assert.equal(server.requests[1].method, "DELETE");
+    assert.equal(server.requests[1].path, "/customerpayments/PAY-1/refunds/REF-1");
+  });
+});
+
 // ---------- contact-persons: nested path with --contactId ----------
 
 test("contact-persons list interpolates parent contact id", async () => {
@@ -244,15 +274,18 @@ test("user-agent header is sent", async () => {
 
 // ---------- queryFlags: convert-from-X via URL query, not body ----------
 
-test("credit-notes create routes invoice_id to URL query, not body (Zoho convert-from-invoice mode)", async () => {
+test("credit-notes create routes invoice and sales return ids to URL query, not body", async () => {
   await withMock({
-    "POST /creditnotes": (req) => ({ status: 200, body: { code: 0, creditnote: { creditnote_id: "cn-1", invoice_id: req.query.invoice_id ?? null, body_keys: Object.keys(req.body || {}) } } }),
+    "POST /creditnotes": (req) => ({ status: 200, body: { code: 0, creditnote: { creditnote_id: "cn-1", invoice_id: req.query.invoice_id ?? null, salesreturn_id: req.query.salesreturn_id ?? null, body_keys: Object.keys(req.body || {}) } } }),
   }, async (server) => {
-    const r = await runJson(["credit-notes", "create", "--invoice_id", "INV-42", "--customer_id", "C-1", "--reference_number", "REF-X"], { env: { ...ENV, ZOHO_INVENTORY_BASE_URL: server.url } });
+    const r = await runJson(["credit-notes", "create", "--invoice_id", "INV-42", "--salesreturn_id", "SR-42", "--customer_id", "C-1", "--reference_number", "REF-X"], { env: { ...ENV, ZOHO_INVENTORY_BASE_URL: server.url } });
     assert.equal(r.exitCode, 0, r.stderr);
     assert.equal(server.requests[0].query.invoice_id, "INV-42");
+    assert.equal(server.requests[0].query.salesreturn_id, "SR-42");
     assert.ok(!server.requests[0].body || server.requests[0].body.invoice_id === undefined,
       `invoice_id leaked into body: ${JSON.stringify(server.requests[0].body)}`);
+    assert.ok(!server.requests[0].body || server.requests[0].body.salesreturn_id === undefined,
+      `salesreturn_id leaked into body: ${JSON.stringify(server.requests[0].body)}`);
     // Sanity: other body fields still went through.
     assert.equal(server.requests[0].body.customer_id, "C-1");
   });
@@ -265,6 +298,22 @@ test("credit-notes convert-to-open uses the official /status/open route (India D
     const r = await runJson(["credit-notes", "convert-to-open", "--id", "cn-7"], { env: { ...ENV, ZOHO_INVENTORY_BASE_URL: server.url } });
     assert.equal(r.exitCode, 0, r.stderr);
     assert.match(server.requests[0].path, /\/creditnotes\/cn-7\/status\/open/);
+  });
+});
+
+test("credit-notes convert-to-draft uses the documented status route", async () => {
+  await withMock({
+    "POST /creditnotes/:id/status/draft": (_req, params) => ({
+      status: 200,
+      body: { code: 0, message: "Credit note converted to draft", creditnote_id: params.id },
+    }),
+  }, async (server) => {
+    const r = await runJson(["credit-notes", "convert-to-draft", "--id", "CN-42"], {
+      env: { ...ENV, ZOHO_INVENTORY_BASE_URL: server.url },
+    });
+    assert.equal(r.exitCode, 0, r.stderr);
+    assert.equal(server.requests[0].method, "POST");
+    assert.equal(server.requests[0].path, "/creditnotes/CN-42/status/draft");
   });
 });
 

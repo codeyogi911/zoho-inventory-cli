@@ -1,7 +1,7 @@
 {
   "parsedAt": "2026-04-26T00:00:00Z",
-  "totalParsed": 350,
-  "totalIncluded": 324,
+  "totalParsed": 353,
+  "totalIncluded": 327,
   "totalDropped": 26,
   "endpoints": [
     {
@@ -1034,13 +1034,6 @@
       "included": true
     },
     {
-      "method": "PUT",
-      "path": "/customerpayment/:id/customfields",
-      "resource": "customer-payments",
-      "action": "update-custom-field",
-      "included": true
-    },
-    {
       "method": "POST",
       "path": "/customerpayments/:id/refunds",
       "resource": "customer-payments",
@@ -1073,6 +1066,13 @@
       "path": "/customerpayments/:id/refunds/:refundId",
       "resource": "customer-payments",
       "action": "delete-refund",
+      "included": true
+    },
+    {
+      "method": "PUT",
+      "path": "/customerpayment/:id/customfields",
+      "resource": "customer-payments",
+      "action": "update-custom-field",
       "included": true
     },
     {
@@ -1189,7 +1189,7 @@
     },
     {
       "method": "POST",
-      "path": "/creditnotes/:id/converttoopen",
+      "path": "/creditnotes/:id/status/open",
       "resource": "credit-notes",
       "action": "convert-to-open",
       "included": true
@@ -1378,6 +1378,13 @@
     },
     {
       "method": "GET",
+      "path": "/purchasereceives",
+      "resource": "purchase-receives",
+      "action": "list",
+      "included": true
+    },
+    {
+      "method": "GET",
       "path": "/purchasereceives/:id",
       "resource": "purchase-receives",
       "action": "get",
@@ -1402,6 +1409,20 @@
       "path": "/purchasereceives/:id",
       "resource": "purchase-receives",
       "action": "delete",
+      "included": true
+    },
+    {
+      "method": "POST",
+      "path": "/purchasereceives/:id/setstatusasintransit",
+      "resource": "purchase-receives",
+      "action": "mark-in-transit",
+      "included": true
+    },
+    {
+      "method": "POST",
+      "path": "/purchasereceives/:id/setstatusasreceived",
+      "resource": "purchase-receives",
+      "action": "mark-received",
       "included": true
     },
     {

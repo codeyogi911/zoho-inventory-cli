@@ -76,8 +76,8 @@
     "businessRules": 6
   },
   "coverage": {
-    "totalParsed": 350,
-    "totalIncluded": 324,
+    "totalParsed": 353,
+    "totalIncluded": 327,
     "totalDropped": 26
   },
   "filterProbes": [
