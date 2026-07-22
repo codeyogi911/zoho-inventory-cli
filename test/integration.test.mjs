@@ -3,7 +3,7 @@
 // error map, and the structured-error contract.
 import test from "node:test";
 import assert from "node:assert/strict";
-import { writeFileSync, mkdtempSync, rmSync } from "node:fs";
+import { writeFileSync, mkdtempSync, rmSync, existsSync, mkdirSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { mockApi } from "./_mock-server.mjs";
@@ -14,6 +14,13 @@ const ENV = { ZOHO_INVENTORY_API_KEY: "test-token", ZOHO_INVENTORY_ORG_ID: "6003
 async function withMock(routes, fn) {
   const server = await mockApi(routes);
   try { await fn(server); } finally { await server.close(); }
+}
+
+function withCredsDir(creds) {
+  const dir = mkdtempSync(join(tmpdir(), "zoho-inventory-cli-test-"));
+  if (!existsSync(dir)) mkdirSync(dir, { recursive: true });
+  writeFileSync(join(dir, "credentials.json"), JSON.stringify(creds));
+  return { dir, cleanup: () => rmSync(dir, { recursive: true, force: true }) };
 }
 
 // ---------- items: list, get, create, update, delete ----------
@@ -206,6 +213,46 @@ test("--organization-id flag overrides the env var", async () => {
     assert.equal(r.exitCode, 0, r.stderr);
     assert.equal(server.requests[0].query.organization_id, "OTHER-ORG");
   });
+});
+
+test("organization_id falls back to credentials.json when ZOHO_INVENTORY_ORG_ID isn't set", async () => {
+  // Regression test for the 2026-07-22 live incident's second cause: env
+  // vars are optional (the config file `login` writes must work on its
+  // own), but the org-id injection only ever checked the env var.
+  const creds = withCredsDir({ orgId: "60033513768", savedAt: "x" });
+  try {
+    await withMock({
+      "GET /contacts": { status: 200, body: { contacts: [], page_context: { has_more_page: false } } },
+    }, async (server) => {
+      const r = await runJson(["contacts", "list"], {
+        env: { ZOHO_INVENTORY_API_KEY: "test-token", ZOHO_INVENTORY_BASE_URL: server.url, __ZOHO_INVENTORY_DEV_CONFIG_DIR: creds.dir },
+      });
+      assert.equal(r.exitCode, 0, r.stderr);
+      assert.equal(server.requests[0].query.organization_id, "60033513768");
+    });
+  } finally { creds.cleanup(); }
+});
+
+// ---------- DC / base-URL resolution ----------
+
+test("base URL falls back to the DC stored in credentials.json when ZOHO_INVENTORY_DC isn't set", async () => {
+  // Regression test for the 2026-07-22 live incident: resolveDc() (used for
+  // the OAuth token URL) already fell back to the stored `dc`, but
+  // resolveBaseUrl() (used for the actual API host) didn't — a session
+  // with no ZOHO_INVENTORY_DC env var but a valid `login`-stored `dc: "in"`
+  // silently sent every request to the wrong (default "com") datacenter,
+  // which Zoho rejects as a plain, indistinguishable-from-a-bad-token 401.
+  // No ZOHO_INVENTORY_BASE_URL override here — this must exercise the real
+  // DC → host resolution, so we assert on the --dry-run URL instead of
+  // routing through a mock server.
+  const creds = withCredsDir({ dc: "in", savedAt: "x" });
+  try {
+    const r = await runJson(["contacts", "list", "--dry-run"], {
+      env: { ZOHO_INVENTORY_API_KEY: "test-token", __ZOHO_INVENTORY_DEV_CONFIG_DIR: creds.dir },
+    });
+    assert.equal(r.exitCode, 0, r.stderr);
+    assert.ok(r.json.url.startsWith("https://www.zohoapis.in/"), `expected the India DC host, got: ${r.json.url}`);
+  } finally { creds.cleanup(); }
 });
 
 // ---------- error paths ----------
